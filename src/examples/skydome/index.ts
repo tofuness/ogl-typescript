@@ -1,4 +1,3 @@
-
 import { Renderer, Geometry, Program, Mesh, Camera, Transform, Texture } from '../../';
 import { Sphere, Orbit } from '../../';
 
@@ -37,7 +36,6 @@ const fragment = /* glsl */ `
             }
         `;
 
-
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
@@ -63,7 +61,7 @@ const scene = new Transform();
 // Texture is equirectangular
 const texture = new Texture(gl);
 const img = new Image();
-img.onload = () => texture.image = img;
+img.onload = () => (texture.image = img);
 img.src = 'assets/sky.jpg';
 
 // Use Sphere geometry to render equirectangular textures
@@ -97,5 +95,6 @@ function update() {
     renderer.render({ scene, camera });
 }
 
-document.getElementsByClassName('Info')[0].innerHTML = 'Skydome. Image credit <a href="https://www.flickr.com/photos/charlesashaw/6264765128" target="_blank">charlesashaw</a>.';
+document.getElementsByClassName('Info')[0].innerHTML =
+    'Skydome. Image credit <a href="https://www.flickr.com/photos/charlesashaw/6264765128" target="_blank">charlesashaw</a>.';
 document.title = 'OGL • Skydome';

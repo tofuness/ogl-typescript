@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Texture, Program, Geometry, Mesh } from '../../';
 import { Orbit, Plane, Shadow } from '../../';
 
@@ -64,7 +63,6 @@ const fragmentColor = /* glsl */ `
             }
         `;
 
-
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
@@ -87,7 +85,10 @@ const scene = new Transform();
 // Swap between the 'fov' and 'left/right/etc' lines to switch from an orthographic to perspective camera,
 // and hence, directional light to spotlight projection.
 const light = new Camera(gl, {
-    left: -3, right: 3, bottom: -3, top: 3,
+    left: -3,
+    right: 3,
+    bottom: -3,
+    top: 3,
     // fov: 30,
 
     near: 1,
@@ -106,7 +107,7 @@ let airplane;
 async function addAirplane() {
     const texture = new Texture(gl);
     const img = new Image();
-    img.onload = () => texture.image = img;
+    img.onload = () => (texture.image = img);
     img.src = 'assets/airplane.jpg';
 
     const program = new Program(gl, {
@@ -138,7 +139,7 @@ async function addAirplane() {
 function addGround() {
     const texture = new Texture(gl);
     const img = new Image();
-    img.onload = () => texture.image = img;
+    img.onload = () => (texture.image = img);
     img.src = 'assets/water.jpg';
 
     const program = new Program(gl, {

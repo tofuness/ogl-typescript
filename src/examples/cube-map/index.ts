@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Texture, Program, Geometry, Mesh } from '../../';
 import { Box, Orbit } from '../../';
 
@@ -35,7 +34,6 @@ const fragment = /* glsl */ `
             }
         `;
 
-
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
@@ -63,7 +61,7 @@ const texture = new Texture(gl, {
 loadImages();
 async function loadImages() {
     function loadImage(src) {
-        return new Promise<HTMLImageElement>(res => {
+        return new Promise<HTMLImageElement>((res) => {
             const img = new Image();
             img.onload = () => res(img);
             img.src = src;

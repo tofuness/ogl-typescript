@@ -28,7 +28,6 @@ const tempVec3k = new Vec3();
 const tempMat4 = new Mat4();
 
 export class Raycast {
-
     gl: OGLRenderingContext;
     origin: Vec3;
     direction: Vec3;
@@ -66,7 +65,7 @@ export class Raycast {
         }
     }
 
-    intersectBounds(meshes: Mesh | Mesh[], { maxDistance, output = [] }: { maxDistance?: number; output?: Array<Mesh>; } = {}) {
+    intersectBounds(meshes: Mesh | Mesh[], { maxDistance, output = [] }: { maxDistance?: number; output?: Array<Mesh> } = {}) {
         if (!Array.isArray(meshes)) meshes = [meshes];
 
         const invWorldMat4 = tempMat4;

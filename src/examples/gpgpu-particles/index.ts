@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Geometry, Program, Texture, Mesh, Vec2 } from '../../index';
 import { GPGPU } from '../../';
 
@@ -108,7 +107,6 @@ const velocityFragment = /* glsl */ `
             }
         `;
 
-
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
@@ -130,7 +128,7 @@ const mouse = { value: new Vec2() };
 
 // The number of particles will determine how large the GPGPU textures are,
 // and therefore how expensive the GPU calculations will be.
-// Below I'm using 65536 to use every pixel of a 256x256 texture. If I used one more (65537), 
+// Below I'm using 65536 to use every pixel of a 256x256 texture. If I used one more (65537),
 // it would need to use a 512x512 texture - the GPU would then perform calculations for each pixel,
 // meaning that nearly 3/4 of the texture (196607 pixels) would be redundant.
 const numParticles = 65536;
@@ -142,19 +140,17 @@ const initialVelocityData = new Float32Array(numParticles * 4);
 // Random to be used as regular static attribute
 const random = new Float32Array(numParticles * 4);
 for (let i = 0; i < numParticles; i++) {
-    initialPositionData.set([
-        (Math.random() - 0.5) * 2.0,
-        (Math.random() - 0.5) * 2.0,
-        0, // the Green and Alpha channels go unused in this example, however I set
-        1, // unused Alpha to 1 so that texture is visible in WebGL debuggers
-    ], i * 4);
+    initialPositionData.set(
+        [
+            (Math.random() - 0.5) * 2.0,
+            (Math.random() - 0.5) * 2.0,
+            0, // the Green and Alpha channels go unused in this example, however I set
+            1, // unused Alpha to 1 so that texture is visible in WebGL debuggers
+        ],
+        i * 4
+    );
     initialVelocityData.set([0, 0, 0, 1], i * 4);
-    random.set([
-        Math.random(),
-        Math.random(),
-        Math.random(),
-        Math.random(),
-    ], i * 4);
+    random.set([Math.random(), Math.random(), Math.random(), Math.random()], i * 4);
 }
 
 // Initialise the GPGPU classes, creating the FBOs and corresponding texture coordinates
@@ -179,7 +175,7 @@ velocity.addPass({
 });
 
 // Now we can create our geometry, using the coordinates from above.
-// We don't use the velocity or position data as attributes, 
+// We don't use the velocity or position data as attributes,
 // instead we will get this from the FBO textures in the shader.
 const geometry = new Geometry(gl, {
     random: { size: 4, data: random },
@@ -220,10 +216,7 @@ function updateMouse(e) {
     }
 
     // Get mouse value in -1 to 1 range, with y flipped
-    mouse.value.set(
-        (e.x / gl.renderer.width) * 2 - 1,
-        (1.0 - e.y / gl.renderer.height) * 2 - 1
-    );
+    mouse.value.set((e.x / gl.renderer.width) * 2 - 1, (1.0 - e.y / gl.renderer.height) * 2 - 1);
 }
 
 requestAnimationFrame(update);

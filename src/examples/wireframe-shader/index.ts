@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Texture, Program, Geometry, Mesh, Vec3 } from '../../';
 import { Orbit } from '../../';
 
@@ -92,7 +91,6 @@ const fragment300 = /* glsl */ `#version 300 es
             }
         `;
 
-
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
@@ -132,7 +130,7 @@ function addBarycentric(position) {
     }
 
     return new Float32Array(barycentric);
-};
+}
 
 let mesh;
 loadModel();

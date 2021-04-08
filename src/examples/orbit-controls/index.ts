@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Texture, Program, Geometry, Mesh, Vec3 } from '../../';
 import { Orbit } from '../../';
 
@@ -70,7 +69,7 @@ const scene = new Transform();
 
 const texture = new Texture(gl);
 const img = new Image();
-img.onload = () => texture.image = img;
+img.onload = () => (texture.image = img);
 img.src = 'assets/macaw.jpg';
 
 const program = new Program(gl, {

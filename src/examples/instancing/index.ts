@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Texture, Program, Geometry, Mesh } from '../../';
 
 const vertex = /* glsl */ `
@@ -81,7 +80,7 @@ const scene = new Transform();
 
 const texture = new Texture(gl);
 const img = new Image();
-img.onload = () => texture.image = img;
+img.onload = () => (texture.image = img);
 img.src = 'assets/acorn.jpg';
 
 const program = new Program(gl, {
@@ -103,11 +102,7 @@ async function loadModel() {
     let offset = new Float32Array(num * 3);
     let random = new Float32Array(num * 3);
     for (let i = 0; i < num; i++) {
-        offset.set([
-            Math.random() * 2 - 1,
-            Math.random() * 2 - 1,
-            Math.random() * 2 - 1,
-        ], i * 3);
+        offset.set([Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1], i * 3);
 
         // unique random values are always handy for instances.
         // Here they will be used for rotation, scale and movement.
@@ -137,7 +132,6 @@ function update(t) {
     program.uniforms.uTime.value = t * 0.001;
     renderer.render({ scene, camera });
 }
-
 
 document.getElementsByClassName('Info')[0].innerHTML = 'Instancing. Model by Google Poly';
 document.title = 'OGL • Instancing';

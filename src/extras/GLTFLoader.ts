@@ -287,7 +287,7 @@ export class GLTFLoader {
     static parseImages(gl, desc, dir, bufferViews) {
         if (!desc.images) return null;
         return desc.images.map(({ uri, bufferView: bufferViewIndex, mimeType, name }) => {
-            const image: HTMLImageElement & { ready?: Promise<void>; } = new Image();
+            const image: HTMLImageElement & { ready?: Promise<void> } = new Image();
             image.name = name;
             if (uri) {
                 image.src = this.resolveURI(uri, dir);
@@ -748,11 +748,10 @@ export class GLTFLoader {
     }
 }
 
-
 type PBRMetallicRoughness = {
     baseColorFactor: [number, number, number, number];
-    baseColorTexture,
-    metallicFactor: number,
-    roughnessFactor: number,
-    metallicRoughnessTexture,
+    baseColorTexture;
+    metallicFactor: number;
+    roughnessFactor: number;
+    metallicRoughnessTexture;
 };

@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Geometry, Program, Mesh } from '../../';
 
 const vertex = /* glsl */ `
@@ -57,7 +56,6 @@ const fragment = /* glsl */ `
                 gl_FragColor.a = circle;
             }
         `;
-
 
 const renderer = new Renderer({ depth: false });
 const gl = renderer.gl;

@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Texture, Program, Mesh, Plane, Orbit, TextureLoader } from '../../index';
 
 document.getElementsByClassName('Info')[0].innerHTML = 'Compressed Textures.';
@@ -30,7 +29,6 @@ const fragment = /* glsl */ `
                 gl_FragColor = texture2D(tMap, vUv * 2.0);
             }
         `;
-
 
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
@@ -113,7 +111,3 @@ function update(t) {
     controls.update();
     renderer.render({ scene, camera });
 }
-
-
-
-

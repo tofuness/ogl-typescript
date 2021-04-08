@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, RenderTarget, Geometry, Program, Texture, Mesh, Color, Vec2 } from '../../index';
 import { Box, NormalProgram, Post } from '../../';
 import { RenderTargetOptions } from '../../core/RenderTarget';
@@ -227,7 +226,6 @@ const gradientSubtractShader = /* glsl */ `
             }
         `;
 
-
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
@@ -281,16 +279,22 @@ function supportRenderTextureFormat(gl, internalFormat, format, type) {
     return true;
 }
 
-
 // Helper to create a ping-pong FBO pairing for simulating on GPU
-function createDoubleFBO(gl, {
-    width, height,
-    wrapS, wrapT,
-    minFilter = gl.LINEAR,
-    magFilter = minFilter,
-    type, format, internalFormat,
-    depth,
-}: Partial<RenderTargetOptions> = {}) {
+function createDoubleFBO(
+    gl,
+    {
+        width,
+        height,
+        wrapS,
+        wrapT,
+        minFilter = gl.LINEAR,
+        magFilter = minFilter,
+        type,
+        format,
+        internalFormat,
+        depth,
+    }: Partial<RenderTargetOptions> = {}
+) {
     const options: Partial<RenderTargetOptions> = { width, height, wrapS, wrapT, minFilter, magFilter, type, format, internalFormat, depth };
     const fbo = {
         read: new RenderTarget(gl, options),
@@ -321,14 +325,12 @@ const texelSize = { value: new Vec2(1 / simRes) };
 
 // Get supported formats and types for FBOs
 let supportLinearFiltering = gl.renderer.extensions[`OES_texture_${gl.renderer.isWebgl2 ? `` : `half_`}float_linear`];
-const halfFloat = gl.renderer.isWebgl2 ? (gl as WebGL2RenderingContext).HALF_FLOAT :
-    gl.renderer.extensions['OES_texture_half_float'].HALF_FLOAT_OES;
+const halfFloat = gl.renderer.isWebgl2 ? (gl as WebGL2RenderingContext).HALF_FLOAT : gl.renderer.extensions['OES_texture_half_float'].HALF_FLOAT_OES;
 
 const filtering = supportLinearFiltering ? gl.LINEAR : gl.NEAREST;
 let rgba, rg, r;
 
 if (gl.renderer.isWebgl2) {
-
     rgba = getSupportedFormat(gl, (gl as WebGL2RenderingContext).RGBA16F, gl.RGBA, halfFloat);
     rg = getSupportedFormat(gl, (gl as WebGL2RenderingContext).RG16F, (gl as WebGL2RenderingContext).RG, halfFloat);
     r = getSupportedFormat(gl, (gl as WebGL2RenderingContext).R16F, (gl as WebGL2RenderingContext).RED, halfFloat);
@@ -408,7 +410,7 @@ const clearProgram = new Mesh(gl, {
         },
         depthTest: false,
         depthWrite: false,
-    })
+    }),
 });
 
 const splatProgram = new Mesh(gl, {
@@ -426,7 +428,7 @@ const splatProgram = new Mesh(gl, {
         },
         depthTest: false,
         depthWrite: false,
-    })
+    }),
 });
 
 const advectionProgram = new Mesh(gl, {
@@ -444,7 +446,7 @@ const advectionProgram = new Mesh(gl, {
         },
         depthTest: false,
         depthWrite: false,
-    })
+    }),
 });
 
 const divergenceProgram = new Mesh(gl, {
@@ -458,7 +460,7 @@ const divergenceProgram = new Mesh(gl, {
         },
         depthTest: false,
         depthWrite: false,
-    })
+    }),
 });
 
 const curlProgram = new Mesh(gl, {
@@ -472,7 +474,7 @@ const curlProgram = new Mesh(gl, {
         },
         depthTest: false,
         depthWrite: false,
-    })
+    }),
 });
 
 const vorticityProgram = new Mesh(gl, {
@@ -489,7 +491,7 @@ const vorticityProgram = new Mesh(gl, {
         },
         depthTest: false,
         depthWrite: false,
-    })
+    }),
 });
 
 const pressureProgram = new Mesh(gl, {
@@ -504,7 +506,7 @@ const pressureProgram = new Mesh(gl, {
         },
         depthTest: false,
         depthWrite: false,
-    })
+    }),
 });
 
 const gradienSubtractProgram = new Mesh(gl, {
@@ -519,9 +521,8 @@ const gradienSubtractProgram = new Mesh(gl, {
         },
         depthTest: false,
         depthWrite: false,
-    })
+    }),
 });
-
 
 const splats = [];
 
@@ -534,7 +535,7 @@ if (isTouchCapable) {
     window.addEventListener('mousemove', updateMouse, false);
 }
 
-const lastMouse: Vec2 & { isInit?: boolean; } = new Vec2();
+const lastMouse: Vec2 & { isInit?: boolean } = new Vec2();
 function updateMouse(e) {
     if (e.changedTouches && e.changedTouches.length) {
         e.x = e.changedTouches[0].pageX;
@@ -560,7 +561,6 @@ function updateMouse(e) {
     // Add if the mouse is moving
     if (Math.abs(deltaX) || Math.abs(deltaY)) {
         splats.push({
-
             // Get mouse value in 0 to 1 range, with y flipped
             x: e.x / gl.renderer.width,
             y: 1.0 - e.y / gl.renderer.height,
@@ -603,16 +603,8 @@ const mesh = new Mesh(gl, { geometry, program: NormalProgram(gl) });
 
 for (let i = 0; i < 20; i++) {
     const m = new Mesh(gl, { geometry, program: NormalProgram(gl) });
-    m.position.set(
-        Math.random() * 3 - 1.5,
-        Math.random() * 3 - 1.5,
-        Math.random() * 3 - 1.5
-    );
-    m.rotation.set(
-        Math.random() * 6.28 - 3.14,
-        Math.random() * 6.28 - 3.14,
-        0
-    );
+    m.position.set(Math.random() * 3 - 1.5, Math.random() * 3 - 1.5, Math.random() * 3 - 1.5);
+    m.rotation.set(Math.random() * 6.28 - 3.14, Math.random() * 6.28 - 3.14, 0);
     m.scale.set(Math.random() * 0.5 + 0.1);
     m.setParent(mesh);
 }
@@ -744,5 +736,6 @@ function update(t) {
     post.render({ scene: mesh, camera });
 }
 
-document.getElementsByClassName('Info')[0].innerHTML = 'Post Fluid Distortion. Based on shaders by <a href="https://github.com/PavelDoGreat/WebGL-Fluid-Simulation" target="_blank">Pavel Dobryakov</a>';
+document.getElementsByClassName('Info')[0].innerHTML =
+    'Post Fluid Distortion. Based on shaders by <a href="https://github.com/PavelDoGreat/WebGL-Fluid-Simulation" target="_blank">Pavel Dobryakov</a>';
 document.title = 'OGL • Post Fluid Distortion';

@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Texture, RenderTarget, Program, Mesh } from '../../';
 import { Box } from '../../';
 
@@ -43,11 +42,9 @@ const fragment = /* glsl */ `
             }
         `;
 
-
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
-
 
 const camera = new Camera(gl, { fov: 35 });
 camera.position.set(0, 1, 5);
@@ -70,12 +67,7 @@ const geometry = new Box(gl);
 
 // A little data texture with 4 colors just to keep things interesting
 const texture = new Texture(gl, {
-    image: new Uint8Array([
-        191, 25, 54, 255,
-        96, 18, 54, 255,
-        96, 18, 54, 255,
-        37, 13, 53, 255,
-    ]),
+    image: new Uint8Array([191, 25, 54, 255, 96, 18, 54, 255, 96, 18, 54, 255, 37, 13, 53, 255]),
     width: 2,
     height: 2,
     magFilter: gl.NEAREST,
@@ -86,7 +78,7 @@ const program = new Program(gl, {
     fragment,
     uniforms: {
         tMap: { value: texture },
-    }
+    },
 });
 
 // Create render target framebuffer.

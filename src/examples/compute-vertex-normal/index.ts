@@ -1,4 +1,3 @@
-
 import { Renderer, OGLRenderingContext, Geometry, Camera, Transform, Program, Mesh, Orbit, Torus } from '../../index';
 
 const vertex = /* glsl */ `
@@ -52,7 +51,7 @@ function initOGL() {
         fov: 30,
         aspect: gl.drawingBufferWidth / gl.drawingBufferHeight,
         near: 1,
-        far: 10000
+        far: 10000,
     });
     camera.position.set(0, 3, 20);
     camera.up.set(0, 1, 0);
@@ -60,7 +59,6 @@ function initOGL() {
     controls = new Orbit(camera);
     scene = new Transform();
 }
-
 
 function addTrimesh() {
     const program = new Program(gl, {
@@ -86,7 +84,7 @@ function addTrimesh() {
     const indices = triGeo.attributes.index.data;
     let geometry = new Geometry(gl, {
         position: { size: 3, data: vertices },
-        index: { data: indices }
+        index: { data: indices },
         // normal: { size: 3, data: normals }
     });
 
@@ -96,14 +94,13 @@ function addTrimesh() {
     const trimesh2 = new Mesh(gl, { geometry, program });
     trimesh2.setParent(scene);
     trimesh2.position.x = 2; // right
-
 }
 
 function animate(time?) {
     requestAnimationFrame(animate);
     controls.update();
     renderer.render({ scene, camera });
-};
+}
 
 function resize() {
     renderer.setSize(window.innerWidth, window.innerHeight);

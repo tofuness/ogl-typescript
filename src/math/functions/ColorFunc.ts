@@ -10,7 +10,7 @@ const NAMES = {
     orange: '#ff8000',
 };
 
-export type ColorNames = keyof (typeof NAMES);
+export type ColorNames = keyof typeof NAMES;
 
 export function hexToRGB(hex) {
     if (hex.length === 4) hex = hex[0] + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3];

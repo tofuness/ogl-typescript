@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Texture, Program, Mesh } from '../../';
 import { Plane } from '../../';
 
@@ -34,7 +33,6 @@ const fragment = /* glsl */ `
                 gl_FragColor.a = 1.0;
             }
         `;
-
 
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
@@ -80,7 +78,7 @@ const program = new Program(gl, {
 
 const mesh = new Mesh(gl, {
     geometry: geometry,
-    program: program
+    program: program,
 });
 
 mesh.scale.set(1, 2, 1);
@@ -88,8 +86,8 @@ mesh.rotation.set(-1.5, 0, 0);
 
 mesh.setParent(scene);
 
-gl.canvas.addEventListener('mousemove', event => {
-    const x = 2 * event.x / gl.canvas.width;
+gl.canvas.addEventListener('mousemove', (event) => {
+    const x = (2 * event.x) / gl.canvas.width;
     program.uniforms.fSlide.value = x;
 });
 
@@ -97,10 +95,8 @@ requestAnimationFrame(update);
 function update(t) {
     requestAnimationFrame(update);
     renderer.render({ scene, camera });
-
 }
 
 document.getElementsByClassName('Info')[0].innerHTML = 'Anisotropic';
 document.getElementsByClassName('Info split')[0].innerHTML = '<span>Texture anisotropy: None</span> <span>Texture anisotropy: 16</span>';
 document.title = 'OGL • Anisotropic';
-

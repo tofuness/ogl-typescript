@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Texture, Program, Color, Geometry, Mesh, Vec3 } from '../../';
 import { Orbit, Cylinder, NormalProgram } from '../../';
 
@@ -66,7 +65,7 @@ const scene = new Transform();
 
 const texture = new Texture(gl);
 const img = new Image();
-img.onload = () => texture.image = img;
+img.onload = () => (texture.image = img);
 img.src = 'assets/forest.jpg';
 
 const program = new Program(gl, {
@@ -104,14 +103,12 @@ async function loadForest() {
         const mesh = new Mesh(gl, { geometry, program });
         mesh.setParent(scene);
 
-        mesh.position.set((i % size - size * 0.5) * 2, 0, (Math.floor(i / size) - size * 0.5) * 2);
+        mesh.position.set(((i % size) - size * 0.5) * 2, 0, (Math.floor(i / size) - size * 0.5) * 2);
         mesh.position.y += Math.sin(mesh.position.x * 0.5) * Math.sin(mesh.position.z * 0.5) * 0.5;
         mesh.rotation.y = Math.random() * Math.PI * 2;
         mesh.scale.set(0.8 + Math.random() * 0.3);
     }
 }
-
-
 
 function addCameraShape() {
     const mesh = new Mesh(gl, {
@@ -132,7 +129,6 @@ function addCameraShape() {
     mesh.rotation.x = -Math.PI / 2;
     mesh.rotation.y = Math.PI / 4;
 }
-
 
 function cameraPath(vec, time, y) {
     const x = 4 * Math.sin(time);
@@ -157,7 +153,7 @@ function update(t) {
     frustumTransform.rotation.copy(frustumCamera.rotation);
 
     // Traverse all meshes in the scene
-    scene.traverse(node => {
+    scene.traverse((node) => {
         if (!(node as Mesh).draw) return;
         // if (node.isCameraShape) return;
         if (node === cameraShape) return;
@@ -168,7 +164,6 @@ function update(t) {
 
     renderer.render({ scene, camera });
 }
-
 
 document.getElementsByClassName('Info')[0].innerHTML = 'Frustum Culling. Model by Google Poly';
 document.title = 'OGL • Frustum Culling';

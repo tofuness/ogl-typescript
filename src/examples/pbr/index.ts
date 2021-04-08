@@ -1,4 +1,3 @@
-
 import { Renderer, Transform, Camera, Geometry, Texture, Program, Mesh, Vec3, Color } from '../../index';
 import { Orbit, Plane } from '../../';
 
@@ -508,7 +507,6 @@ const shadowFragment = /* glsl */ `
 // Use this online tool to create the required IBL environment maps
 // https://oframe.github.io/ibl-converter/
 
-
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
@@ -564,19 +562,17 @@ async function loadExterior() {
 
     // This whole effect lives in the fairly epic shader.
     const program = new Program(gl, {
-
         // Get fallback shader for WebGL1 - needed for OES_standard_derivatives ext
         vertex: renderer.isWebgl2 ? vertex300 : vertex100,
         fragment: renderer.isWebgl2 ? fragment300 : fragment100,
         uniforms: {
-
             // Base color / albedo. This is used to determine both the diffuse and specular colors.
             tBaseColor: { value: getTexture('assets/pbr/car-ext-color.jpg') },
 
             // This works as a multiplier for each channel in the texture above.
             uBaseColor: { value: new Color(1, 1, 1) },
 
-            // 'Roughness', 'Metalness' and 'Occlusion', each packed into their own channel (R, G, B) 
+            // 'Roughness', 'Metalness' and 'Occlusion', each packed into their own channel (R, G, B)
             tRMO: { value: getTexture('assets/pbr/car-ext-rmo.jpg') },
 
             // The following are multipliers to the above values
@@ -603,22 +599,22 @@ async function loadExterior() {
             uAlpha: { value: 1 },
 
             // This Look Up Table is used to calculate the BRDF (Bidirectional reflectance distribution function)
-            // coefficients used in the shader more efficiently. 
+            // coefficients used in the shader more efficiently.
             // It is based on the roughness and fresnel grazing angle.
             tLUT: { value: getTexture('assets/pbr/lut.png', false) },
 
-            // The following two environment maps are the most important inputs. 
+            // The following two environment maps are the most important inputs.
             // They can be generated using this online tool https://oframe.github.io/ibl-converter/
             // They are equirectangular (a sphere mapped to a rectangle) maps used for lighting the model.
             // Instead of just relying on lights, we use these textures as IBL (image-based lighting), which
-            // is like having thousands of lights in a scene. 
+            // is like having thousands of lights in a scene.
             // In order to get more realistic results, we use a HDR (high dynamic range) image as an input,
             // so instead of values being limited between 0 and 1, they can go higher (up to 6 in this implementation).
-            // These images have been converted to an RGBM structure (where the rgb channels multiply with the 
+            // These images have been converted to an RGBM structure (where the rgb channels multiply with the
             // alpha channel to recapture their original HDR value), as this allows us to store it in an 8 bit PNG.
 
-            // The first of the two maps is the diffuse irradiance. It's a small, blurry texture used to give 
-            // ambient/diffuse lighting to the model. 
+            // The first of the two maps is the diffuse irradiance. It's a small, blurry texture used to give
+            // ambient/diffuse lighting to the model.
             tEnvDiffuse: { value: getTexture('assets/pbr/waterfall-diffuse-RGBM.png', false) },
 
             // The second is the pre-filtered specular vertical atlas. It's basically 7 environment maps
@@ -657,7 +653,6 @@ async function loadInterior() {
     });
 
     const program = new Program(gl, {
-
         // Get fallback shader for WebGL1 - needed for OES_standard_derivatives ext
         vertex: renderer.isWebgl2 ? vertex300 : vertex100,
         fragment: renderer.isWebgl2 ? fragment300 : fragment100,
@@ -721,6 +716,7 @@ function update() {
     renderer.render({ scene, camera });
 }
 
-document.getElementsByClassName('Info')[0].innerHTML = 'PBR (Physically Based Rendering). Model by <a href="https://sketchfab.com/slava" target="_blank">Slava Z</a>';
-(document.getElementsByClassName('Info')[0] as HTMLDivElement).style.color = "#fff";
+document.getElementsByClassName('Info')[0].innerHTML =
+    'PBR (Physically Based Rendering). Model by <a href="https://sketchfab.com/slava" target="_blank">Slava Z</a>';
+(document.getElementsByClassName('Info')[0] as HTMLDivElement).style.color = '#fff';
 document.title = 'OGL • PBR';

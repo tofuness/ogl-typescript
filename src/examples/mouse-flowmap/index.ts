@@ -1,4 +1,3 @@
-
 import { Renderer, Triangle, Program, Texture, Mesh, Vec2 } from '../../';
 import { Flowmap } from '../../';
 
@@ -43,12 +42,11 @@ const fragment = /* glsl */ `
             }
         `;
 
-
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
 
-type Velocity = Vec2 & { needsUpdate?: boolean; };
+type Velocity = Vec2 & { needsUpdate?: boolean };
 
 // Variable inputs to control flowmap
 let aspect = 1;
@@ -69,7 +67,7 @@ const geometry = new Triangle(gl);
 
 const texture = new Texture(gl, { wrapS: gl.REPEAT, wrapT: gl.REPEAT });
 const img = new Image();
-img.onload = () => texture.image = img;
+img.onload = () => (texture.image = img);
 img.src = 'assets/water.jpg';
 
 const program = new Program(gl, {
@@ -83,7 +81,7 @@ const program = new Program(gl, {
         // This is because the class alternates this texture between two render targets
         // and updates the value property after each render.
         tFlow: flowmap.uniform,
-    }
+    },
 });
 
 const mesh = new Mesh(gl, { geometry, program });
@@ -110,14 +108,10 @@ function updateMouse(e) {
     }
 
     // Get mouse value in 0 to 1 range, with y flipped
-    mouse.set(
-        e.x / gl.renderer.width,
-        1.0 - e.y / gl.renderer.height
-    );
+    mouse.set(e.x / gl.renderer.width, 1.0 - e.y / gl.renderer.height);
 
     // Calculate velocity
     if (!lastTime) {
-
         // First frame
         lastTime = performance.now();
         lastMouse.set(e.x, e.y);
@@ -166,6 +160,6 @@ function update(t) {
     renderer.render({ scene: mesh });
 }
 
-
-document.getElementsByClassName('Info')[0].innerHTML = 'Mouse Flowmap. Texture by <a href="https://www.deviantart.com/berserkitty/art/Seamless-Cartoon-styled-Water-Texture-743787929" target="_blank">BerserKitty</a>';
+document.getElementsByClassName('Info')[0].innerHTML =
+    'Mouse Flowmap. Texture by <a href="https://www.deviantart.com/berserkitty/art/Seamless-Cartoon-styled-Water-Texture-743787929" target="_blank">BerserKitty</a>';
 document.title = 'OGL • Mouse Flowmap';

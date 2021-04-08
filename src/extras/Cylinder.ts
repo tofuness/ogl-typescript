@@ -3,15 +3,15 @@ import { Vec3 } from '../math/Vec3';
 import { OGLRenderingContext } from '../core/Renderer';
 
 export type CylinderOptions = {
-    radiusTop: number,
-    radiusBottom: number,
-    height: number,
-    radialSegments: number,
-    heightSegments: number,
-    openEnded: boolean,
-    thetaStart: number,
-    thetaLength: number,
-    attributes: AttributeMap,
+    radiusTop: number;
+    radiusBottom: number;
+    height: number;
+    radialSegments: number;
+    heightSegments: number;
+    openEnded: boolean;
+    thetaStart: number;
+    thetaLength: number;
+    attributes: AttributeMap;
 };
 
 export class Cylinder extends Geometry {

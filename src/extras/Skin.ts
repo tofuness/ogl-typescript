@@ -112,7 +112,7 @@ export class Skin extends Mesh {
         });
     }
 
-    draw({ camera }: { camera?: Camera; } = {}) {
+    draw({ camera }: { camera?: Camera } = {}) {
         // Update world matrices manually, as not part of scene graph
         this.root.updateMatrixWorld(true);
 

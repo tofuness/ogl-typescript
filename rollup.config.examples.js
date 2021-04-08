@@ -2,12 +2,9 @@ import resolve from '@rollup/plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 import template from 'rollup-plugin-generate-html-template';
 
-const extensions = [
-    '.ts'
-];
+const extensions = ['.ts'];
 
 export default [
-
     // Geometry
     buildExample('triangle-screen-shader'),
     buildExample('draw-modes'),
@@ -59,9 +56,8 @@ export default [
     buildExample('skinning'),
 
     // Performance
-    buildExample('high-mesh-count', 'src/examples/high-mesh-count/template.html')
-]
-
+    buildExample('high-mesh-count', 'src/examples/high-mesh-count/template.html'),
+];
 
 function buildExample(example, htmlTemplate = 'src/examples/template.html') {
     return {
@@ -70,21 +66,22 @@ function buildExample(example, htmlTemplate = 'src/examples/template.html') {
             file: `./examples/${example}.js`,
             format: 'iife',
             // sourcemap: true
-            name: 'window', extend: true, globals: {}
+            name: 'window',
+            extend: true,
+            globals: {},
         },
         watch: {
             chokidar: {
-                usePolling: true
-            }
+                usePolling: true,
+            },
         },
         plugins: [
-
             template({
                 template: htmlTemplate,
-                target: `${example}.html`
+                target: `${example}.html`,
             }),
             resolve({ extensions }),
             babel({ extensions, include: ['./src/**/*'] }),
-        ]
-    }
+        ],
+    };
 }

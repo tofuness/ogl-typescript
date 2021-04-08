@@ -43,4 +43,3 @@ export * from './extras/TextureLoader';
 export * from './extras/GLTFLoader';
 export * from './extras/GLTFAnimation';
 export * from './extras/GLTFSkin';
-

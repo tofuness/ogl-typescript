@@ -1,12 +1,11 @@
-
 import { Renderer, Camera, Transform, Texture, Program, Geometry, Mesh, Vec3 } from '../../';
 import { Orbit } from '../../';
 
 // When we use standard derivatives (dFdx & dFdy functions),
-// which are necessary for this effect, WebGL1 requires the 
-// GL_OES_standard_derivatives extension, and WebGL2 complains 
-// about the extension's existence. So unfortunately we're 
-// forced to create a 300 es GLSL shader for WebGL2, and a 100 es 
+// which are necessary for this effect, WebGL1 requires the
+// GL_OES_standard_derivatives extension, and WebGL2 complains
+// about the extension's existence. So unfortunately we're
+// forced to create a 300 es GLSL shader for WebGL2, and a 100 es
 // GLSL shader for WebGL1. There are only slight syntax changes.
 const vertex100 = /* glsl */ `
             attribute vec3 position;
@@ -98,7 +97,6 @@ const fragment300 = /* glsl */ `#version 300 es
             }
         `;
 
-
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
@@ -122,7 +120,7 @@ const scene = new Transform();
 
 const texture = new Texture(gl);
 const img = new Image();
-img.onload = () => texture.image = img;
+img.onload = () => (texture.image = img);
 img.src = 'assets/matcap.jpg';
 
 const program = new Program(gl, {
@@ -140,8 +138,8 @@ async function loadModel() {
 
     // If you can generate the flat-shaded normals with attributes, it would
     // be more efficient. However if your mesh is dynamic, indexed, or you're
-    // updating the vertices in the shader, we can still calculate the normals 
-    // in the shader - all we need is the position. 
+    // updating the vertices in the shader, we can still calculate the normals
+    // in the shader - all we need is the position.
     const geometry = new Geometry(gl, {
         position: { size: 3, data: new Float32Array(data.position) },
     });
@@ -157,7 +155,6 @@ function update() {
     controls.update();
     renderer.render({ scene, camera });
 }
-
 
 document.getElementsByClassName('Info')[0].innerHTML = 'Flat Shading Matcap. Model by Google Poly.';
 document.title = 'OGL • Flat Shading Matcap';

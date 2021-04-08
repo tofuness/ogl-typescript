@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Texture, Program, Geometry, Mesh } from '../../';
 import { Orbit } from '../../';
 
@@ -152,7 +151,6 @@ const fragment300 = /* glsl */ `#version 300 es
             }
         `;
 
-
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
@@ -174,16 +172,15 @@ const scene = new Transform();
 
 const textureDiffuse = new Texture(gl);
 const imgDiffuse = new Image();
-imgDiffuse.onload = () => textureDiffuse.image = imgDiffuse;
+imgDiffuse.onload = () => (textureDiffuse.image = imgDiffuse);
 imgDiffuse.src = 'assets/granite-diffuse.jpg';
 
 const textureNormal = new Texture(gl);
 const imgNormal = new Image();
-imgNormal.onload = () => textureNormal.image = imgNormal;
+imgNormal.onload = () => (textureNormal.image = imgNormal);
 imgNormal.src = 'assets/granite-normal.jpg';
 
 const program = new Program(gl, {
-
     // Get fallback shader for WebGL1 - needed for OES_standard_derivatives ext
     vertex: renderer.isWebgl2 ? vertex300 : vertex100,
     fragment: renderer.isWebgl2 ? fragment300 : fragment100,
@@ -221,4 +218,3 @@ function update(t) {
 
 document.getElementsByClassName('Info')[0].innerHTML = 'Normal Maps';
 document.title = 'OGL • Normal Maps';
-

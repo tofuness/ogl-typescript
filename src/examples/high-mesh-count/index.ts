@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Program, Mesh } from '../../';
 import { Box } from '../../';
 
@@ -35,7 +34,6 @@ const fragment = /* glsl */ `
             }
         `;
 
-
 const renderer = new Renderer({});
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
@@ -65,7 +63,6 @@ const program = new Program(gl, {
 let meshes = [];
 
 function setMeshCount(count) {
-
     // sanitize input
     count = parseInt(count) || 1000;
 
@@ -78,11 +75,7 @@ function setMeshCount(count) {
         let mesh = new Mesh(gl, { geometry: cubeGeometry, program });
 
         // position meshes in a random position between -100 / +100 in each dimension
-        mesh.position.set(
-            -100 + Math.random() * 200,
-            -100 + Math.random() * 200,
-            -100 + Math.random() * 200
-        );
+        mesh.position.set(-100 + Math.random() * 200, -100 + Math.random() * 200, -100 + Math.random() * 200);
         mesh.rotation.set(Math.random() * 3, Math.random() * 3, Math.random() * 3);
         scene.addChild(mesh);
         meshes.push(mesh);
@@ -90,7 +83,6 @@ function setMeshCount(count) {
 
     // set input counter value to make sure
     (document.getElementById('meshCountInput') as any).value = count;
-
 }
 
 (window as any).setMeshCount = setMeshCount;

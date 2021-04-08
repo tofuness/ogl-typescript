@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Texture, Program, Geometry, Mesh } from '../../';
 
 const vertex = /* glsl */ `
@@ -45,7 +44,6 @@ const fragment = /* glsl */ `
             }
         `;
 
-
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
@@ -66,7 +64,7 @@ const scene = new Transform();
 
 const texture = new Texture(gl);
 const img = new Image();
-img.onload = () => texture.image = img;
+img.onload = () => (texture.image = img);
 img.src = 'assets/croissant.jpg';
 
 const program = new Program(gl, {
@@ -99,7 +97,6 @@ async function loadModel() {
     // Here we do so by generating indices. If your geometry is already indexed, this needs to be adjusted.
     let index = new Uint16Array((data.position.length / 3 / 3) * 6);
     for (let i = 0; i < data.position.length / 3; i += 3) {
-
         // For every triangle, make three line pairs (start, end)
         index.set([i, i + 1, i + 1, i + 2, i + 2, i], i * 2);
     }
@@ -126,7 +123,6 @@ function update() {
 
     renderer.render({ scene, camera });
 }
-
 
 document.getElementsByClassName('Info')[0].innerHTML = 'Wireframe. Model by Google Poly';
 document.title = 'OGL • Wireframe';

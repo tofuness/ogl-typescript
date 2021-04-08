@@ -38,7 +38,10 @@ export class Camera extends Transform {
     type: 'perspective' | 'orthographic';
     frustum: Vec3[];
 
-    constructor(gl: OGLRenderingContext, { near = 0.1, far = 100, fov = 45, aspect = 1, left, right, bottom, top, zoom = 1 }: Partial<CameraOptions> = {}) {
+    constructor(
+        gl: OGLRenderingContext,
+        { near = 0.1, far = 100, fov = 45, aspect = 1, left, right, bottom, top, zoom = 1 }: Partial<CameraOptions> = {}
+    ) {
         super();
 
         Object.assign(this, { near, far, fov, aspect, left, right, bottom, top, zoom });

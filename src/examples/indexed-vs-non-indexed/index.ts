@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Geometry, Program, Mesh } from '../../';
 
 const vertex = /* glsl */ `
@@ -54,20 +53,34 @@ const scene = new Transform();
 // 4 vertices, using 6 indices to designate 2 triangles using the default gl.TRIANGLES draw mode
 const indexedGeometry = new Geometry(gl, {
     position: {
-        size: 3, data: new Float32Array([
-            -0.5, 0.5, 0, // vertex 0
-            -0.5, -0.5, 0, // vertex 1
-            0.5, 0.5, 0, // vertex 2
-            0.5, -0.5, 0, // vertex 3
-        ])
+        size: 3,
+        data: new Float32Array([
+            -0.5,
+            0.5,
+            0, // vertex 0
+            -0.5,
+            -0.5,
+            0, // vertex 1
+            0.5,
+            0.5,
+            0, // vertex 2
+            0.5,
+            -0.5,
+            0, // vertex 3
+        ]),
     },
     uv: {
-        size: 2, data: new Float32Array([
-            0, 1, // vertex 0
-            1, 1, // vertex 1
-            0, 0, // vertex 2
-            1, 0, // vertex 3
-        ])
+        size: 2,
+        data: new Float32Array([
+            0,
+            1, // vertex 0
+            1,
+            1, // vertex 1
+            0,
+            0, // vertex 2
+            1,
+            0, // vertex 3
+        ]),
     },
 
     // the indices attribute must use the name 'index' to be treated as an ELEMENT_ARRAY_BUFFER
@@ -78,24 +91,44 @@ const indexedGeometry = new Geometry(gl, {
 // If only the original 4 vertices were supplied, only one triangle would be drawn.
 const nonIndexedGeometry = new Geometry(gl, {
     position: {
-        size: 3, data: new Float32Array([
-            -0.5, 0.5, 0, // vertex 0
-            -0.5, -0.5, 0, // vertex 1
-            0.5, 0.5, 0, // vertex 2
-            -0.5, -0.5, 0, // vertex 1
-            0.5, -0.5, 0, // vertex 3
-            0.5, 0.5, 0, // vertex 2
-        ])
+        size: 3,
+        data: new Float32Array([
+            -0.5,
+            0.5,
+            0, // vertex 0
+            -0.5,
+            -0.5,
+            0, // vertex 1
+            0.5,
+            0.5,
+            0, // vertex 2
+            -0.5,
+            -0.5,
+            0, // vertex 1
+            0.5,
+            -0.5,
+            0, // vertex 3
+            0.5,
+            0.5,
+            0, // vertex 2
+        ]),
     },
     uv: {
-        size: 2, data: new Float32Array([
-            0, 1, // vertex 0
-            1, 1, // vertex 1
-            0, 0, // vertex 2
-            1, 1, // vertex 1
-            1, 0, // vertex 3
-            0, 0, // vertex 2
-        ])
+        size: 2,
+        data: new Float32Array([
+            0,
+            1, // vertex 0
+            1,
+            1, // vertex 1
+            0,
+            0, // vertex 2
+            1,
+            1, // vertex 1
+            1,
+            0, // vertex 3
+            0,
+            0, // vertex 2
+        ]),
     },
 });
 

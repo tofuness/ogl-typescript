@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Geometry, Texture, Program, Mesh } from '../../';
 import { Orbit, Text } from '../../';
 
@@ -88,7 +87,6 @@ const fragment300 = /* glsl */ `#version 300 es
             }
         `;
 
-
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
@@ -127,11 +125,10 @@ const texture = new Texture(gl, {
     generateMipmaps: false,
 });
 const img = new Image();
-img.onload = () => texture.image = img;
+img.onload = () => (texture.image = img);
 img.src = 'assets/fonts/FiraSans-Bold.png';
 
 const program = new Program(gl, {
-
     // Get fallback shader for WebGL1 - needed for OES_standard_derivatives ext
     vertex: renderer.isWebgl2 ? vertex300 : vertex100,
     fragment: renderer.isWebgl2 ? fragment300 : fragment100,
@@ -149,7 +146,7 @@ async function loadText() {
 
     const text = new Text({
         font,
-        text: 'don\'t panic',
+        text: "don't panic",
         width: 4,
         align: 'center',
         letterSpacing: -0.05,
@@ -181,4 +178,3 @@ function update(t) {
 
 document.getElementsByClassName('Info')[0].innerHTML = 'MSDF Text Glyphs (Multichannel Signed Distance Fields)';
 document.title = 'OGL • MSDF Text Glyphs (Multichannel Signed Distance Fields)';
-

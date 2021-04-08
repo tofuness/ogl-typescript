@@ -73,7 +73,7 @@ export class Geometry {
     id: number;
     attributes: AttributeMap;
     VAOs: {};
-    drawRange: { start: number; count: number; };
+    drawRange: { start: number; count: number };
     instancedCount: number;
     glState: RenderState;
     isInstanced: boolean;
@@ -81,7 +81,7 @@ export class Geometry {
 
     raycast: 'sphere' | 'box' = 'box';
 
-    constructor(gl: OGLRenderingContext, attributes: { [key: string]: Partial<Attribute>; } = {}) {
+    constructor(gl: OGLRenderingContext, attributes: { [key: string]: Partial<Attribute> } = {}) {
         if (!gl.canvas) console.error('gl not passed as fist argument to Geometry');
         this.gl = gl;
         this.attributes = attributes;
@@ -117,8 +117,8 @@ export class Geometry {
             (attr.data.constructor === Float32Array
                 ? this.gl.FLOAT
                 : attr.data.constructor === Uint16Array
-                    ? this.gl.UNSIGNED_SHORT
-                    : this.gl.UNSIGNED_INT); // Uint32Array
+                ? this.gl.UNSIGNED_SHORT
+                : this.gl.UNSIGNED_INT); // Uint32Array
         attr.target = key === 'index' ? this.gl.ELEMENT_ARRAY_BUFFER : this.gl.ARRAY_BUFFER;
         attr.normalized = attr.normalized || false;
         attr.stride = attr.stride || 0;
@@ -317,8 +317,7 @@ export class Geometry {
 
     computeVertexNormals() {
         const positionAttribute = this.attributes['position'];
-        if (!positionAttribute)
-            return;
+        if (!positionAttribute) return;
 
         let normalAttribute = this.attributes['normal'];
         if (!normalAttribute) {
@@ -328,9 +327,14 @@ export class Geometry {
             (normalAttribute.data as Float32Array).fill(0);
         }
 
-        const pA = new Vec3(), pB = new Vec3(), pC = new Vec3();
-        const nA = new Vec3(), nB = new Vec3(), nC = new Vec3();
-        const cb = new Vec3(), ab = new Vec3();
+        const pA = new Vec3(),
+            pB = new Vec3(),
+            pC = new Vec3();
+        const nA = new Vec3(),
+            nB = new Vec3(),
+            nC = new Vec3();
+        const cb = new Vec3(),
+            ab = new Vec3();
 
         const indexAttribute = this.attributes['index'];
         if (indexAttribute) {
@@ -347,7 +351,7 @@ export class Geometry {
                 cb.sub(pC, pB);
                 ab.sub(pA, pB);
                 cb.cross(ab);
-                // read vertex normals 
+                // read vertex normals
                 nA.fromArray(normalAttribute.data, iA * normalAttribute.size);
                 nB.fromArray(normalAttribute.data, iB * normalAttribute.size);
                 nC.fromArray(normalAttribute.data, iC * normalAttribute.size);
@@ -369,12 +373,10 @@ export class Geometry {
                 normalAttribute.data[iC + 1] = nC.y;
                 normalAttribute.data[iC + 2] = nC.z;
             }
-
         } else {
             // non-indexed elements (unconnected triangle soup)
 
             for (let i = 0, il = positionAttribute.count; i < il; i += 3) {
-
                 pA.fromArray(positionAttribute.data, i * positionAttribute.size);
                 pB.fromArray(positionAttribute.data, (i + 1) * positionAttribute.size);
                 pC.fromArray(positionAttribute.data, (i + 2) * positionAttribute.size);
@@ -394,9 +396,7 @@ export class Geometry {
                 normalAttribute.data[(i + 2) * normalAttribute.size] = cb.x;
                 normalAttribute.data[(i + 2) * normalAttribute.size + 1] = cb.y;
                 normalAttribute.data[(i + 2) * normalAttribute.size + 2] = cb.z;
-
             }
-
         }
 
         this.normalizeNormals();

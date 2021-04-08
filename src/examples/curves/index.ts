@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Program, Mesh, Sphere, Polyline, Orbit, Vec3, Color, Curve } from '../../index';
 
 const vertex = /* glsl */ `
@@ -68,12 +67,7 @@ const sphere = new Mesh(gl, { geometry: sphereGeometry, program });
 sphere.setParent(scene);
 
 const curve = new Curve({
-    points: [
-        new Vec3(0, 0.5, 0),
-        new Vec3(0, 1, 1),
-        new Vec3(0, -1, 1),
-        new Vec3(0, -0.5, 0),
-    ],
+    points: [new Vec3(0, 0.5, 0), new Vec3(0, 1, 1), new Vec3(0, -1, 1), new Vec3(0, -0.5, 0)],
     type: Curve.CUBICBEZIER,
 });
 const points = curve.getPoints(20);
@@ -89,7 +83,7 @@ const polyline = new Polyline(gl, {
     uniforms: {
         uColor: { value: new Color('#f00') },
         uThickness: { value: 3 },
-    }
+    },
 });
 
 const polyline2 = new Polyline(gl, {
@@ -97,7 +91,7 @@ const polyline2 = new Polyline(gl, {
     uniforms: {
         uColor: { value: new Color('#00f') },
         uThickness: { value: 2 },
-    }
+    },
 });
 
 const polyline3 = new Polyline(gl, {
@@ -105,14 +99,14 @@ const polyline3 = new Polyline(gl, {
     uniforms: {
         uColor: { value: new Color('#0f0') },
         uThickness: { value: 4 },
-    }
+    },
 });
 
 for (let i = 0; i <= 60; i++) {
     const p = [polyline, polyline2, polyline3][i % 3];
     const mesh = new Mesh(gl, { geometry: p.geometry, program: p.program });
     mesh.setParent(sphere);
-    mesh.rotation.y = i * Math.PI / 60;
+    mesh.rotation.y = (i * Math.PI) / 60;
 }
 
 requestAnimationFrame(update);
@@ -122,9 +116,6 @@ function update() {
     controls.update();
     renderer.render({ scene, camera });
 }
-
-
-
 
 document.getElementsByClassName('Info')[0].innerHTML = 'Curves';
 document.title = 'OGL • Curves';

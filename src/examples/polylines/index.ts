@@ -1,5 +1,3 @@
-
-
 import { Renderer, Transform, Vec3, Color } from '../../';
 import { Polyline } from '../../';
 
@@ -50,7 +48,6 @@ const vertex = /* glsl */ `
             }
         `;
 
-
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
@@ -64,7 +61,7 @@ function resize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     // We call resize on the polylines to update their resolution uniforms
-    lines.forEach(line => line.polyline.resize());
+    lines.forEach((line) => line.polyline.resize());
 }
 window.addEventListener('resize', resize, false);
 
@@ -74,8 +71,8 @@ function random(a, b) {
     return a * (1.0 - alpha) + b * alpha;
 }
 
-// If you're interested in learning about drawing lines with geometry, 
-// go through this detailed article by Matt DesLauriers 
+// If you're interested in learning about drawing lines with geometry,
+// go through this detailed article by Matt DesLauriers
 // https://mattdesl.svbtle.com/drawing-lines-is-hard
 // It's an excellent breakdown of the approaches and their pitfalls.
 
@@ -85,14 +82,7 @@ function random(a, b) {
 // give the line some width.
 
 // We're going to make a number of different coloured lines for fun.
-[
-    '#e09f7d',
-    '#ef5d60',
-    '#ec4067',
-    '#a01a7d',
-    '#311847',
-].forEach((color, i) => {
-
+['#e09f7d', '#ef5d60', '#ec4067', '#a01a7d', '#311847'].forEach((color, i) => {
     // Store a few values for each lines' spring movement
     const line: any = {
         spring: random(0.02, 0.1),
@@ -105,7 +95,7 @@ function random(a, b) {
     // Note: Only pass in one for each point on the line - the class will handle
     // the doubling of vertices for the polyline effect.
     const count = 20;
-    const points = line.points = [];
+    const points = (line.points = []);
     for (let i = 0; i < count; i++) points.push(new Vec3());
 
     // Pass in the points, and any custom elements - for example here we've made
@@ -147,11 +137,7 @@ function updateMouse(e) {
     }
 
     // Get mouse value in -1 to 1 range, with y flipped
-    mouse.set(
-        (e.x / gl.renderer.width) * 2 - 1,
-        (e.y / gl.renderer.height) * -2 + 1,
-        0
-    );
+    mouse.set((e.x / gl.renderer.width) * 2 - 1, (e.y / gl.renderer.height) * -2 + 1, 0);
 }
 
 const tmp = new Vec3();
@@ -160,18 +146,15 @@ requestAnimationFrame(update);
 function update(t) {
     requestAnimationFrame(update);
 
-    lines.forEach(line => {
-
+    lines.forEach((line) => {
         // Update polyline input points
         for (let i = line.points.length - 1; i >= 0; i--) {
             if (!i) {
-
                 // For the first point, spring ease it to the mouse position
                 tmp.copy(mouse).add(line.mouseOffset).sub(line.points[i]).multiply(line.spring);
                 line.mouseVelocity.add(tmp).multiply(line.friction);
                 line.points[i].add(line.mouseVelocity);
             } else {
-
                 // The rest of the points ease to the point in front of them, making a line
                 line.points[i].lerp(line.points[i - 1], 0.9);
             }

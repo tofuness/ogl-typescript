@@ -1,9 +1,7 @@
-
 import { Renderer, Camera, Program, Transform, Mesh } from '../../';
 import { Sphere, Box } from '../../';
 
-
-type SpeedMesh = { speed?: number; } & Mesh;
+type SpeedMesh = { speed?: number } & Mesh;
 
 const vertex = /* glsl */ `
             precision highp float;
@@ -47,7 +45,6 @@ const fragment = /* glsl */ `
                 gl_FragColor.a = 1.0;
             }
         `;
-
 
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
@@ -93,11 +90,7 @@ for (let i = 0; i < 50; i++) {
     const geometry = Math.random() > 0.5 ? cubeGeometry : sphereGeometry;
     const shape: SpeedMesh = new Mesh(gl, { geometry, program });
     shape.scale.set(Math.random() * 0.3 + 0.7);
-    shape.position.set(
-        (Math.random() - 0.5) * 3,
-        (Math.random() - 0.5) * 3,
-        (Math.random() - 0.5) * 3
-    );
+    shape.position.set((Math.random() - 0.5) * 3, (Math.random() - 0.5) * 3, (Math.random() - 0.5) * 3);
     shape.speed = (Math.random() - 0.5) * 0.7;
 
     // Attach them to a random, previously created shape
@@ -109,7 +102,7 @@ requestAnimationFrame(update);
 function update(t) {
     requestAnimationFrame(update);
 
-    shapes.forEach(shape => {
+    shapes.forEach((shape) => {
         shape.rotation.y += 0.03 * shape.speed;
         shape.rotation.x += 0.04 * shape.speed;
         shape.rotation.z += 0.01 * shape.speed;

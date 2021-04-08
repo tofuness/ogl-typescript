@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Program, Mesh, Vec2 } from '../../';
 import { Post, Box, NormalProgram } from '../../';
 
@@ -64,7 +63,6 @@ const fragment = /* glsl */ `
             }
         `;
 
-
 const renderer = new Renderer({ dpr: 1 });
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
@@ -97,7 +95,6 @@ const mesh = new Mesh(gl, { geometry, program: NormalProgram(gl) });
 // Add pass like you're creating a Program. Then use the 'enabled'
 // property to toggle the pass.
 const pass = post.addPass({
-
     // If not passed in, pass will use the default vertex/fragment
     // shaders found within the class.
     fragment,

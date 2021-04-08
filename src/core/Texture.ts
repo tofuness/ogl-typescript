@@ -35,12 +35,11 @@ export interface TextureOptions {
     anisotropy: number;
 }
 
-export type CompressedImage = { isCompressedTexture?: boolean; } & { data: Uint8Array; width: number; height: number; }[];
+export type CompressedImage = { isCompressedTexture?: boolean } & { data: Uint8Array; width: number; height: number }[];
 
 const isCompressedImage = (image: any): image is CompressedImage => (image as CompressedImage).isCompressedTexture === true;
 
 export class Texture {
-
     ext: string;
     gl: OGLRenderingContext;
     id: number;
@@ -71,7 +70,7 @@ export class Texture {
     anisotropy: number;
 
     texture: WebGLTexture;
-    store: { image: any; };
+    store: { image: any };
     glState: RenderState;
 
     state: {

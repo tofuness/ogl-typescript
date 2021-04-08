@@ -13,29 +13,29 @@ const tempVec2a = new Vec2();
 const tempVec2b = new Vec2();
 
 export type OrbitOptions = {
-    element: HTMLElement,
-    enabled: boolean,
-    target: Vec3,
-    ease: number,
-    inertia: number,
-    enableRotate: boolean,
-    rotateSpeed: number,
-    autoRotate: boolean,
-    autoRotateSpeed: number,
-    enableZoom: boolean,
-    zoomSpeed: number,
-    enablePan: boolean,
-    panSpeed: number,
-    minPolarAngle: number,
-    maxPolarAngle: number,
-    minAzimuthAngle: number,
-    maxAzimuthAngle: number,
-    minDistance: number,
-    maxDistance: number,
+    element: HTMLElement;
+    enabled: boolean;
+    target: Vec3;
+    ease: number;
+    inertia: number;
+    enableRotate: boolean;
+    rotateSpeed: number;
+    autoRotate: boolean;
+    autoRotateSpeed: number;
+    enableZoom: boolean;
+    zoomSpeed: number;
+    enablePan: boolean;
+    panSpeed: number;
+    minPolarAngle: number;
+    maxPolarAngle: number;
+    minAzimuthAngle: number;
+    maxAzimuthAngle: number;
+    minDistance: number;
+    maxDistance: number;
 };
 
 export function Orbit(
-    object: Transform & { fov: number; }, // TODO: fov property only be used in pan()
+    object: Transform & { fov: number }, // TODO: fov property only be used in pan()
     {
         element = document.body,
         enabled = true,

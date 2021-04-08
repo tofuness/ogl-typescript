@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Program, Mesh, Vec2 } from '../../';
 import { Plane, Sphere, Box, Orbit, Raycast } from '../../';
 
@@ -38,7 +37,7 @@ const fragment = /* glsl */ `
             }
         `;
 
-type HitableMesh = Mesh & { isHit?: boolean; };
+type HitableMesh = Mesh & { isHit?: boolean };
 
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
@@ -115,18 +114,15 @@ sphere.geometry.raycast = 'sphere';
 document.addEventListener('mousemove', move, false);
 document.addEventListener('touchmove', move, false);
 function move(e) {
-    mouse.set(
-        2.0 * (e.x / renderer.width) - 1.0,
-        2.0 * (1.0 - e.y / renderer.height) - 1.0
-    );
+    mouse.set(2.0 * (e.x / renderer.width) - 1.0, 2.0 * (1.0 - e.y / renderer.height) - 1.0);
 
     // Update the ray's origin and direction using the camera and mouse
     raycast.castMouse(camera, mouse);
 
     // Just for the feedback in this example - reset each mesh's hit to false
-    meshes.forEach(mesh => mesh.isHit = false);
+    meshes.forEach((mesh) => (mesh.isHit = false));
 
-    // raycast.intersectBounds will test against the bounds of each mesh, and 
+    // raycast.intersectBounds will test against the bounds of each mesh, and
     // return an array of intersected meshes in order of closest to farthest
     const hits: HitableMesh[] = raycast.intersectBounds(meshes);
 
@@ -134,18 +130,17 @@ function move(e) {
     // to find out the uv or normal value at the hit point.
     // Optional 2nd and third arguments are backface culling, and max distance
     // Both useful for doing early exits to help optimise.
-    // const hits = raycast.intersectMeshes(meshes, { 
-    //     cullFace: true, 
-    //     maxDistance: 10, 
-    //     includeUV: true, 
+    // const hits = raycast.intersectMeshes(meshes, {
+    //     cullFace: true,
+    //     maxDistance: 10,
+    //     includeUV: true,
     //     includeNormal: true,
     // });
     // if (hits.length) console.log(hits[0].hit.uv);
 
     // Update our feedback using this array
-    hits.forEach(mesh => mesh.isHit = true);
+    hits.forEach((mesh) => (mesh.isHit = true));
 }
-
 
 document.getElementsByClassName('Info')[0].innerHTML = 'Projection and Raycasting';
 document.title = 'OGL • Projection and Raycasting';

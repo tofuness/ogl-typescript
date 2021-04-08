@@ -44,8 +44,8 @@ export type DeviceParameters = {
 };
 
 export type RenderState = {
-    blendFunc?: { src: GLenum; dst: GLenum; srcAlpha?; dstAlpha?; };
-    blendEquation?: { modeRGB: GLenum; modeAlpha?; };
+    blendFunc?: { src: GLenum; dst: GLenum; srcAlpha?; dstAlpha? };
+    blendEquation?: { modeRGB: GLenum; modeAlpha? };
     cullFace?: number;
     frontFace?: number;
     depthMask?: boolean;
@@ -53,7 +53,7 @@ export type RenderState = {
     premultiplyAlpha?: boolean;
     flipY?: boolean;
     unpackAlignment?: number;
-    viewport?: { width: number | null; height: number | null; };
+    viewport?: { width: number | null; height: number | null };
     textureUnits?: Array<number>;
     activeTextureUnit?: number;
     framebuffer?;
@@ -61,7 +61,7 @@ export type RenderState = {
     uniformLocations?: Map<number, WebGLUniformLocation>;
 };
 
-export type RenderExtensions = { [key: string]: any; };
+export type RenderExtensions = { [key: string]: any };
 
 export class Renderer {
     dpr: number;
@@ -337,8 +337,7 @@ export class Renderer {
         }
     }
 
-
-    getRenderList({ scene, camera, frustumCull, sort }: { scene: Transform; camera: Camera; frustumCull: boolean; sort: boolean; }) {
+    getRenderList({ scene, camera, frustumCull, sort }: { scene: Transform; camera: Camera; frustumCull: boolean; sort: boolean }) {
         let renderList = [];
 
         if (camera && frustumCull) camera.updateFrustum();
@@ -427,8 +426,8 @@ export class Renderer {
             }
             this.gl.clear(
                 (this.color ? this.gl.COLOR_BUFFER_BIT : 0) |
-                (this.depth ? this.gl.DEPTH_BUFFER_BIT : 0) |
-                (this.stencil ? this.gl.STENCIL_BUFFER_BIT : 0)
+                    (this.depth ? this.gl.DEPTH_BUFFER_BIT : 0) |
+                    (this.stencil ? this.gl.STENCIL_BUFFER_BIT : 0)
             );
         }
 

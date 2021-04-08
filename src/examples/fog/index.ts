@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Texture, Program, Color, Geometry, Mesh } from '../../index';
 
 const vertex = /* glsl */ `
@@ -81,7 +80,6 @@ const fragment = /* glsl */ `
             }
         `;
 
-
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
@@ -102,7 +100,7 @@ const scene = new Transform();
 
 const texture = new Texture(gl);
 const img = new Image();
-img.onload = () => texture.image = img;
+img.onload = () => (texture.image = img);
 img.src = 'assets/forest.jpg';
 
 const program = new Program(gl, {
@@ -119,7 +117,6 @@ const program = new Program(gl, {
     },
 });
 
-
 let mesh;
 loadModel();
 async function loadModel() {
@@ -131,13 +128,8 @@ async function loadModel() {
     let offset = new Float32Array(num * 3);
     let random = new Float32Array(num * 3);
     for (let i = 0; i < num; i++) {
-
         // Layout in a grid
-        offset.set([
-            (i % size - size * 0.5) * 2,
-            0,
-            (Math.floor(i / size) - size * 0.5) * 2,
-        ], i * 3);
+        offset.set([((i % size) - size * 0.5) * 2, 0, (Math.floor(i / size) - size * 0.5) * 2], i * 3);
 
         random.set([Math.random(), Math.random(), Math.random()], i * 3);
     }

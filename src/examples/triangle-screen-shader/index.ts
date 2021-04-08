@@ -1,4 +1,3 @@
-
 import { Renderer, Triangle, Program, Color, Mesh } from '../../';
 
 const vertex = /* glsl */ `
@@ -56,7 +55,7 @@ const program = new Program(gl, {
     fragment,
     uniforms: {
         uTime: { value: 0 },
-        uColor: { value: new Color(0.3, 0.2, 0.5) }
+        uColor: { value: new Color(0.3, 0.2, 0.5) },
     },
 });
 

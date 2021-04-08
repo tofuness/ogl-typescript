@@ -1,8 +1,7 @@
-
 import { Renderer, Camera, Transform, Texture, Program, Mesh, Color } from '../../';
 import { Plane } from '../../';
 
-type SpeedMesh = Mesh & { speed?: number; };
+type SpeedMesh = Mesh & { speed?: number };
 
 const vertex = /* glsl */ `
             precision highp float;
@@ -80,7 +79,7 @@ const geometry = new Plane(gl, {
 
 const texture = new Texture(gl);
 const img = new Image();
-img.onload = () => texture.image = img;
+img.onload = () => (texture.image = img);
 img.src = 'assets/leaf.jpg';
 
 const program = new Program(gl, {
@@ -98,16 +97,8 @@ const meshes = [];
 
 for (let i = 0; i < 50; i++) {
     const mesh: SpeedMesh = new Mesh(gl, { geometry, program });
-    mesh.position.set(
-        (Math.random() - 0.5) * 3,
-        (Math.random() - 0.5) * 6,
-        (Math.random() - 0.5) * 3
-    );
-    mesh.rotation.set(
-        0,
-        (Math.random() - 0.5) * 6.28,
-        (Math.random() - 0.5) * 6.28
-    );
+    mesh.position.set((Math.random() - 0.5) * 3, (Math.random() - 0.5) * 6, (Math.random() - 0.5) * 3);
+    mesh.rotation.set(0, (Math.random() - 0.5) * 6.28, (Math.random() - 0.5) * 6.28);
     mesh.scale.set(Math.random() * 0.5 + 0.2);
     mesh.speed = Math.random() * 1.5 + 0.2;
     mesh.setParent(scene);
@@ -118,7 +109,7 @@ requestAnimationFrame(update);
 function update(t) {
     requestAnimationFrame(update);
 
-    meshes.forEach(mesh => {
+    meshes.forEach((mesh) => {
         mesh.rotation.y += 0.05;
         mesh.rotation.z += 0.05;
         mesh.position.y -= 0.02 * mesh.speed;
@@ -130,7 +121,6 @@ function update(t) {
     // Objects are automatically sorted if renderer.sort === true
     renderer.render({ scene, camera });
 }
-
 
 document.getElementsByClassName('Info')[0].innerHTML = 'Sort Transparency';
 document.title = 'OGL • Sort Transparency';

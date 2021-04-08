@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Program, Mesh, Plane, Sphere, Box, Cylinder, Orbit } from '../../index';
 
 const vertex = /* glsl */ `
@@ -33,7 +32,6 @@ const fragment = /* glsl */ `
                 gl_FragColor.a = 1.0;
             }
         `;
-
 
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
@@ -95,7 +93,6 @@ function update() {
 
     renderer.render({ scene, camera });
 }
-
 
 document.getElementsByClassName('Info')[0].innerHTML = 'Base Primitives - Plane, Cube, Sphere, Cylinder';
 document.title = 'OGL • Base Primitives - Plane, Cube, Sphere, Cylinder';

@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Orbit, Program, GLTFLoader, GLTFSkin, Vec3, Color, TextureLoader } from '../../index';
 const shader = {
     vertex: /* glsl */ `

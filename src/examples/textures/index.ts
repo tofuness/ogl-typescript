@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Texture, TextureLoader, Program, Geometry, Mesh } from '../../';
 import { Box } from '../../';
 
@@ -46,7 +45,6 @@ const fragment = /* glsl */ `
             }
         `;
 
-
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
@@ -70,7 +68,7 @@ const texture = new Texture(gl);
 const img = new Image();
 
 // update image value with source once loaded
-img.onload = () => texture.image = img;
+img.onload = () => (texture.image = img);
 img.src = 'assets/saddle.jpg';
 
 // Alternatively, you can use the TextureLoader class's load method that handles
@@ -137,7 +135,7 @@ const videoProgram = new Program(gl, {
 });
 const videoMesh = new Mesh(gl, {
     geometry: videoGeometry,
-    program: videoProgram
+    program: videoProgram,
 });
 videoMesh.position.set(0, 0.5, -4);
 videoMesh.scale.set(1.5);
@@ -160,5 +158,3 @@ function update(t) {
 
 document.getElementsByClassName('Info')[0].innerHTML = 'Textures. Model by Google Poly. Film by Studio Ghibli.';
 document.title = 'OGL • Textures';
-
-

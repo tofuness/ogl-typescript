@@ -1,7 +1,5 @@
 {
-    "pages": [
-        "FiraSans-Bold.png"
-    ],
+    "pages": ["FiraSans-Bold.png"],
     "chars": [
         {
             "id": 106,
@@ -1440,16 +1438,8 @@
         "stretchH": 100,
         "smooth": 1,
         "aa": 1,
-        "padding": [
-            0,
-            0,
-            0,
-            0
-        ],
-        "spacing": [
-            0,
-            0
-        ]
+        "padding": [0, 0, 0, 0],
+        "spacing": [0, 0]
     },
     "common": {
         "lineHeight": 50,

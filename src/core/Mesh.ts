@@ -42,7 +42,9 @@ export class Mesh extends Transform {
 
     // raycast.ts
     hit: Partial<{
-        localPoint: Vec3; distance: number; point: Vec3;
+        localPoint: Vec3;
+        distance: number;
+        point: Vec3;
         faceNormal: Vec3;
         localFaceNormal: Vec3;
         uv: Vec2;
@@ -50,7 +52,10 @@ export class Mesh extends Transform {
         normal: Vec3;
     }> = null;
 
-    constructor(gl: OGLRenderingContext, { geometry, program, mode = gl.TRIANGLES, frustumCulled = true, renderOrder = 0 }: Partial<MeshOptions> = {}) {
+    constructor(
+        gl: OGLRenderingContext,
+        { geometry, program, mode = gl.TRIANGLES, frustumCulled = true, renderOrder = 0 }: Partial<MeshOptions> = {}
+    ) {
         super();
         if (!gl.canvas) console.error('gl not passed as first argument to Mesh');
         this.gl = gl;

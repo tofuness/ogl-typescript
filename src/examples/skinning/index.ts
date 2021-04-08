@@ -1,4 +1,3 @@
-
 import { Renderer, Transform, Camera, Geometry, Texture, Program, Mesh } from '../../';
 import { Orbit, Plane, Skin } from '../../';
 
@@ -164,7 +163,7 @@ async function loadModel() {
     //         ],
     //         bindPose: {
     //             ... for the following properties, values concatenated for all bones, arranged in order of bones array
-    //             position: [x1, y1, z1, x2, y2, z2, ...], 
+    //             position: [x1, y1, z1, x2, y2, z2, ...],
     //             quaternion: [x1, y1, z1, w1, x2, y2, z2, w2, ...],
     //             scale: [x1, y1, z1, x2, y2, z2, ...],
     //         },
@@ -179,7 +178,7 @@ async function loadModel() {
     //     frames: [
     //         {
     //             ... identical format to bindPose above, values are concatenated
-    //             position: [x1, y1, z1, x2, y2, z2, ...], 
+    //             position: [x1, y1, z1, x2, y2, z2, ...],
     //             quaternion: [x1, y1, z1, w1, x2, y2, z2, w2, ...],
     //             scale: [x1, y1, z1, x2, y2, z2, ...],
     //         },
@@ -197,7 +196,7 @@ async function loadModel() {
 
     const texture = new Texture(gl);
     const img = new Image();
-    img.onload = () => texture.image = img;
+    img.onload = () => (texture.image = img);
     img.src = 'assets/snout.jpg';
 
     const program = new Program(gl, {
@@ -217,7 +216,7 @@ async function loadModel() {
     skin.scale.set(0.01);
     skin.position.y = -1;
 
-    // Helper function to add animation to skin's bones. 
+    // Helper function to add animation to skin's bones.
     // The Animation class can be used directly for any hierarchy - is not solely for bones.
     animation = skin.addAnimation(animationData);
 }
@@ -227,7 +226,7 @@ initShadow();
 function initShadow() {
     const texture = new Texture(gl);
     const img = new Image();
-    img.onload = () => texture.image = img;
+    img.onload = () => (texture.image = img);
     img.src = 'assets/snout-shadow.jpg';
 
     const geometry = new Plane(gl, { width: 7, height: 7 });
@@ -252,7 +251,7 @@ function update(t) {
     requestAnimationFrame(update);
 
     // Control animation but updating the elapsed value.
-    // It uses modulo to repeat the animation range, 
+    // It uses modulo to repeat the animation range,
     // so below is playing a never-ending loop.
     if (animation) animation.elapsed += 0.1;
 
@@ -264,5 +263,6 @@ function update(t) {
     renderer.render({ scene, camera });
 }
 
-document.getElementsByClassName('Info')[0].innerHTML = 'Skinning. Model by <a href="https://artella.lpages.co/artella-lily-snout-giveaway/" target="_blank">Carlos Quintero and Zach Baharov</a>.';
+document.getElementsByClassName('Info')[0].innerHTML =
+    'Skinning. Model by <a href="https://artella.lpages.co/artella-lily-snout-giveaway/" target="_blank">Carlos Quintero and Zach Baharov</a>.';
 document.title = 'OGL • Skinning';

@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Geometry, Triangle, Texture, RenderTarget, Program, Mesh, Vec3, Vec2 } from '../../';
 import { Orbit } from '../../';
 
@@ -171,7 +170,6 @@ const fragmentPost = /* glsl */ `
             }
         `;
 
-
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
@@ -201,8 +199,7 @@ const target = new RenderTarget(gl, {
     color: 2, // Number of render targets
 
     // Use half float to get accurate position values
-    type: gl.renderer.isWebgl2 ? (gl as WebGL2RenderingContext).HALF_FLOAT :
-        gl.renderer.extensions['OES_texture_half_float'].HALF_FLOAT_OES,
+    type: gl.renderer.isWebgl2 ? (gl as WebGL2RenderingContext).HALF_FLOAT : gl.renderer.extensions['OES_texture_half_float'].HALF_FLOAT_OES,
 
     internalFormat: gl.renderer.isWebgl2 ? (gl as WebGL2RenderingContext).RGBA16F : gl.RGBA,
     minFilter: supportLinearFiltering ? gl.LINEAR : gl.NEAREST,
@@ -233,7 +230,7 @@ async function initScene() {
 
     const texture = new Texture(gl);
     const img = new Image();
-    img.onload = () => texture.image = img;
+    img.onload = () => (texture.image = img);
     img.src = 'assets/acorn.jpg';
 
     const program = new Program(gl, {
@@ -270,8 +267,6 @@ function initPost() {
 
     return new Mesh(gl, { geometry, program });
 }
-
-
 
 requestAnimationFrame(update);
 function update(t) {

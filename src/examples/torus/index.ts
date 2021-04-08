@@ -53,7 +53,7 @@ const fragment = /* glsl */ `
 
     const program = new Program(gl, {
         vertex,
-        fragment
+        fragment,
     });
 
     const torusGeometry = new Torus(gl, {
@@ -81,7 +81,5 @@ const fragment = /* glsl */ `
     }
 }
 
-
 document.getElementsByClassName('Info')[0].innerHTML = 'Torus';
 document.title = 'OGL • Torus';
-

@@ -3,18 +3,17 @@ import { Vec3 } from '../math/Vec3';
 import { OGLRenderingContext } from '../core/Renderer';
 
 export type SphereOptions = {
-    radius: number,
-    widthSegments: number,
-    heightSegments: number,
-    phiStart: number,
-    phiLength: number,
-    thetaStart: number,
-    thetaLength: number,
-    attributes: AttributeMap,
+    radius: number;
+    widthSegments: number;
+    heightSegments: number;
+    phiStart: number;
+    phiLength: number;
+    thetaStart: number;
+    thetaLength: number;
+    attributes: AttributeMap;
 };
 
 export class Sphere extends Geometry {
-
     constructor(
         gl: OGLRenderingContext,
         {

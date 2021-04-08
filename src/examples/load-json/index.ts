@@ -1,4 +1,3 @@
-
 import { Renderer, Camera, Transform, Texture, Program, Geometry, Mesh } from '../../';
 
 const vertex = /* glsl */ `
@@ -45,7 +44,6 @@ const fragment = /* glsl */ `
             }
         `;
 
-
 const renderer = new Renderer({ dpr: 2 });
 const gl = renderer.gl;
 document.body.appendChild(gl.canvas);
@@ -66,7 +64,7 @@ const scene = new Transform();
 
 const texture = new Texture(gl);
 const img = new Image();
-img.onload = () => texture.image = img;
+img.onload = () => (texture.image = img);
 img.src = 'assets/fox.jpg';
 
 const program = new Program(gl, {
@@ -99,7 +97,6 @@ function update() {
     if (mesh) mesh.rotation.y -= 0.005;
     renderer.render({ scene, camera });
 }
-
 
 document.getElementsByClassName('Info')[0].innerHTML = 'Load JSON (Javascript Object Notation). Model by Google Poly';
 document.title = 'OGL • Load JSON';
