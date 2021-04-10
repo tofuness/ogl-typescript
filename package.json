@@ -19,13 +19,8 @@
         "access": "public"
     },
     "scripts": {
-        "build": "npm run build:dist && npm run build:lib",
-        "build:dist": "rimraf dist/* && rollup -c",
-        "build:lib": "rimraf lib/* && tsc",
-        "build:examples": "rollup -c rollup.config.examples.js",
-        "dev": "rollup -c -w",
-        "dev:examples": "rollup -c rollup.config.examples.js -w",
-        "serve": "npx http-server examples -o"
+        "dev": "vite",
+        "build": "vite build"
     },
     "repository": {
         "type": "git",
@@ -43,23 +38,13 @@
     "bugs": {
         "url": "https://github.com/nshen/ogl-typescript/issues"
     },
-    "devDependencies": {
-        "@babel/cli": "^7.8.4",
-        "@babel/core": "^7.8.6",
-        "@babel/plugin-proposal-class-properties": "^7.8.3",
-        "@babel/plugin-proposal-numeric-separator": "^7.8.3",
-        "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
-        "@babel/preset-typescript": "^7.8.3",
-        "@rollup/plugin-node-resolve": "^7.1.1",
-        "prettier": "2.0.5",
-        "rimraf": "^3.0.2",
-        "rollup": "^1.31.1",
-        "rollup-plugin-babel": "^4.3.3",
-        "rollup-plugin-generate-html-template": "^1.6.1",
-        "rollup-plugin-terser": "^5.2.0",
-        "typescript": "^3.7.5"
-    },
     "homepage": "https://github.com/nshen/ogl-typescript",
+    "devDependencies": {
+        "prettier": "^2.2.1",
+        "rimraf": "^3.0.2",
+        "typescript": "^4.2.4",
+        "vite": "^2.1.5"
+    },
     "prettier": {
         "arrowParens": "always",
         "bracketSpacing": true,
