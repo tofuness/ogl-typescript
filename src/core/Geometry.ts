@@ -41,7 +41,7 @@ export type AttributeMap = {
 export type Attribute = {
     size: number;
     data: ArrayLike<number> | ArrayBufferView;
-    instanced?: null | number;
+    instanced?: null | number | boolean;
     type: GLenum;
     normalized: boolean;
 
@@ -126,7 +126,7 @@ export class Geometry {
         attr.count =
             attr.count ||
             (attr.stride ? (attr.data as ArrayBufferView).byteLength / attr.stride : (attr.data as ArrayLike<number>).length / attr.size);
-        attr.divisor = attr.instanced || 0;
+        attr.divisor = (attr.instanced as number) || 0;
         attr.needsUpdate = false;
 
         if (!attr.buffer) {

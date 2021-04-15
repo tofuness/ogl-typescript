@@ -17,7 +17,7 @@ let ID = 1;
 
 export interface TextureOptions {
     image: HTMLImageElement | HTMLVideoElement | HTMLImageElement[] | ArrayBufferView;
-    target: number; // gl.TEXTURE_2D
+    target: number; // gl.TEXTURE_2D or gl.TEXTURE_CUBE_MAP
     type: number; // gl.UNSIGNED_BYTE,
     format: number; // gl.RGBA,
     internalFormat: number;
