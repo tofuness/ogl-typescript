@@ -64,6 +64,7 @@ export default ({ command, mode }) => {
                         'flat-shading-matcap',
                         'wireframe-shader',
                         'msdf-text',
+                        'point-lighting',
                         'pbr',
                         'compressed-textures',
 
