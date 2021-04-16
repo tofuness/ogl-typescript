@@ -39,8 +39,8 @@ export class Transform {
         this.quaternion.onChange = () => this.rotation.fromQuaternion(this.quaternion);
     }
 
-    setParent(parent: Transform, notifyParent: boolean = true) {
-        if (notifyParent && this.parent && parent !== this.parent) this.parent.removeChild(this, false);
+    setParent(parent, notifyParent = true) {
+        if (this.parent && parent !== this.parent) this.parent.removeChild(this, false);
         this.parent = parent;
         if (notifyParent && parent) parent.addChild(this, false);
     }
