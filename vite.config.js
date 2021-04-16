@@ -37,6 +37,7 @@ export default ({ command, mode }) => {
                         'base-primitives',
                         'particles',
                         'instancing',
+                        'instancing-gpu-picking',
                         'polylines',
                         'curves',
                         'torus',
@@ -81,7 +82,6 @@ export default ({ command, mode }) => {
                         'high-mesh-count',
                     ]),
                 },
-                // input: glob.sync(path.resolve(__dirname, 'examples', '*', 'index.html')),
                 // https://github.com/vitejs/vite/issues/378#issuecomment-716717258
                 output: {
                     entryFileNames: `examples/[name]/index.js`, // works
