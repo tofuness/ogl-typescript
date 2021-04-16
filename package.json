@@ -1,18 +1,14 @@
 {
     "name": "ogl-typescript",
-    "version": "0.1.20",
+    "version": "0.1.30",
     "description": "TypeScript port of OGL WebGL Library",
     "module": "lib/index.js",
     "types": "lib/index.d.ts",
-    "browser": "dist/ogl.es.js",
-    "browserMin": "dist/ogl.es.min.js",
-    "unpkg": "dist/ogl.umd.js",
     "sideEffects": false,
     "directories": {
         "example": "examples"
     },
     "files": [
-        "dist",
         "lib"
     ],
     "publishConfig": {
@@ -20,7 +16,8 @@
     },
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "tsc",
+        "build:examples": "vite build"
     },
     "repository": {
         "type": "git",

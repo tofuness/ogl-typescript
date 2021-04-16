@@ -19,8 +19,6 @@
 
 <br />
 
-⚠️ _Note: currently in alpha, so expect breaking changes._
-
 [See the Examples!](https://nshen.github.io/ogl-typescript/examples)
 
 OGL-TypeScript is TypeScript port of [OGL Minimal WebGL library](https://github.com/oframe/ogl) , so it add code completion feature to OGL.
@@ -30,7 +28,7 @@ OGL-TypeScript is TypeScript port of [OGL Minimal WebGL library](https://github.
 ## Install
 
 ```bash
-npm i ogl-typescript
+npm i ogl-typescript  # yarn add ogl-typescript
 ```
 
 ## Usage
@@ -55,6 +53,12 @@ You can find [ogl-typescript-starter](https://github.com/nshen/ogl-typescript-st
 
 ## Build
 
+dev mode
+
+```bash
+yarn dev # npm run dev
+```
+
 build library
 
 ```bash
@@ -69,25 +73,26 @@ yarn build:examples # npm run build:examples
 
 ## Versions
 
-| OGL-TypeScript | OGL    |                                            |
-| -------------- | ------ | ------------------------------------------ |
-| 0.1.20         | 0.0.60 |                                            |
-| 0.1.19         | 0.0.59 |                                            |
-| 0.1.18         | 0.0.58 |                                            |
-| 0.1.17         | 0.0.57 |                                            |
-| 0.1.16         |        | add computeVertexNormal method to Geometry |
-| 0.1.15         | 0.0.56 |                                            |
-| 0.1.14         | 0.0.55 |                                            |
-| 0.1.13         | 0.0.54 |                                            |
-| 0.1.12         | 0.0.53 |                                            |
-| 0.1.11         | 0.0.52 |                                            |
-| 0.1.10         | 0.0.51 |                                            |
-| 0.1.9          | 0.0.50 |                                            |
-| 0.1.8          | 0.0.49 |                                            |
-| 0.1.7          | 0.0.48 |                                            |
-| 0.1.6          | 0.0.47 |                                            |
-| 0.1.5          | 0.0.46 |                                            |
-| 0.1.4          | 0.0.45 |                                            |
-| 0.1.3          | 0.0.43 |                                            |
-| 0.1.2          | 0.0.42 |                                            |
-| 0.1.1          | 0.0.40 |                                            |
+| OGL-TypeScript | OGL    |                                               |
+| -------------- | ------ | --------------------------------------------- |
+| 0.1.30         | 0.0.61 | build with [vite](https://http://vitejs.dev/) |
+| 0.1.20         | 0.0.60 |                                               |
+| 0.1.19         | 0.0.59 |                                               |
+| 0.1.18         | 0.0.58 |                                               |
+| 0.1.17         | 0.0.57 |                                               |
+| 0.1.16         |        | add computeVertexNormal method to Geometry    |
+| 0.1.15         | 0.0.56 |                                               |
+| 0.1.14         | 0.0.55 |                                               |
+| 0.1.13         | 0.0.54 |                                               |
+| 0.1.12         | 0.0.53 |                                               |
+| 0.1.11         | 0.0.52 |                                               |
+| 0.1.10         | 0.0.51 |                                               |
+| 0.1.9          | 0.0.50 |                                               |
+| 0.1.8          | 0.0.49 |                                               |
+| 0.1.7          | 0.0.48 |                                               |
+| 0.1.6          | 0.0.47 |                                               |
+| 0.1.5          | 0.0.46 |                                               |
+| 0.1.4          | 0.0.45 |                                               |
+| 0.1.3          | 0.0.43 |                                               |
+| 0.1.2          | 0.0.42 |                                               |
+| 0.1.1          | 0.0.40 |                                               |

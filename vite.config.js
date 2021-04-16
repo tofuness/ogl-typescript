@@ -2,24 +2,8 @@ import { defineConfig } from 'vite';
 const path = require('path');
 const fs = require('fs');
 
-function copyIndexPlugin() {
-    return {
-        name: 'copyIndexPlugin',
-        async closeBundle() {
-            fs.copyFileSync('./index.html', './dist/index.html');
-        },
-    };
-}
-
 export default ({ command, mode }) => {
     if (command === 'build') {
-        function getInput(arr) {
-            let input = {};
-            arr.forEach((example) => {
-                input[example] = path.resolve(__dirname, `examples/${example}/index.html`);
-            });
-            return input;
-        }
         return {
             build: {
                 minify: true,
@@ -83,8 +67,8 @@ export default ({ command, mode }) => {
                         'high-mesh-count',
                     ]),
                 },
-                // https://github.com/vitejs/vite/issues/378#issuecomment-716717258
                 output: {
+                    // https://github.com/vitejs/vite/issues/378#issuecomment-716717258
                     entryFileNames: `examples/[name]/index.js`, // works
                     manualChunks: undefined, // not work, why?
                 },
@@ -97,3 +81,20 @@ export default ({ command, mode }) => {
         };
     }
 };
+
+function copyIndexPlugin() {
+    return {
+        name: 'copyIndexPlugin',
+        async closeBundle() {
+            fs.copyFileSync('./index.html', './dist/index.html');
+        },
+    };
+}
+
+function getInput(arr) {
+    let input = {};
+    arr.forEach((example) => {
+        input[example] = path.resolve(__dirname, `examples/${example}/index.html`);
+    });
+    return input;
+}
