@@ -544,8 +544,8 @@ loadInterior();
 loadShadow();
 
 async function loadExterior() {
-    const data = await (await fetch(`/assets/pbr/car-ext.json`)).json();
-    const dataInner = await (await fetch(`/assets/pbr/car-ext-inner.json`)).json();
+    const data = await (await fetch(`../../assets/pbr/car-ext.json`)).json();
+    const dataInner = await (await fetch(`../../assets/pbr/car-ext-inner.json`)).json();
 
     const geometry = new Geometry(gl, {
         position: { size: 3, data: new Float32Array(data.position) },
@@ -566,13 +566,13 @@ async function loadExterior() {
         fragment: renderer.isWebgl2 ? fragment300 : fragment100,
         uniforms: {
             // Base color / albedo. This is used to determine both the diffuse and specular colors.
-            tBaseColor: { value: getTexture('/assets/pbr/car-ext-color.jpg') },
+            tBaseColor: { value: getTexture('../../assets/pbr/car-ext-color.jpg') },
 
             // This works as a multiplier for each channel in the texture above.
             uBaseColor: { value: new Color(1, 1, 1) },
 
             // 'Roughness', 'Metalness' and 'Occlusion', each packed into their own channel (R, G, B)
-            tRMO: { value: getTexture('/assets/pbr/car-ext-rmo.jpg') },
+            tRMO: { value: getTexture('../../assets/pbr/car-ext-rmo.jpg') },
 
             // The following are multipliers to the above values
             uRoughness: { value: 1 },
@@ -580,18 +580,18 @@ async function loadExterior() {
             uOcclusion: { value: 1 },
 
             // Just a regular normal map
-            tNormal: { value: getTexture('/assets/pbr/car-ext-normal.jpg') },
+            tNormal: { value: getTexture('../../assets/pbr/car-ext-normal.jpg') },
             uNormalScale: { value: 0.5 },
             uNormalUVScale: { value: 1 },
 
             // Emissive color is added at the very end to simulate light sources.
-            tEmissive: { value: getTexture('/assets/pbr/car-ext-emissive.jpg') },
+            tEmissive: { value: getTexture('../../assets/pbr/car-ext-emissive.jpg') },
             uEmissive: { value: 1 },
 
             // Initial opacity is taken from the green channel of the map below.
             // If a transparent area is smooth, the specular may increase the opacity.
             // This is done to simulate specular reflections on transparent surfaces like glass.
-            tOpacity: { value: getTexture('/assets/pbr/car-ext-opacity.jpg') },
+            tOpacity: { value: getTexture('../../assets/pbr/car-ext-opacity.jpg') },
 
             // uAlpha is an overall alpha control. It is applied right at the end to hide the geometry.
             // Specular reflections will not affect this value, unlike above.
@@ -643,7 +643,7 @@ async function loadExterior() {
 }
 
 async function loadInterior() {
-    const data = await (await fetch(`/assets/pbr/car-int.json`)).json();
+    const data = await (await fetch(`../../assets/pbr/car-int.json`)).json();
 
     const geometry = new Geometry(gl, {
         position: { size: 3, data: new Float32Array(data.position) },
@@ -656,28 +656,28 @@ async function loadInterior() {
         vertex: renderer.isWebgl2 ? vertex300 : vertex100,
         fragment: renderer.isWebgl2 ? fragment300 : fragment100,
         uniforms: {
-            tBaseColor: { value: getTexture('/assets/pbr/car-int-color.jpg') },
+            tBaseColor: { value: getTexture('../../assets/pbr/car-int-color.jpg') },
             uBaseColor: { value: new Color(1, 1, 1) },
 
-            tRMO: { value: getTexture('/assets/pbr/car-int-rmo.jpg') },
+            tRMO: { value: getTexture('../../assets/pbr/car-int-rmo.jpg') },
             uRoughness: { value: 1 },
             uMetallic: { value: 1 },
             uOcclusion: { value: 1 },
 
-            tNormal: { value: getTexture('/assets/pbr/car-int-normal.jpg') },
+            tNormal: { value: getTexture('../../assets/pbr/car-int-normal.jpg') },
             uNormalScale: { value: 0.5 },
             uNormalUVScale: { value: 1 },
 
-            tEmissive: { value: getTexture('/assets/pbr/black.jpg') },
+            tEmissive: { value: getTexture('../../assets/pbr/black.jpg') },
             uEmissive: { value: 1 },
 
-            tOpacity: { value: getTexture('/assets/pbr/white.jpg') },
+            tOpacity: { value: getTexture('../../assets/pbr/white.jpg') },
             uAlpha: { value: 1 },
 
-            tLUT: { value: getTexture('/assets/pbr/lut.png', false) },
+            tLUT: { value: getTexture('../../assets/pbr/lut.png', false) },
 
-            tEnvDiffuse: { value: getTexture('/assets/pbr/waterfall-diffuse-RGBM.png', false) },
-            tEnvSpecular: { value: getTexture('/assets/pbr/waterfall-specular-RGBM.png', false) },
+            tEnvDiffuse: { value: getTexture('../../assets/pbr/waterfall-diffuse-RGBM.png', false) },
+            tEnvSpecular: { value: getTexture('../../assets/pbr/waterfall-specular-RGBM.png', false) },
             uEnvSpecular: { value: 1.0 },
 
             uLightDirection: { value: new Vec3(1, 1, 1) },
@@ -695,7 +695,7 @@ function loadShadow() {
         vertex: shadowVertex,
         fragment: shadowFragment,
         uniforms: {
-            tMap: { value: getTexture('/assets/pbr/car-shadow.jpg') },
+            tMap: { value: getTexture('../../assets/pbr/car-shadow.jpg') },
         },
         transparent: true,
         cullFace: false,

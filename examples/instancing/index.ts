@@ -81,7 +81,7 @@ const scene = new Transform();
 const texture = new Texture(gl);
 const img = new Image();
 img.onload = () => (texture.image = img);
-img.src = '/assets/acorn.jpg';
+img.src = '../../assets/acorn.jpg';
 
 const program = new Program(gl, {
     vertex,
@@ -95,7 +95,7 @@ const program = new Program(gl, {
 let mesh;
 loadModel();
 async function loadModel() {
-    const data = await (await fetch(`/assets/acorn.json`)).json();
+    const data = await (await fetch(`../../assets/acorn.json`)).json();
 
     const num = 20;
 
