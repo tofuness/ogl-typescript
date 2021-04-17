@@ -70,7 +70,7 @@ export default ({ command, mode }) => {
 
                     output: {
                         // https://github.com/vitejs/vite/issues/378#issuecomment-716717258
-                        entryFileNames: `examples/[name]/index.js`, // works
+                        // entryFileNames: `examples/[name]/index.js`, // works
                         // chunkFileNames: `chunks/[name].js`,
                         // assetFileNames: `assets/[name].[ext]`
                     },
