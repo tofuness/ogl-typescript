@@ -56,6 +56,7 @@ export default ({ command, mode }) => {
                         // Frame Buffer
                         'render-to-texture',
                         'post-fxaa',
+                        'post-bloom',
                         'mrt',
                         'shadow-maps',
                         'post-fluid-distortion',
