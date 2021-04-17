@@ -4,7 +4,6 @@
     "description": "TypeScript port of OGL WebGL Library",
     "module": "lib/index.js",
     "types": "lib/index.d.ts",
-    "sideEffects": false,
     "directories": {
         "example": "examples"
     },
@@ -24,7 +23,9 @@
         "url": "git+https://github.com/nshen/ogl-typescript"
     },
     "keywords": [
-        "webgl"
+        "webgl",
+        "ogl",
+        "ogl-typescript"
     ],
     "author": {
         "name": "Nathan Gordon",
