@@ -136,8 +136,8 @@ const scene = new Transform();
 let skin, animation;
 loadModel();
 async function loadModel() {
-  const data = await (await fetch(`/assets/snout-rig.json`)).json();
-  const animationData = await (await fetch(`/assets/snout-anim.json`)).json();
+  const data = await (await fetch(`../assets/snout-rig.json`)).json();
+  const animationData = await (await fetch(`../assets/snout-anim.json`)).json();
   const geometry = new Geometry(gl, {
     position: {size: 3, data: new Float32Array(data.position)},
     uv: {size: 2, data: new Float32Array(data.uv)},
@@ -148,7 +148,7 @@ async function loadModel() {
   const texture = new Texture(gl);
   const img = new Image();
   img.onload = () => texture.image = img;
-  img.src = "/assets/snout.jpg";
+  img.src = "../assets/snout.jpg";
   const program = new Program(gl, {
     vertex,
     fragment,
@@ -167,7 +167,7 @@ function initShadow() {
   const texture = new Texture(gl);
   const img = new Image();
   img.onload = () => texture.image = img;
-  img.src = "/assets/snout-shadow.jpg";
+  img.src = "../assets/snout-shadow.jpg";
   const geometry = new Plane(gl, {width: 7, height: 7});
   const program = new Program(gl, {
     vertex: shadowVertex,

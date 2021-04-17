@@ -104,7 +104,7 @@ const scene = new Transform();
 const texture = new Texture(gl);
 const img = new Image();
 img.onload = () => texture.image = img;
-img.src = "/assets/matcap.jpg";
+img.src = "../assets/matcap.jpg";
 const program = new Program(gl, {
   vertex: renderer.isWebgl2 ? vertex300 : vertex100,
   fragment: renderer.isWebgl2 ? fragment300 : fragment100,
@@ -115,7 +115,7 @@ const program = new Program(gl, {
 });
 loadModel();
 async function loadModel() {
-  const data = await (await fetch(`/assets/octopus.json`)).json();
+  const data = await (await fetch(`../assets/octopus.json`)).json();
   const geometry = new Geometry(gl, {
     position: {size: 3, data: new Float32Array(data.position)}
   });

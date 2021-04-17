@@ -120,15 +120,15 @@ const FRAGMENT_SHADER = `
   const colMap = new Texture(gl);
   const img = new Image();
   img.onload = () => colMap.image = img;
-  img.src = "/assets/earth.jpg";
+  img.src = "../assets/earth.jpg";
   const specMap = new Texture(gl);
   const specMap_img = new Image();
   specMap_img.onload = () => specMap.image = specMap_img;
-  specMap_img.src = "/assets/earth_specular.jpg";
+  specMap_img.src = "../assets/earth_specular.jpg";
   const cloudMap = new Texture(gl, {wrapS: gl.REPEAT, wrapT: gl.REPEAT});
   const cloudMap_img = new Image();
   cloudMap_img.onload = () => cloudMap.image = cloudMap_img;
-  cloudMap_img.src = "/assets/earth_cloud.jpg";
+  cloudMap_img.src = "../assets/earth_cloud.jpg";
   const program = new Program(gl, {
     vertex: VERTEX_SHADER,
     fragment: FRAGMENT_SHADER,

@@ -53,7 +53,7 @@ const scene = new Transform();
 const texture = new Texture(gl);
 const img = new Image();
 img.onload = () => texture.image = img;
-img.src = "/assets/sky.jpg";
+img.src = "../assets/sky.jpg";
 const geometry = new Sphere(gl, {radius: 1, widthSegments: 64});
 const program = new Program(gl, {
   vertex,

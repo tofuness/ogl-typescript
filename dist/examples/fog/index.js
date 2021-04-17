@@ -94,7 +94,7 @@ const scene = new Transform();
 const texture = new Texture(gl);
 const img = new Image();
 img.onload = () => texture.image = img;
-img.src = "/assets/forest.jpg";
+img.src = "../assets/forest.jpg";
 const program = new Program(gl, {
   vertex,
   fragment,
@@ -109,7 +109,7 @@ const program = new Program(gl, {
 let mesh;
 loadModel();
 async function loadModel() {
-  const data = await (await fetch(`/assets/forest.json`)).json();
+  const data = await (await fetch(`../assets/forest.json`)).json();
   const size = 8;
   const num = size * size;
   let offset = new Float32Array(num * 3);

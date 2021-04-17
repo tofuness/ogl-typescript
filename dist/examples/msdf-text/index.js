@@ -274,7 +274,7 @@ const texture = new Texture(gl, {
 });
 const img = new Image();
 img.onload = () => texture.image = img;
-img.src = "/assets/fonts/FiraSans-Bold.png";
+img.src = "../assets/fonts/FiraSans-Bold.png";
 const program = new Program(gl, {
   vertex: renderer.isWebgl2 ? vertex300 : vertex100,
   fragment: renderer.isWebgl2 ? fragment300 : fragment100,
@@ -287,7 +287,7 @@ const program = new Program(gl, {
 });
 loadText();
 async function loadText() {
-  const font = await (await fetch("/assets/fonts/FiraSans-Bold.json")).json();
+  const font = await (await fetch("../assets/fonts/FiraSans-Bold.json")).json();
   const text = new Text({
     font,
     text: "don't panic",

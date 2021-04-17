@@ -60,7 +60,7 @@ const scene = new Transform();
 const texture = new Texture(gl);
 const img = new Image();
 img.onload = () => texture.image = img;
-img.src = "/assets/saddle.jpg";
+img.src = "../assets/saddle.jpg";
 const program = new Program(gl, {
   vertex,
   fragment,
@@ -88,7 +88,7 @@ const videoTexture = new Texture(gl, {
   height: 512
 });
 let video = document.createElement("video");
-video.src = "/assets/laputa.mp4";
+video.src = "../assets/laputa.mp4";
 video.loop = true;
 video.muted = true;
 video.play();

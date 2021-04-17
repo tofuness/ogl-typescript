@@ -529,8 +529,8 @@ loadExterior();
 loadInterior();
 loadShadow();
 async function loadExterior() {
-  const data = await (await fetch(`/assets/pbr/car-ext.json`)).json();
-  const dataInner = await (await fetch(`/assets/pbr/car-ext-inner.json`)).json();
+  const data = await (await fetch(`../assets/pbr/car-ext.json`)).json();
+  const dataInner = await (await fetch(`../assets/pbr/car-ext-inner.json`)).json();
   const geometry = new Geometry(gl, {
     position: {size: 3, data: new Float32Array(data.position)},
     uv: {size: 2, data: new Float32Array(data.uv)},
@@ -545,18 +545,18 @@ async function loadExterior() {
     vertex: renderer.isWebgl2 ? vertex300 : vertex100,
     fragment: renderer.isWebgl2 ? fragment300 : fragment100,
     uniforms: {
-      tBaseColor: {value: getTexture("/assets/pbr/car-ext-color.jpg")},
+      tBaseColor: {value: getTexture("../assets/pbr/car-ext-color.jpg")},
       uBaseColor: {value: new Color(1, 1, 1)},
-      tRMO: {value: getTexture("/assets/pbr/car-ext-rmo.jpg")},
+      tRMO: {value: getTexture("../assets/pbr/car-ext-rmo.jpg")},
       uRoughness: {value: 1},
       uMetallic: {value: 1},
       uOcclusion: {value: 1},
-      tNormal: {value: getTexture("/assets/pbr/car-ext-normal.jpg")},
+      tNormal: {value: getTexture("../assets/pbr/car-ext-normal.jpg")},
       uNormalScale: {value: 0.5},
       uNormalUVScale: {value: 1},
-      tEmissive: {value: getTexture("/assets/pbr/car-ext-emissive.jpg")},
+      tEmissive: {value: getTexture("../assets/pbr/car-ext-emissive.jpg")},
       uEmissive: {value: 1},
-      tOpacity: {value: getTexture("/assets/pbr/car-ext-opacity.jpg")},
+      tOpacity: {value: getTexture("../assets/pbr/car-ext-opacity.jpg")},
       uAlpha: {value: 1},
       tLUT: {value: getTexture("assets/pbr/lut.png", false)},
       tEnvDiffuse: {value: getTexture("assets/pbr/waterfall-diffuse-RGBM.png", false)},
@@ -573,7 +573,7 @@ async function loadExterior() {
   meshInner.setParent(scene);
 }
 async function loadInterior() {
-  const data = await (await fetch(`/assets/pbr/car-int.json`)).json();
+  const data = await (await fetch(`../assets/pbr/car-int.json`)).json();
   const geometry = new Geometry(gl, {
     position: {size: 3, data: new Float32Array(data.position)},
     uv: {size: 2, data: new Float32Array(data.uv)},
@@ -583,22 +583,22 @@ async function loadInterior() {
     vertex: renderer.isWebgl2 ? vertex300 : vertex100,
     fragment: renderer.isWebgl2 ? fragment300 : fragment100,
     uniforms: {
-      tBaseColor: {value: getTexture("/assets/pbr/car-int-color.jpg")},
+      tBaseColor: {value: getTexture("../assets/pbr/car-int-color.jpg")},
       uBaseColor: {value: new Color(1, 1, 1)},
-      tRMO: {value: getTexture("/assets/pbr/car-int-rmo.jpg")},
+      tRMO: {value: getTexture("../assets/pbr/car-int-rmo.jpg")},
       uRoughness: {value: 1},
       uMetallic: {value: 1},
       uOcclusion: {value: 1},
-      tNormal: {value: getTexture("/assets/pbr/car-int-normal.jpg")},
+      tNormal: {value: getTexture("../assets/pbr/car-int-normal.jpg")},
       uNormalScale: {value: 0.5},
       uNormalUVScale: {value: 1},
-      tEmissive: {value: getTexture("/assets/pbr/black.jpg")},
+      tEmissive: {value: getTexture("../assets/pbr/black.jpg")},
       uEmissive: {value: 1},
-      tOpacity: {value: getTexture("/assets/pbr/white.jpg")},
+      tOpacity: {value: getTexture("../assets/pbr/white.jpg")},
       uAlpha: {value: 1},
-      tLUT: {value: getTexture("/assets/pbr/lut.png", false)},
-      tEnvDiffuse: {value: getTexture("/assets/pbr/waterfall-diffuse-RGBM.png", false)},
-      tEnvSpecular: {value: getTexture("/assets/pbr/waterfall-specular-RGBM.png", false)},
+      tLUT: {value: getTexture("../assets/pbr/lut.png", false)},
+      tEnvDiffuse: {value: getTexture("../assets/pbr/waterfall-diffuse-RGBM.png", false)},
+      tEnvSpecular: {value: getTexture("../assets/pbr/waterfall-specular-RGBM.png", false)},
       uEnvSpecular: {value: 1},
       uLightDirection: {value: new Vec3(1, 1, 1)},
       uLightColor: {value: new Vec3(7)}
@@ -613,7 +613,7 @@ function loadShadow() {
     vertex: shadowVertex,
     fragment: shadowFragment,
     uniforms: {
-      tMap: {value: getTexture("/assets/pbr/car-shadow.jpg")}
+      tMap: {value: getTexture("../assets/pbr/car-shadow.jpg")}
     },
     transparent: true,
     cullFace: false

@@ -188,7 +188,7 @@ const target = new RenderTarget(gl, {
 });
 const post = initPost();
 async function initScene() {
-  const data = await (await fetch(`/assets/acorn.json`)).json();
+  const data = await (await fetch(`../assets/acorn.json`)).json();
   const num = 100;
   let offset = new Float32Array(num * 3);
   let random = new Float32Array(num * 3);
@@ -206,7 +206,7 @@ async function initScene() {
   const texture = new Texture(gl);
   const img = new Image();
   img.onload = () => texture.image = img;
-  img.src = "/assets/acorn.jpg";
+  img.src = "../assets/acorn.jpg";
   const program = new Program(gl, {
     vertex: renderer.isWebgl2 ? vertex300 : vertex100,
     fragment: renderer.isWebgl2 ? fragment300 : fragment100,

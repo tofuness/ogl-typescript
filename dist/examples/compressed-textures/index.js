@@ -44,10 +44,10 @@ resize();
 const scene = new Transform();
 const texture = TextureLoader.load(gl, {
   src: {
-    s3tc: "/assets/compressed/s3tc-m-y.ktx",
-    etc: "/assets/compressed/etc-m-y.ktx",
-    pvrtc: "/assets/compressed/pvrtc-m-y.ktx",
-    jpg: "/assets/compressed/uv.jpg"
+    s3tc: "../assets/compressed/s3tc-m-y.ktx",
+    etc: "../assets/compressed/etc-m-y.ktx",
+    pvrtc: "../assets/compressed/pvrtc-m-y.ktx",
+    jpg: "../assets/compressed/uv.jpg"
   },
   wrapS: gl.REPEAT,
   wrapT: gl.REPEAT

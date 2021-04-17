@@ -187,7 +187,7 @@ async function addAirplane() {
   const texture = new Texture(gl);
   const img = new Image();
   img.onload = () => texture.image = img;
-  img.src = "/assets/airplane.jpg";
+  img.src = "../assets/airplane.jpg";
   const program = new Program(gl, {
     vertex: vertexColor,
     fragment: fragmentColor,
@@ -196,7 +196,7 @@ async function addAirplane() {
     },
     cullFace: null
   });
-  const data = await (await fetch(`/assets/airplane.json`)).json();
+  const data = await (await fetch(`../assets/airplane.json`)).json();
   const geometry = new Geometry(gl, {
     position: {size: 3, data: new Float32Array(data.position)},
     uv: {size: 2, data: new Float32Array(data.uv)},
@@ -211,7 +211,7 @@ function addGround() {
   const texture = new Texture(gl);
   const img = new Image();
   img.onload = () => texture.image = img;
-  img.src = "/assets/water.jpg";
+  img.src = "../assets/water.jpg";
   const program = new Program(gl, {
     vertex: vertexColor,
     fragment: fragmentColor,

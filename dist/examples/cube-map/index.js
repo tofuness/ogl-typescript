@@ -59,12 +59,12 @@ async function loadImages() {
     });
   }
   const images = await Promise.all([
-    loadImage("/assets/cube/posx.jpg"),
-    loadImage("/assets/cube/negx.jpg"),
-    loadImage("/assets/cube/posy.jpg"),
-    loadImage("/assets/cube/negy.jpg"),
-    loadImage("/assets/cube/posz.jpg"),
-    loadImage("/assets/cube/negz.jpg")
+    loadImage("../assets/cube/posx.jpg"),
+    loadImage("../assets/cube/negx.jpg"),
+    loadImage("../assets/cube/posy.jpg"),
+    loadImage("../assets/cube/negy.jpg"),
+    loadImage("../assets/cube/posz.jpg"),
+    loadImage("../assets/cube/negz.jpg")
   ]);
   texture.image = images;
 }
