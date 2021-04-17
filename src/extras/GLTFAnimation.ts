@@ -17,6 +17,8 @@ export class GLTFAnimation {
     private weight: number;
     private loop: boolean;
     private duration: number;
+    private startTime: number;
+    private endTime: number;
 
     constructor(data, weight = 1) {
         this.data = data;
