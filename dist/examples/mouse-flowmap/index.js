@@ -178,7 +178,7 @@ const geometry = new Triangle(gl);
 const texture = new Texture(gl, {wrapS: gl.REPEAT, wrapT: gl.REPEAT});
 const img = new Image();
 img.onload = () => texture.image = img;
-img.src = "../assets/water.jpg";
+img.src = "../../assets/water.jpg";
 const program = new Program(gl, {
   vertex,
   fragment,

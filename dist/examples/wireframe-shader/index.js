@@ -122,7 +122,7 @@ function addBarycentric(position) {
 let mesh;
 loadModel();
 async function loadModel() {
-  const data = await (await fetch(`../assets/goat.json`)).json();
+  const data = await (await fetch(`../../assets/goat.json`)).json();
   const geometry = new Geometry(gl, {
     position: {size: 3, data: new Float32Array(data.position)},
     uv: {size: 2, data: new Float32Array(data.uv)},

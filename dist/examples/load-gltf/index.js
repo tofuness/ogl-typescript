@@ -960,20 +960,20 @@ void main() ${`{`}
   const scene = new Transform();
   let gltf;
   const lutTexture = TextureLoader.load(gl, {
-    src: "../assets/pbr/lut.png"
+    src: "../../assets/pbr/lut.png"
   });
   const envDiffuseTexture = TextureLoader.load(gl, {
-    src: "../assets/sunset-diffuse-RGBM.png"
+    src: "../../assets/sunset-diffuse-RGBM.png"
   });
   const envSpecularTexture = TextureLoader.load(gl, {
-    src: "../assets/sunset-specular-RGBM.png"
+    src: "../../assets/sunset-specular-RGBM.png"
   });
   {
     loadInitial();
     handlers();
   }
   async function loadInitial() {
-    gltf = await GLTFLoader.load(gl, `../assets/gltf/hershel.glb`);
+    gltf = await GLTFLoader.load(gl, `../../assets/gltf/hershel.glb`);
     addGLTF(gltf);
   }
   requestAnimationFrame(update);

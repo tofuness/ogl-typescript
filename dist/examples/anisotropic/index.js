@@ -47,7 +47,7 @@ const scene = new Transform();
 const texture = new Texture(gl);
 const textureAnisotropy = new Texture(gl, {anisotropy: 16});
 const img = new Image();
-img.src = "../assets/grid.jpg";
+img.src = "../../assets/grid.jpg";
 img.onload = () => {
   texture.image = img;
   textureAnisotropy.image = img;

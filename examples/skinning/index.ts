@@ -146,7 +146,7 @@ const scene = new Transform();
 let skin, animation;
 loadModel();
 async function loadModel() {
-    const data = await (await fetch(`../assets/snout-rig.json`)).json();
+    const data = await (await fetch(`../../assets/snout-rig.json`)).json();
     // Rig JSON data format
     // format is the same as regular model json, with the addition of the rig object
     //
@@ -170,7 +170,7 @@ async function loadModel() {
     //     },
     // }
 
-    const animationData = await (await fetch(`../assets/snout-anim.json`)).json();
+    const animationData = await (await fetch(`../../assets/snout-anim.json`)).json();
     // Animation JSON format
     // data is expected to be baked for each frame, therefore duration is derived
     // from number of frames in array.
@@ -197,7 +197,7 @@ async function loadModel() {
     const texture = new Texture(gl);
     const img = new Image();
     img.onload = () => (texture.image = img);
-    img.src = '../assets/snout.jpg';
+    img.src = '../../assets/snout.jpg';
 
     const program = new Program(gl, {
         vertex,
@@ -227,7 +227,7 @@ function initShadow() {
     const texture = new Texture(gl);
     const img = new Image();
     img.onload = () => (texture.image = img);
-    img.src = '../assets/snout-shadow.jpg';
+    img.src = '../../assets/snout-shadow.jpg';
 
     const geometry = new Plane(gl, { width: 7, height: 7 });
     const program = new Program(gl, {

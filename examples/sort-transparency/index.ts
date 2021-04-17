@@ -79,7 +79,7 @@ const geometry = new Plane(gl, {
 const texture = new Texture(gl);
 const img = new Image();
 img.onload = () => (texture.image = img);
-img.src = '../assets/leaf.jpg';
+img.src = '../../assets/leaf.jpg';
 
 const program = new Program(gl, {
     vertex,

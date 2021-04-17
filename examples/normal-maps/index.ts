@@ -172,12 +172,12 @@ const scene = new Transform();
 const textureDiffuse = new Texture(gl);
 const imgDiffuse = new Image();
 imgDiffuse.onload = () => (textureDiffuse.image = imgDiffuse);
-imgDiffuse.src = '../assets/granite-diffuse.jpg';
+imgDiffuse.src = '../../assets/granite-diffuse.jpg';
 
 const textureNormal = new Texture(gl);
 const imgNormal = new Image();
 imgNormal.onload = () => (textureNormal.image = imgNormal);
-imgNormal.src = '../assets/granite-normal.jpg';
+imgNormal.src = '../../assets/granite-normal.jpg';
 
 const program = new Program(gl, {
     // Get fallback shader for WebGL1 - needed for OES_standard_derivatives ext
@@ -194,7 +194,7 @@ const program = new Program(gl, {
 
 loadModel();
 async function loadModel() {
-    const data = await (await fetch(`../assets/rounded-cube.json`)).json();
+    const data = await (await fetch(`../../assets/rounded-cube.json`)).json();
 
     const geometry = new Geometry(gl, {
         position: { size: 3, data: new Float32Array(data.position) },

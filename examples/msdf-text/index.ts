@@ -125,7 +125,7 @@ const texture = new Texture(gl, {
 });
 const img = new Image();
 img.onload = () => (texture.image = img);
-img.src = '../assets/fonts/FiraSans-Bold.png';
+img.src = '../../assets/fonts/FiraSans-Bold.png';
 
 const program = new Program(gl, {
     // Get fallback shader for WebGL1 - needed for OES_standard_derivatives ext
@@ -141,7 +141,7 @@ const program = new Program(gl, {
 
 loadText();
 async function loadText() {
-    const font = await (await fetch('../assets/fonts/FiraSans-Bold.json')).json();
+    const font = await (await fetch('../../assets/fonts/FiraSans-Bold.json')).json();
 
     const text = new Text({
         font,

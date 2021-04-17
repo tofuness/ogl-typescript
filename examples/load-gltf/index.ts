@@ -295,13 +295,13 @@ void main() ${`{`}
 
     // Common textures for uber shader
     const lutTexture = TextureLoader.load(gl, {
-        src: '../assets/pbr/lut.png',
+        src: '../../assets/pbr/lut.png',
     });
     const envDiffuseTexture = TextureLoader.load(gl, {
-        src: '../assets/sunset-diffuse-RGBM.png',
+        src: '../../assets/sunset-diffuse-RGBM.png',
     });
     const envSpecularTexture = TextureLoader.load(gl, {
-        src: '../assets/sunset-specular-RGBM.png',
+        src: '../../assets/sunset-specular-RGBM.png',
     });
 
     {
@@ -310,7 +310,7 @@ void main() ${`{`}
     }
 
     async function loadInitial() {
-        gltf = await GLTFLoader.load(gl, `../assets/gltf/hershel.glb`);
+        gltf = await GLTFLoader.load(gl, `../../assets/gltf/hershel.glb`);
         addGLTF(gltf);
     }
 

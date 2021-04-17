@@ -208,7 +208,7 @@ const target = new RenderTarget(gl, {
 const post = initPost();
 
 async function initScene() {
-    const data = await (await fetch(`../assets/acorn.json`)).json();
+    const data = await (await fetch(`../../assets/acorn.json`)).json();
 
     // Instanced buffers
     const num = 100;
@@ -230,7 +230,7 @@ async function initScene() {
     const texture = new Texture(gl);
     const img = new Image();
     img.onload = () => (texture.image = img);
-    img.src = '../assets/acorn.jpg';
+    img.src = '../../assets/acorn.jpg';
 
     const program = new Program(gl, {
         vertex: renderer.isWebgl2 ? vertex300 : vertex100,

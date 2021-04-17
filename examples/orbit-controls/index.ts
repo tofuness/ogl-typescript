@@ -69,7 +69,7 @@ const scene = new Transform();
 const texture = new Texture(gl);
 const img = new Image();
 img.onload = () => (texture.image = img);
-img.src = '../assets/macaw.jpg';
+img.src = '../../assets/macaw.jpg';
 
 const program = new Program(gl, {
     vertex,
@@ -82,7 +82,7 @@ const program = new Program(gl, {
 
 loadModel();
 async function loadModel() {
-    const data = await (await fetch(`../assets/macaw.json`)).json();
+    const data = await (await fetch(`../../assets/macaw.json`)).json();
 
     const geometry = new Geometry(gl, {
         position: { size: 3, data: new Float32Array(data.position) },
