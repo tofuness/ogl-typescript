@@ -1,14 +1,15 @@
 import { defineConfig } from 'vite';
-const path = require('path');
+const { resolve } = require('path');
 const fs = require('fs');
 
 export default ({ command, mode }) => {
     if (command === 'build') {
         return {
+            // https://github.com/vitejs/vite/issues/3025
+            base: 'http://github.nshen.net/ogl-typescript/dist/',
             build: {
-                minify: true,
+                minify: false,
                 emptyOutDir: true,
-                outDir: path.join(__dirname, 'dist'),
                 assetsDir: 'chunks',
                 rollupOptions: {
                     input: getInput([
@@ -66,11 +67,13 @@ export default ({ command, mode }) => {
                         // Performance
                         'high-mesh-count',
                     ]),
-                },
-                output: {
-                    // https://github.com/vitejs/vite/issues/378#issuecomment-716717258
-                    entryFileNames: `examples/[name]/index.js`, // works
-                    manualChunks: undefined, // not work, why?
+
+                    output: {
+                        // https://github.com/vitejs/vite/issues/378#issuecomment-716717258
+                        entryFileNames: `examples/[name]/index.js`, // works
+                        // chunkFileNames: `chunks/[name].js`,
+                        // assetFileNames: `assets/[name].[ext]`
+                    },
                 },
             },
             plugins: [copyIndexPlugin()],
@@ -94,7 +97,7 @@ function copyIndexPlugin() {
 function getInput(arr) {
     let input = {};
     arr.forEach((example) => {
-        input[example] = path.resolve(__dirname, `examples/${example}/index.html`);
+        input[example] = resolve(__dirname, `examples/${example}/index.html`);
     });
     return input;
 }
