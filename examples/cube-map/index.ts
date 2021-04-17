@@ -76,12 +76,12 @@ async function loadImages() {
     // gl.TEXTURE_CUBE_MAP_NEGATIVE_Z Front
 
     const images = await Promise.all([
-        loadImage('/assets/cube/posx.jpg'),
-        loadImage('/assets/cube/negx.jpg'),
-        loadImage('/assets/cube/posy.jpg'),
-        loadImage('/assets/cube/negy.jpg'),
-        loadImage('/assets/cube/posz.jpg'),
-        loadImage('/assets/cube/negz.jpg'),
+        loadImage('../assets/cube/posx.jpg'),
+        loadImage('../assets/cube/negx.jpg'),
+        loadImage('../assets/cube/posy.jpg'),
+        loadImage('../assets/cube/negy.jpg'),
+        loadImage('../assets/cube/posz.jpg'),
+        loadImage('../assets/cube/negz.jpg'),
     ]);
 
     // Once all are loaded, we can update the texture image, which will upload them

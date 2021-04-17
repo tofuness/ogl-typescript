@@ -65,7 +65,7 @@ const scene = new Transform();
 const texture = new Texture(gl);
 const img = new Image();
 img.onload = () => (texture.image = img);
-img.src = '../../assets/croissant.jpg';
+img.src = '../..../assets/croissant.jpg';
 
 const program = new Program(gl, {
     vertex,
@@ -78,7 +78,7 @@ const program = new Program(gl, {
 let lineLoopMesh, wireframeMesh;
 loadModel();
 async function loadModel() {
-    const data = await (await fetch(`../../assets/croissant.json`)).json();
+    const data = await (await fetch(`../..../assets/croissant.json`)).json();
 
     // Regular geometry with no modifications to be used with gl.LINE_LOOP version
     const geometry = new Geometry(gl, {

@@ -69,7 +69,7 @@ const img = new Image();
 
 // update image value with source once loaded
 img.onload = () => (texture.image = img);
-img.src = '/assets/saddle.jpg';
+img.src = '../assets/saddle.jpg';
 
 // Alternatively, you can use the TextureLoader class's load method that handles
 // these steps for you. It also handles compressed textures and fallbacks.
@@ -111,7 +111,7 @@ const videoTexture = new Texture(gl, {
 // Create video with attributes that let it autoplay
 // Check update loop to see when video is attached to texture
 let video: HTMLVideoElement = document.createElement('video');
-video.src = '/assets/laputa.mp4';
+video.src = '../assets/laputa.mp4';
 
 // Disclaimer: video autoplay is a confusing, constantly-changing browser feature.
 // The best approach is to never assume that it will work, and therefore prepare for a fallback.

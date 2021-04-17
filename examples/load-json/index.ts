@@ -65,7 +65,7 @@ const scene = new Transform();
 const texture = new Texture(gl);
 const img = new Image();
 img.onload = () => (texture.image = img);
-img.src = '/assets/fox.jpg';
+img.src = '../assets/fox.jpg';
 
 const program = new Program(gl, {
     vertex,
@@ -78,7 +78,7 @@ const program = new Program(gl, {
 let mesh;
 loadModel();
 async function loadModel() {
-    const data = await (await fetch(`/assets/fox.json`)).json();
+    const data = await (await fetch(`../assets/fox.json`)).json();
 
     const geometry = new Geometry(gl, {
         position: { size: 3, data: new Float32Array(data.position) },
