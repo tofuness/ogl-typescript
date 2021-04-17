@@ -115,7 +115,7 @@ export class Post {
     }
 
     // Uses same arguments as renderer.render, with addition of optional texture passed in to avoid scene render
-    render({ scene, camera, texture, target = null, update = true, sort = true, frustumCull = true }) {
+    render({ scene = null, camera = null, texture = null, target = null, update = true, sort = true, frustumCull = true }) {
         const enabledPasses = this.passes.filter((pass) => pass.enabled);
 
         if (!texture) {
