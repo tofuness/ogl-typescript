@@ -75,7 +75,7 @@ yarn build:examples # npm run build:examples
 
 | OGL-TypeScript | OGL    |                                               |
 | -------------- | ------ | --------------------------------------------- |
-| 0.1.30         | 0.0.61 | build with [vite](https://http://vitejs.dev/) |
+| 0.1.31         | 0.0.61 | build with [vite](https://http://vitejs.dev/) |
 | 0.1.20         | 0.0.60 |                                               |
 | 0.1.19         | 0.0.59 |                                               |
 | 0.1.18         | 0.0.58 |                                               |
