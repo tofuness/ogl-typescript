@@ -130,6 +130,7 @@ const fragment300 =
         const geometry = new Geometry(gl, {
             position: { size: 3, data: text.buffers.position },
             uv: { size: 2, data: text.buffers.uv },
+            // id provides a per-character index, for effects that may require it
             id: { size: 1, data: text.buffers.id },
             index: { data: text.buffers.index },
         });
