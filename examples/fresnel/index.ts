@@ -1,9 +1,9 @@
-import { Renderer, Camera, Transform, Program, Mesh, Sphere, Vec3 } from '../../src';
+import { Renderer, Camera, Transform, Program, Mesh, Sphere, Color } from '../../src';
 
 const params = {
-    backgroundColor: { r: 182, g: 216, b: 242 },
-    baseColor: { r: 182, g: 216, b: 242 },
-    fresnelColor: { r: 247, g: 246, b: 207 },
+    backgroundColor: new Color('#B6D8F2'),
+    baseColor: new Color('#B6D8F2'),
+    fresnelColor: new Color('#F7F6CF'),
     fresnelFactor: 1.5,
 };
 
@@ -11,7 +11,7 @@ const params = {
     const renderer = new Renderer({ dpr: 2 });
     const gl = renderer.gl;
     document.body.appendChild(gl.canvas);
-    gl.clearColor(params.backgroundColor.r / 255, params.backgroundColor.g / 255, params.backgroundColor.b / 255, 1);
+    gl.clearColor(...params.backgroundColor, 1);
 
     const camera = new Camera(gl, { fov: 35 });
     camera.position.set(0, 1, 7);
@@ -32,53 +32,57 @@ const params = {
     });
 
     const vertex = /* glsl */ `
-        attribute vec3 position;
-        attribute vec2 uv;
-        attribute vec3 normal;
-        uniform mat4 modelViewMatrix;
-        uniform mat4 projectionMatrix;
-        varying vec2 vUv;
-        varying vec3 vNormal;
-        varying vec3 vPosition;
-        void main() {					
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-            vPosition = position;
-            vUv = uv;
-            vNormal = normalize(vec3(mat3(modelViewMatrix) * normal));
-        }
-    `;
+                    attribute vec3 position;
+                    attribute vec2 uv;
+                    attribute vec3 normal;
+
+                    uniform mat4 modelViewMatrix;
+                    uniform mat4 projectionMatrix;
+                    uniform mat3 normalMatrix;
+
+                    varying vec2 vUv;
+                    varying vec3 vNormal;
+                    varying vec3 vPosition;
+
+                    void main() {					
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+
+                        vPosition = position;
+                        vUv = uv;
+                        vNormal = normalMatrix * normal;
+                    }
+                `;
 
     const fragment = /* glsl */ `
-        precision highp float;
-        varying vec2 vUv;
-        varying vec3 vNormal;
-        varying vec3 vPosition;
-        uniform vec3 fresnelColor;
-        uniform vec3 baseColor;
-        uniform float powerOfFactor;
-        uniform vec3 cameraPosition;
-        void main() {
-            vec3 viewDirection = normalize(cameraPosition - vec3(vPosition.x, vPosition.y, vPosition.z));
-            float fresnelFactor = dot(viewDirection, vNormal);
-            
-            float inversefresnelFactor = clamp(1. - fresnelFactor, 0., 1.);
-            
-            // Shaping function
-            fresnelFactor = pow(fresnelFactor, powerOfFactor);
-            inversefresnelFactor = pow(inversefresnelFactor, powerOfFactor);
-            gl_FragColor = vec4(fresnelFactor * baseColor + fresnelColor * inversefresnelFactor, 1.);
-        }
-    `;
+                    precision highp float;
+
+                    varying vec2 vUv;
+                    varying vec3 vNormal;
+                    varying vec3 vPosition;
+
+                    uniform vec3 fresnelColor;
+                    uniform vec3 baseColor;
+                    uniform float powerOfFactor;
+                    uniform vec3 cameraPosition;
+
+                    void main() {
+                        vec3 viewDirection = normalize(cameraPosition - vPosition.xyz);
+                        float fresnelFactor = dot(viewDirection, normalize(vNormal));
+                        
+                        float inversefresnelFactor = clamp(1. - fresnelFactor, 0., 1.);
+                        
+                        // Shaping function
+                        fresnelFactor = pow(fresnelFactor, powerOfFactor);
+                        inversefresnelFactor = pow(inversefresnelFactor, powerOfFactor);
+
+                        gl_FragColor = vec4(fresnelFactor * baseColor + inversefresnelFactor * fresnelColor, 1.);
+                    }
+                `;
 
     const uniforms = {
-        fresnelColor: {
-            value: new Vec3(params.fresnelColor.r / 255, params.fresnelColor.g / 255, params.fresnelColor.b / 255),
-        },
-        baseColor: {
-            value: new Vec3(params.baseColor.r / 255, params.baseColor.g / 255, params.baseColor.b / 255),
-        },
+        fresnelColor: { value: params.fresnelColor },
+        baseColor: { value: params.baseColor },
         powerOfFactor: { value: params.fresnelFactor },
-        cameraPosition: { value: camera.position },
     };
 
     const program = new Program(gl, {
