@@ -84,7 +84,7 @@ yarn build:examples # npm run build:examples
 | 0.1.34         | 0.0.64 |                                               |
 | 0.1.33         | 0.0.63 |                                               |
 | 0.1.32         | 0.0.62 |                                               |
-| 0.1.31         | 0.0.61 | build with [vite](https://http://vitejs.dev/) |
+| 0.1.31         | 0.0.61 | build with [vite](https://vitejs.dev/) |
 | 0.1.20         | 0.0.60 |                                               |
 | 0.1.19         | 0.0.59 |                                               |
 | 0.1.18         | 0.0.58 |                                               |
