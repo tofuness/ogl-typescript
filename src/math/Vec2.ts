@@ -1,5 +1,3 @@
-import * as Vec2Func from './functions/Vec2Func';
-
 export class Vec2 extends Array<number> {
     constructor(x = 0, y = x) {
         super(x, y);
@@ -22,120 +20,138 @@ export class Vec2 extends Array<number> {
         this[1] = v;
     }
 
-    set(x, y = x) {
-        if (x.length) return this.copy(x);
-        Vec2Func.set(this, x, y);
+    set(x: number, y: number = x): this {
+        this.x = x;
+        this.y = y;
         return this;
     }
 
-    copy(v) {
-        Vec2Func.copy(this, v);
+    copy(v: Vec2): this {
+        this.x = v.x;
+        this.y = v.y;
         return this;
     }
 
-    add(va, vb) {
-        if (vb) Vec2Func.add(this, va, vb);
-        else Vec2Func.add(this, this, va);
+    add(va: Vec2): this {
+        this.x += va.x;
+        this.y += va.y;
         return this;
     }
 
-    sub(va, vb) {
-        if (vb) Vec2Func.subtract(this, va, vb);
-        else Vec2Func.subtract(this, this, va);
+    sub(va: Vec2): this {
+        this.x -= va.x;
+        this.y -= va.y;
         return this;
     }
 
-    multiply(v) {
-        if (v.length) Vec2Func.multiply(this, this, v);
-        else Vec2Func.scale(this, this, v);
+    multiply(v: Vec2): this {
+        this.x *= v.x;
+        this.y *= v.y;
         return this;
     }
 
-    divide(v) {
-        if (v.length) Vec2Func.divide(this, this, v);
-        else Vec2Func.scale(this, this, 1 / v);
+    divide(v: Vec2): this {
+        this.x /= v.x;
+        this.y /= v.y;
         return this;
     }
 
-    inverse(v = this) {
-        Vec2Func.inverse(this, v);
+    inverse(): this {
+        this.x = 1.0 / this.x;
+        this.y = 1.0 / this.y;
         return this;
     }
 
-    // Can't use 'length' as Array.prototype uses it
-    len() {
-        return Vec2Func.length(this);
+    squaredLength(): number {
+        return this.x * this.x + this.y * this.y;
     }
 
-    distance(v) {
-        if (v) return Vec2Func.distance(this, v);
-        else return Vec2Func.length(this);
+    len(): number {
+        return Math.sqrt(this.x * this.x + this.y * this.y);
     }
 
-    squaredLen() {
-        return this.squaredDistance();
+    distance(v: Vec2): number {
+        const x = v.x - this.x;
+        const y = v.y - this.y;
+        return Math.sqrt(x * x + y * y);
     }
 
-    squaredDistance(v?) {
-        if (v) return Vec2Func.squaredDistance(this, v);
-        else return Vec2Func.squaredLength(this);
+    squaredDistance(v: Vec2): number {
+        const x = v.x - this.x;
+        const y = v.y - this.y;
+        return x * x + y * y;
     }
 
-    negate(v = this) {
-        Vec2Func.negate(this, v);
+    negate(): this {
+        this.x = -this.x;
+        this.y = -this.y;
         return this;
     }
 
-    cross(va, vb) {
-        if (vb) return Vec2Func.cross(va, vb);
-        return Vec2Func.cross(this, va);
+    // https://www.youtube.com/watch?v=-n_C7tD55_A
+    // 2d cross product
+    cross(va: Vec2): number {
+        return this.x * va.y - this.y * va.x;
     }
 
-    scale(v) {
-        Vec2Func.scale(this, this, v);
+    scale(n: number): this {
+        this.x *= n;
+        this.y *= n;
         return this;
     }
 
-    normalize() {
-        Vec2Func.normalize(this, this);
+    normalize(): this {
+        // squaredLength()
+        let len = this.x * this.x + this.y * this.y;
+        if (len > 0) {
+            len = 1 / Math.sqrt(len);
+            this.x *= len;
+            this.y *= len;
+        } else {
+            this.x = 1;
+            this.y = 0;
+        }
         return this;
     }
 
-    dot(v) {
-        return Vec2Func.dot(this, v);
+    dot(v: Vec2): number {
+        return this.x * v.x + this.y * v.y;
     }
 
-    equals(v) {
-        return Vec2Func.exactEquals(this, v);
+    equals(v: Vec2): boolean {
+        return this.x === v.x && this.y === v.y;
     }
 
-    applyMatrix3(mat3) {
-        Vec2Func.transformMat3(this, this, mat3);
+    // TODO: mat3 mat4
+    // applyMatrix3(mat3) {
+    //     Vec2Func.transformMat3(this, this, mat3);
+    //     return this;
+    // }
+
+    // applyMatrix4(mat4) {
+    //     Vec2Func.transformMat4(this, this, mat4);
+    //     return this;
+    // }
+
+    lerp(v: Vec2, t: number): this {
+        this.x += t * (v.x - this.x);
+        this.y += t * (v.y - this.y);
         return this;
     }
 
-    applyMatrix4(mat4) {
-        Vec2Func.transformMat4(this, this, mat4);
+    clone(): Vec2 {
+        return new Vec2(this.x, this.y);
+    }
+
+    fromArray(a: ArrayLike<number>, o: number = 0): this {
+        this.x = a[o];
+        this.y = a[o + 1];
         return this;
     }
 
-    lerp(v, a) {
-        Vec2Func.lerp(this, this, v, a);
-    }
-
-    clone() {
-        return new Vec2(this[0], this[1]);
-    }
-
-    fromArray(a, o = 0) {
-        this[0] = a[o];
-        this[1] = a[o + 1];
-        return this;
-    }
-
-    toArray(a = [], o = 0) {
-        a[o] = this[0];
-        a[o + 1] = this[1];
+    toArray(a = [], o = 0): number[] {
+        a[o] = this.x;
+        a[o + 1] = this.y;
         return a;
     }
 }

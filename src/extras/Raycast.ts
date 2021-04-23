@@ -233,9 +233,9 @@ export class Raycast {
             }
 
             if (includeUV && attributes.uv) {
-                uvA.fromArray(attributes.uv.data, closestA * 2);
-                uvB.fromArray(attributes.uv.data, closestB * 2);
-                uvC.fromArray(attributes.uv.data, closestC * 2);
+                uvA.fromArray(attributes.uv.data as ArrayLike<number>, closestA * 2);
+                uvB.fromArray(attributes.uv.data as ArrayLike<number>, closestB * 2);
+                uvC.fromArray(attributes.uv.data as ArrayLike<number>, closestC * 2);
                 mesh.hit.uv.set(
                     uvA.x * barycoord.x + uvB.x * barycoord.y + uvC.x * barycoord.z,
                     uvA.y * barycoord.x + uvB.y * barycoord.y + uvC.y * barycoord.z

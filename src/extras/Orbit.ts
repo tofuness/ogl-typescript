@@ -180,7 +180,7 @@ export function Orbit(
 
     function handleMoveRotate(x, y) {
         tempVec2a.set(x, y);
-        tempVec2b.sub(tempVec2a, rotateStart).multiply(rotateSpeed);
+        tempVec2b.copy(tempVec2a).sub(rotateStart).scale(rotateSpeed);
         // let el = element === document ? document.body : element;
         sphericalDelta.theta -= (2 * Math.PI * tempVec2b.x) / element.clientHeight;
         sphericalDelta.phi -= (2 * Math.PI * tempVec2b.y) / element.clientHeight;
@@ -189,7 +189,7 @@ export function Orbit(
 
     function handleMouseMoveDolly(e) {
         tempVec2a.set(e.clientX, e.clientY);
-        tempVec2b.sub(tempVec2a, dollyStart);
+        tempVec2b.copy(tempVec2a).sub(dollyStart);
         if (tempVec2b.y > 0) {
             dolly(getZoomScale());
         } else if (tempVec2b.y < 0) {
@@ -200,7 +200,7 @@ export function Orbit(
 
     function handleMovePan(x, y) {
         tempVec2a.set(x, y);
-        tempVec2b.sub(tempVec2a, panStart).multiply(panSpeed);
+        tempVec2b.copy(tempVec2a).sub(panStart).scale(panSpeed);
         pan(tempVec2b.x, tempVec2b.y);
         panStart.copy(tempVec2a);
     }
