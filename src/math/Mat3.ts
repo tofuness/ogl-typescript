@@ -317,8 +317,8 @@ export class Mat3 extends Array<number> {
         return this;
     }
 
-    getNormalMatrix(m) {
-        Mat3Func.normalFromMat4(this, m);
-        return this;
-    }
+    // getNormalMatrix(m) {
+    //     Mat3Func.normalFromMat4(this, m);
+    //     return this;
+    // }
 }

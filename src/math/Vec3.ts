@@ -19,123 +19,207 @@ export class Vec3 extends Array<number> {
         return this[2];
     }
 
-    set x(v) {
+    set x(v: number) {
         this[0] = v;
     }
 
-    set y(v) {
+    set y(v: number) {
         this[1] = v;
     }
 
-    set z(v) {
+    set z(v: number) {
         this[2] = v;
     }
 
-    set(x: number | Array<number>, y = x, z = x) {
-        if (isArrayLike<number>(x)) return this.copy(x);
-        Vec3Func.set(this, x, y, z);
+    set(x: number, y: number = x, z: number = x): this {
+        this.x = x;
+        this.y = y;
+        this.z = z;
         return this;
     }
 
-    copy(v) {
-        Vec3Func.copy(this, v);
+    copy(v: Vec3): this {
+        this.x = v.x;
+        this.y = v.y;
+        this.z = v.z;
         return this;
     }
 
-    add(va, vb?: Vec3) {
-        if (vb) Vec3Func.add(this, va, vb);
-        else Vec3Func.add(this, this, va);
+    add(v: Vec3): this {
+        this.x += v.x;
+        this.y += v.y;
+        this.z += v.z;
         return this;
     }
 
-    sub(va, vb?: Vec3) {
-        if (vb) Vec3Func.subtract(this, va, vb);
-        else Vec3Func.subtract(this, this, va);
+    /**
+     * Sets this vector to va + vb
+     */
+    addVectors(va: Vec3, vb: Vec3): this {
+        this.x = va.x + vb.x;
+        this.y = va.y + vb.y;
+        this.z = va.z + vb.z;
         return this;
     }
 
-    multiply(v) {
-        if (v.length) Vec3Func.multiply(this, this, v);
-        else Vec3Func.scale(this, this, v);
+    sub(v: Vec3): this {
+        this.x -= v.x;
+        this.y -= v.y;
+        this.z -= v.z;
         return this;
     }
 
-    divide(v) {
-        if (v.length) Vec3Func.divide(this, this, v);
-        else Vec3Func.scale(this, this, 1 / v);
+    /**
+     * Sets this vector to va - vb.
+     */
+    subVectors(va: Vec3, vb: Vec3): this {
+        this.x = va.x - vb.x;
+        this.y = va.x - vb.x;
+        this.z = va.z - vb.z;
         return this;
     }
 
-    inverse(v = this) {
-        Vec3Func.inverse(this, v);
+    multiply(v: Vec3): this {
+        this.x *= v.x;
+        this.y *= v.y;
+        this.z *= v.z;
+        return this;
+    }
+
+    divide(v: Vec3): this {
+        this.x /= v.x;
+        this.y /= v.y;
+        this.z /= v.z;
+        return this;
+    }
+
+    /**
+     * Returns the inverse of the components of a vec3
+     * @returns this
+     */
+    inverse(): this {
+        this.x = 1.0 / this.x;
+        this.y = 1.0 / this.y;
+        this.z = 1.0 / this.z;
         return this;
     }
 
     // Can't use 'length' as Array.prototype uses it
-    len() {
-        return Vec3Func.length(this);
+    len(): number {
+        const x = this.x;
+        const y = this.y;
+        const z = this.z;
+        return Math.sqrt(x * x + y * y + z * z);
     }
 
-    distance(v?: Vec3) {
-        if (v) return Vec3Func.distance(this, v);
-        else return Vec3Func.length(this);
+    squaredLen(): number {
+        const x = this.x;
+        const y = this.y;
+        const z = this.z;
+        return x * x + y * y + z * z;
     }
 
-    squaredLen() {
-        return Vec3Func.squaredLength(this);
+    distance(v: Vec3): number {
+        const x = v.x - this.x;
+        const y = v.y - this.y;
+        const z = v.z - this.z;
+        return Math.sqrt(x * x + y * y + z * z);
     }
 
-    squaredDistance(v?: Vec3) {
-        if (v) return Vec3Func.squaredDistance(this, v);
-        else return Vec3Func.squaredLength(this);
+    squaredDistance(v: Vec3): number {
+        const x = v.x - this.x;
+        const y = v.y - this.y;
+        const z = v.z - this.z;
+        return x * x + y * y + z * z;
     }
 
-    negate(v = this) {
-        Vec3Func.negate(this, v);
+    negate(): this {
+        this.x = -this.x;
+        this.y = -this.y;
+        this.z = -this.z;
         return this;
     }
 
-    cross(va, vb?) {
-        if (vb) Vec3Func.cross(this, va, vb);
-        else Vec3Func.cross(this, this, va);
+    cross(v: Vec3): this {
+        return this.crossVectors(this, v);
+    }
+
+    /**
+     * Sets this vector to cross product of va and vb.
+     */
+    crossVectors(va: Vec3, vb: Vec3): this {
+        const ax = va.x;
+        const ay = va.y;
+        const az = va.z;
+
+        const bx = vb.x;
+        const by = vb.y;
+        const bz = vb.z;
+
+        this.x = ay * bz - az * by;
+        this.y = az * bx - ax * bz;
+        this.z = ax * by - ay * bx;
+
         return this;
     }
 
-    scale(v) {
-        Vec3Func.scale(this, this, v);
+    scale(s: number): this {
+        this.x *= s;
+        this.y *= s;
+        this.z *= s;
         return this;
     }
 
-    normalize() {
-        Vec3Func.normalize(this, this);
+    normalize(): this {
+        const x = this.x;
+        const y = this.y;
+        const z = this.z;
+        let len = x * x + y * y + z * z;
+        if (len <= 0) {
+            len = 1; // error
+        } else {
+            len = 1 / Math.sqrt(len);
+        }
+        this.x = x * len;
+        this.y = y * len;
+        this.z = z * len;
         return this;
     }
 
-    dot(v) {
-        return Vec3Func.dot(this, v);
+    dot(v: Vec3): number {
+        return this.x * v.x + this.y * v.y + this.z * v.z;
     }
 
-    equals(v) {
-        return Vec3Func.exactEquals(this, v);
+    equals(v: Vec3): boolean {
+        return this.x === v.x && this.y === v.y && this.z === v.z;
     }
 
-    applyMatrix4(mat4) {
-        Vec3Func.transformMat4(this, this, mat4);
-        return this;
-    }
+    // TODO: mat4 quaternion
+    // applyMatrix4(mat4) {
+    //     Vec3Func.transformMat4(this, this, mat4);
+    //     return this;
+    // }
 
-    scaleRotateMatrix4(mat4) {
-        Vec3Func.scaleRotateMat4(this, this, mat4);
-        return this;
-    }
+    // scaleRotateMatrix4(mat4) {
+    //     Vec3Func.scaleRotateMat4(this, this, mat4);
+    //     return this;
+    // }
 
-    applyQuaternion(q) {
-        Vec3Func.transformQuat(this, this, q);
-        return this;
-    }
+    // applyQuaternion(q) {
+    //     Vec3Func.transformQuat(this, this, q);
+    //     return this;
+    // }
 
     angle(v) {
-        return Vec3Func.angle(this, v);
+        const denominator = Math.sqrt(this.squaredLen() * v.squaredLen());
+
+        if (denominator === 0) return Math.PI / 2;
+
+        const theta = this.dot(v) / denominator;
+
+        // clamp, to handle numerical problems
+
+        return Math.acos(MathUtils.clamp(theta, -1, 1));
     }
 
     lerp(v, t) {
