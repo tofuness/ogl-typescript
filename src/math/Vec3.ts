@@ -1,6 +1,6 @@
-import * as Vec3Func from './functions/Vec3Func';
-import { isArrayLike } from '../Guards';
 import { clamp, PI_OVER_TWO } from './MathUtils';
+import { Mat3 } from './Mat3';
+
 export class Vec3 extends Array<number> {
     // constant: number; // TODO: only be used in Camera class
     constructor(x = 0, y = x, z = x) {
@@ -193,6 +193,32 @@ export class Vec3 extends Array<number> {
 
     equals(v: Vec3): boolean {
         return this.x === v.x && this.y === v.y && this.z === v.z;
+    }
+
+    /**
+     *
+     * Transforms the vec3 with a mat3
+     * 3rd vector component is implicitly '1'
+     *
+     * m[0] m[3] m[6]     x
+     * m[1] m[4] m[7]  *  y
+     * m[2] m[5] m[8]     z
+     *
+     * m[0] * x + m[3] * y + m[6] * z
+     * m[1] * x + m[4] * y + m[7] * z
+     * m[2] * x + m[5] * y + m[8] * z
+     *
+     * @param mat3
+     * @returns this
+     */
+    applyMatrix3(m: Mat3): this {
+        const x = this.x;
+        const y = this.y;
+        const z = this.z;
+        this.x = m[0] * x + m[3] * y + m[6] * z;
+        this.y = m[1] * x + m[4] * y + m[7] * z;
+        this.y = m[2] * x + m[5] * y + m[8] * z;
+        return this;
     }
 
     // TODO: mat4 quaternion
