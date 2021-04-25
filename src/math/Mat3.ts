@@ -30,8 +30,17 @@ export class Mat3 extends Array<number> {
      *
      * @returns a new 3*3 matrix in column major
      */
-    constructor(m11 = 1, m12 = 0, m13 = 0, m21 = 0, m22 = 1, m23 = 0, m31 = 0, m32 = 0, m33 = 1) {
-        super(m11, m21, m31, m12, m22, m32, m13, m23, m33);
+    // prettier-ignore
+    constructor(
+        m11 = 1, m12 = 0, m13 = 0, 
+        m21 = 0, m22 = 1, m23 = 0, 
+        m31 = 0, m32 = 0, m33 = 1
+        ) {
+        super(
+            m11, m21, m31, 
+            m12, m22, m32, 
+            m13, m23, m33
+        );
         return this;
     }
 
@@ -48,21 +57,20 @@ export class Mat3 extends Array<number> {
      * @param m33 row 3 column 3
      * @returns
      */
-    set(m11 = 1, m12 = 0, m13 = 0, m21 = 0, m22 = 1, m23 = 0, m31 = 0, m32 = 0, m33 = 1): this {
-        this[0] = m11;
-        this[1] = m21;
-        this[2] = m31;
-        this[3] = m12;
-        this[4] = m22;
-        this[5] = m32;
-        this[6] = m13;
-        this[7] = m23;
-        this[8] = m33;
+    // prettier-ignore
+    set(
+        m11 = 1, m12 = 0, m13 = 0, 
+        m21 = 0, m22 = 1, m23 = 0, 
+        m31 = 0, m32 = 0, m33 = 1
+        ): this {
+        this[0] = m11; this[1] = m21; this[2] = m31;
+        this[3] = m12; this[4] = m22; this[5] = m32;
+        this[6] = m13; this[7] = m23; this[8] = m33;
         return this;
     }
 
     /**
-     * Translate a mat3 by the given vector
+     * Translate by the given vector 2
      *
      * 1  0  x     m[0] m[3] m[6]
      * 0  1  y  *  m[1] m[4] m[7]
@@ -76,12 +84,14 @@ export class Mat3 extends Array<number> {
      * @returns
      */
     translate(v: Vec2): this {
-        this[0] += v.x * this[2];
-        this[1] += v.y * this[2];
-        this[3] += v.x * this[5];
-        this[4] += v.y * this[5];
-        this[6] += v.x * this[8];
-        this[7] += v.y * this[8];
+        const x = v.x;
+        const y = v.y;
+        this[0] += x * this[2];
+        this[1] += y * this[2];
+        this[3] += x * this[5];
+        this[4] += y * this[5];
+        this[6] += x * this[8];
+        this[7] += y * this[8];
         return this;
     }
 
@@ -317,6 +327,7 @@ export class Mat3 extends Array<number> {
         return this;
     }
 
+    // TODO: mat4
     // getNormalMatrix(m) {
     //     Mat3Func.normalFromMat4(this, m);
     //     return this;
