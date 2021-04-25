@@ -1,3 +1,5 @@
+import { Mat3 } from './Mat3';
+
 export class Vec2 extends Array<number> {
     constructor(x = 0, y = x) {
         super(x, y);
@@ -140,12 +142,31 @@ export class Vec2 extends Array<number> {
         return this.x === v.x && this.y === v.y;
     }
 
-    // TODO: mat3 mat4
-    // applyMatrix3(mat3) {
-    //     Vec2Func.transformMat3(this, this, mat3);
-    //     return this;
-    // }
+    /**
+     *
+     * Transforms the vec2 with a mat3
+     * 3rd vector component is implicitly '1'
+     *
+     * m[0] m[3] m[6]     x
+     * m[1] m[4] m[7]  *  y
+     * m[2] m[5] m[8]     1
+     *
+     * m[0] * x + m[3] * y + m[6]
+     * m[1] * x + m[4] * y + m[7]
+     * m[2] * x + m[5] * y + m[8]
+     *
+     * @param mat3
+     * @returns
+     */
+    applyMatrix3(m: Mat3): this {
+        const x = this.x;
+        const y = this.y;
+        this.x = m[0] * x + m[3] * y + m[6];
+        this.y = m[1] * x + m[4] * y + m[7];
+        return this;
+    }
 
+    // TODO: mat4
     // applyMatrix4(mat4) {
     //     Vec2Func.transformMat4(this, this, mat4);
     //     return this;
