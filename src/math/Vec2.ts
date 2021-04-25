@@ -32,15 +32,33 @@ export class Vec2 extends Array<number> {
         return this;
     }
 
-    add(va: Vec2): this {
-        this.x += va.x;
-        this.y += va.y;
+    add(v: Vec2): this {
+        this.x += v.x;
+        this.y += v.y;
+        return this;
+    }
+
+    /**
+     * Sets this vector to va + vb
+     */
+    addVectors(va: Vec2, vb: Vec2): this {
+        this.x = va.x + vb.x;
+        this.y = va.y + vb.y;
         return this;
     }
 
     sub(va: Vec2): this {
         this.x -= va.x;
         this.y -= va.y;
+        return this;
+    }
+
+    /**
+     * Sets this vector to va - vb.
+     */
+    subVectors(va: Vec2, vb: Vec2): this {
+        this.x = va.x - vb.x;
+        this.y = va.x - vb.x;
         return this;
     }
 
