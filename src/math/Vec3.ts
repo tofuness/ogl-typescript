@@ -1,7 +1,8 @@
 import * as Vec3Func from './functions/Vec3Func';
 import { isArrayLike } from '../Guards';
+import { clamp, PI_OVER_TWO } from './MathUtils';
 export class Vec3 extends Array<number> {
-    constant: number; // TODO: only be used in Camera class
+    // constant: number; // TODO: only be used in Camera class
     constructor(x = 0, y = x, z = x) {
         super(x, y, z);
         return this;
@@ -210,20 +211,18 @@ export class Vec3 extends Array<number> {
     //     return this;
     // }
 
-    angle(v) {
+    angle(v: Vec3): number {
         const denominator = Math.sqrt(this.squaredLen() * v.squaredLen());
-
-        if (denominator === 0) return Math.PI / 2;
-
+        if (denominator === 0) return PI_OVER_TWO;
         const theta = this.dot(v) / denominator;
-
         // clamp, to handle numerical problems
-
-        return Math.acos(MathUtils.clamp(theta, -1, 1));
+        return Math.acos(clamp(theta, -1, 1));
     }
 
-    lerp(v, t) {
-        Vec3Func.lerp(this, this, v, t);
+    lerp(v: Vec3, t: number) {
+        this.x += t * (v.x - this.x);
+        this.y += t * (v.y - this.y);
+        this.z += t * (v.z - this.z);
         return this;
     }
 
@@ -245,15 +244,16 @@ export class Vec3 extends Array<number> {
         return a;
     }
 
-    transformDirection(mat4) {
-        const x = this[0];
-        const y = this[1];
-        const z = this[2];
+    // TODO: mat4
+    // transformDirection(mat4) {
+    //     const x = this[0];
+    //     const y = this[1];
+    //     const z = this[2];
 
-        this[0] = mat4[0] * x + mat4[4] * y + mat4[8] * z;
-        this[1] = mat4[1] * x + mat4[5] * y + mat4[9] * z;
-        this[2] = mat4[2] * x + mat4[6] * y + mat4[10] * z;
+    //     this[0] = mat4[0] * x + mat4[4] * y + mat4[8] * z;
+    //     this[1] = mat4[1] * x + mat4[5] * y + mat4[9] * z;
+    //     this[2] = mat4[2] * x + mat4[6] * y + mat4[10] * z;
 
-        return this.normalize();
-    }
+    //     return this.normalize();
+    // }
 }
