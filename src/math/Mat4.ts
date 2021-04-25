@@ -193,10 +193,12 @@ export class Mat4 extends Array<number> {
     /**
      * Rorate radians around y axis
      * 
-     * c , 0,  s, 0,
-     * 0 , 1,  0, 0,  *  this
-     * -s, 0,  c, 0,
-     * 0 , 0,  0, 1
+     * c , 0,  s, 0,     m[0] m[4] m[8] m[12]
+     * 0 , 1,  0, 0,  *  m[1] m[5] m[9] m[13]
+     * -s, 0,  c, 0,     m[2] m[6] m[10] m[14]
+     * 0 , 0,  0, 1      m[3] m[7] m[11] m[15]
+     * 
+     * c * m[0] + s * m[2], c * m[4] + s * m[6], c * m[8] + s * m[10], c * m[12] + s * m[14]
      * 
      * @param rad radians
      * @returns this
