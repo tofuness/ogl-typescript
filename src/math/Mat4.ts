@@ -1,7 +1,6 @@
 import * as Mat4Func from './functions/Mat4Func';
 import { Vec3 } from './Vec3';
 
-// prettier-ignore
 export class Mat4 extends Array<number> {
     /**
      * create a 4*4 Matrix
@@ -39,6 +38,7 @@ export class Mat4 extends Array<number> {
      * @param m44 row 4 column 4
      * @returns a new 4*4 matrix in column major
      */
+    // prettier-ignore
     constructor(
         m11 = 1, m12 = 0, m13 = 0, m14 = 0,
         m21 = 0, m22 = 1, m23 = 0, m24 = 0,
@@ -89,6 +89,13 @@ export class Mat4 extends Array<number> {
         this[15] = v;
     }
 
+    setPosition(v: Vec3): this {
+        this.x = v[0];
+        this.y = v[1];
+        this.z = v[2];
+        return this;
+    }
+
     /**
      * set in row-major, we store in column-major
      * [m11, m21, m31, m41, m12, m22, m32, m42, m13, m23, m33, m43, m14, m24, m34, m44]
@@ -111,16 +118,17 @@ export class Mat4 extends Array<number> {
      * @param m44 row 4 column 4
      * @returns
      */
+    // prettier-ignore
     set(
         m11 = 1, m12 = 0, m13 = 0, m14 = 0,
         m21 = 0, m22 = 1, m23 = 0, m24 = 0,
         m31 = 0, m32 = 0, m33 = 1, m34 = 0,
         m41 = 0, m42 = 0, m43 = 0, m44 = 1
     ): this {
-        this[0]  = m11; this[1]  = m21; this[2]  = m31; this[3]  = m41;
-        this[4]  = m12; this[5]  = m22; this[6]  = m32; this[7]  = m42;
-        this[8]  = m13; this[9]  = m23; this[10] = m33; this[11] = m43;
-        this[12] = m14; this[13] = m24; this[14] = m34; this[15] = m44;
+        this[0] = m11; this[4] = m12; this[8 ] = m13; this[12] = m14;
+        this[1] = m21; this[5] = m22; this[9 ] = m23; this[13] = m24;
+        this[2] = m31; this[6] = m32; this[10] = m33; this[14] = m34;
+        this[3] = m41; this[7] = m42; this[11] = m43; this[15] = m44;
         return this;
     }
 
@@ -140,6 +148,7 @@ export class Mat4 extends Array<number> {
      * @param v Vec3
      * @returns this
      */
+    // prettier-ignore
     translate(v: Vec3): this {
         const x = v.x;
         const y = v.y;
@@ -152,20 +161,21 @@ export class Mat4 extends Array<number> {
 
     /**
      * Rotate radians around x axis
-     * 
+     *
      * 1, 0,  0, 0,     m[0] m[4] m[8]  m[12]
      * 0, c, -s, 0,  *  m[1] m[5] m[9]  m[13]
      * 0, s,  c, 0,     m[2] m[6] m[10] m[14]
      * 0, 0,  0, 1      m[3] m[7] m[11] m[15]
-     * 
+     *
      * m[0]               , m[4]               , m[8]                , m[12]
      * c * m[1] - s * m[2], c * m[5] - s * m[6], c * m[9] - s * m[10], c * m[13] - s * m[14]
      * s * m[1] + c * m[2], s * m[5] + c * m[6], s * m[9] + c * m[10], s * m[13] + c * m[14]
      * m[3]               , m[7]               , m[11]               , m[15]
-     * 
+     *
      * @param rad radians
      * @returns this
      */
+    // prettier-ignore
     rotateX(rad:number):this{
         const c = Math.cos(rad);
         const s = Math.sin(rad);
@@ -191,46 +201,69 @@ export class Mat4 extends Array<number> {
     }
 
     /**
-     * Rorate radians around y axis
-     * 
+     * Rotate radians around y axis
+     *
      * c , 0,  s, 0,     m[0] m[4] m[8] m[12]
      * 0 , 1,  0, 0,  *  m[1] m[5] m[9] m[13]
      * -s, 0,  c, 0,     m[2] m[6] m[10] m[14]
      * 0 , 0,  0, 1      m[3] m[7] m[11] m[15]
-     * 
-     * c * m[0] + s * m[2], c * m[4] + s * m[6], c * m[8] + s * m[10], c * m[12] + s * m[14]
-     * 
+     *
+     * c * m[0] + s * m[2] , c * m[4] + s * m[6] , c * m[8] + s * m[10] , c * m[12] + s * m[14]
+     * m[1]                , m[5]                , m[9]                 , m[13]
+     * -s * m[0] + c * m[2], -s * m[4] + c * m[6], -s * m[8] + c * m[10], -s * m[12] + c * m[14]
+     * m[3]                , m[7]                , m[11]                , m[15]
+     *
      * @param rad radians
      * @returns this
      */
+    // prettier-ignore
     rotateY(rad:number):this{
         const c = Math.cos(rad);
         const s = Math.sin(rad);
-
+        const m11 = this[0];
+        const m31 = this[2];
+        const m12 = this[4];
+        const m32 = this[6];
+        const m13 = this[8];
+        const m33 = this[10];
+        const m14 = this[12];
+        const m34 = this[14];
+        this[0] = c * m11 + s * m31;  this[4] = c * m12 + s * m32;  this[8] = c * m13 + s * m33;  this[12] = c * m14 + s * m34;
+        this[2] = -s * m11 + c * m31; this[6] = -s * m12 + c * m32; this[10] = -s * m13 + c * m33;this[14] = -s * m14 + c * m34; 
         return this;
     }
 
     /**
-     * Rorate radians around z axis
-     * 
-     * c, -s, 0, 0,
-     * s,  c, 0, 0,  *  this
-     * 0,  0, 1, 0,
-     * 0,  0, 0, 1
-     * 
+     * Rotate radians around z axis
+     *
+     * c, -s, 0, 0,     m[0] m[4] m[8] m[12]
+     * s,  c, 0, 0,  *  m[1] m[5] m[9] m[13]
+     * 0,  0, 1, 0,     m[2] m[6] m[10] m[14]
+     * 0,  0, 0, 1      m[3] m[7] m[11] m[15]
+     *
      * @param rad radians
      * @returns this
      */
+    // prettier-ignore
     rotateZ(rad:number):this{
         const c = Math.cos(rad);
         const s = Math.sin(rad);
+        const m11 = this[0];
+        const m21 = this[1];
+        const m12 = this[4];
+        const m22 = this[5];
+        const m13 = this[8];
+        const m23 = this[9];
+        const m14 = this[12];
+        const m24 = this[13];
 
+        this[0] = c * m11 - s * m21; this[4] = c * m12 - s * m22; this[8] = c * m13 - s * m23; this[12] = c * m14 - s * m24;
+        this[1] = s * m11 + c * m21; this[5] = s * m12 + c * m22; this[9] = s * m13 + c * m23; this[13] = s * m14 + c * m24;
         return this;
     }
 
-    rotate(v, axis, m = this) {
-        Mat4Func.rotate(this, m, v, axis);
-        return this;
+    rotate(rad: number, axis: Vec3): this {
+        return this.premultiply(new Mat4().fromRotationAxis(axis, rad));
     }
 
     /**
@@ -250,6 +283,7 @@ export class Mat4 extends Array<number> {
      * @param v Vec3
      * @returns this
      */
+    // prettier-ignore
     scale(v: Vec3): this {
         const x = v.x;
         const y = v.y;
@@ -260,54 +294,247 @@ export class Mat4 extends Array<number> {
         return this;
     }
 
-    multiply(ma, mb) {
-        if (mb) {
-            Mat4Func.multiply(this, ma, mb);
-        } else {
-            Mat4Func.multiply(this, this, ma);
-        }
+    // prettier-ignore
+    multiplyMatrices(ma: Mat4, mb: Mat4): this {
+
+        const a11 = ma[0], a12 = ma[4], a13 = ma[8],  a14 = ma[12];
+        const a21 = ma[1], a22 = ma[5], a23 = ma[9],  a24 = ma[13];
+        const a31 = ma[2], a32 = ma[6], a33 = ma[10], a34 = ma[14];
+        const a41 = ma[3], a42 = ma[7], a43 = ma[11], a44 = ma[15];
+
+        // Cache only the current column of the second matrix
+        let b1 = mb[0], b2 = mb[1], b3 = mb[2], b4 = mb[3];
+
+        this[0] = a11 * b1 + a12 * b2 + a13 * b3 + a14 * b4;
+        this[1] = a21 * b1 + a22 * b2 + a23 * b3 + a24 * b4;
+        this[2] = a31 * b1 + a32 * b2 + a33 * b3 + a34 * b4;
+        this[3] = a41 * b1 + a42 * b2 + a43 * b3 + a44 * b4;
+
+        b1 = mb[4]; b2 = mb[5]; b3 = mb[6]; b4 = mb[7];
+
+        this[4] = a11 * b1 + a12 * b2 + a13 * b3 + a14 * b4;
+        this[5] = a21 * b1 + a22 * b2 + a23 * b3 + a24 * b4;
+        this[6] = a31 * b1 + a32 * b2 + a33 * b3 + a34 * b4;
+        this[7] = a41 * b1 + a42 * b2 + a43 * b3 + a44 * b4;
+
+        b1 = mb[8]; b2 = mb[9]; b3 = mb[10]; b4 = mb[11];
+
+        this[8] = a11 * b1 + a12 * b2 + a13 * b3 + a14 * b4;
+        this[9] = a21 * b1 + a22 * b2 + a23 * b3 + a24 * b4;
+        this[10] = a31 * b1 + a32 * b2 + a33 * b3 + a34 * b4;
+        this[11] = a41 * b1 + a42 * b2 + a43 * b3 + a44 * b4;
+
+        b1 = mb[12]; b2 = mb[13]; b3 = mb[14]; b4 = mb[15];
+
+        this[8] = a11 * b1 + a12 * b2 + a13 * b3 + a14 * b4;
+        this[9] = a21 * b1 + a22 * b2 + a23 * b3 + a24 * b4;
+        this[10] = a31 * b1 + a32 * b2 + a33 * b3 + a34 * b4;
+        this[11] = a41 * b1 + a42 * b2 + a43 * b3 + a44 * b4;
+
         return this;
     }
 
-    identity() {
-        Mat4Func.identity(this);
+    multiply(m: Mat4): this {
+        return this.multiplyMatrices(this, m);
+    }
+
+    premultiply(m: Mat4): this {
+        return this.multiplyMatrices(m, this);
+    }
+
+    identity(): this {
+        return this.set();
+    }
+
+    copy(m: Mat4): this {
+        this[0] = m[0];
+        this[1] = m[1];
+        this[2] = m[2];
+        this[3] = m[3];
+        this[4] = m[4];
+        this[5] = m[5];
+        this[6] = m[6];
+        this[7] = m[7];
+        this[8] = m[8];
+        this[9] = m[9];
+        this[10] = m[10];
+        this[11] = m[11];
+        this[12] = m[12];
+        this[13] = m[13];
+        this[14] = m[14];
+        this[15] = m[15];
         return this;
     }
 
-    copy(m) {
-        Mat4Func.copy(this, m);
+    /**
+     * Sets this matrix as rotation transform around axis by rad radians.
+     *
+     * c = cos(rad) , s = sin(rad) , t = 1 - cos(rad)
+     *
+     * tx^2 + c , txy - sz, txz + sy, 0
+     * txy + sz , ty^2 + c, tyz - sx, 0
+     * txz - sy , tyz + sx, tz^2 + c, 0
+     * 0        , 0       , 0       , 1
+     *
+     * @param rad
+     * @param axis
+     * @returns this
+     */
+    // prettier-ignore
+    fromRotationAxis(axis: Vec3, rad: number): this {
+        const c = Math.cos(rad);
+        const s = Math.sin(rad);
+        const t = 1 - c;
+        const x = axis.x, y = axis.y, z = axis.z;
+        const tx = t * x, ty = t * y;
+
+        this.set(
+            tx * x + c    , tx * y - s * z, tx * z + s * y, 0,
+            tx * y + s * z, ty * y + c    , ty * z - s * x, 0,
+            tx * z - s * y, ty * z + s * x, t * z * z + c , 0,
+            0             , 0             , 0             , 1
+        );
+
         return this;
     }
 
-    fromPerspective({
-        fov,
-        aspect,
-        near,
-        far,
-    }: Partial<{
-        fov: number;
-        aspect: number;
-        near: number;
-        far: number;
-    }> = {}) {
-        Mat4Func.perspective(this, fov, aspect, near, far);
+    /**
+     * Sets this matrix as a perspective projection matrix
+     *
+     * @param fov Vertical field of view in radians
+     * @param aspect Aspect ratio. typically viewport width/height
+     * @param near Near bound of the frustum
+     * @param far Far bound of the frustum
+     * @returns
+     */
+    // prettier-ignore
+    fromPerspective(fov: number, aspect: number, near: number, far: number): this {
+        const yScale = 1.0 / Math.tan(fov / 2.0);
+        const xScale = yScale / aspect;
+        const nf = 1 / (near - far);
+        this[0] = xScale; this[4] = 0;      this[8] = 0;                  this[12] = 0;
+        this[1] = 0;      this[5] = yScale; this[9] = 0;                  this[13] = 0;
+        this[2] = 0;      this[6] = 0;      this[10] = (far + near) * nf; this[14] = 2 * far * near * nf;
+        this[3] = 0;      this[7] = 0;      this[11] = -1;                this[15] = 0;
         return this;
     }
 
-    fromOrthogonal({ left, right, bottom, top, near, far }) {
-        Mat4Func.ortho(this, left, right, bottom, top, near, far);
+    /**
+     * Sets this matrix as a orthogonal projection matrix
+     *
+     * @param left Left bound of the frustum
+     * @param right Right bound of the frustum
+     * @param bottom Bottom bound of the frustum
+     * @param top Top bound of the frustum
+     * @param near Near bound of the frustum
+     * @param far Far bound of the frustum
+     * @returns this
+     */
+    // prettier-ignore
+    fromOrthogonal(left: number, right: number, bottom: number, top: number, near: number, far: number): this {
+        const lr = 1 / (left - right);
+        const bt = 1 / (bottom - top);
+        const nf = 1 / (near - far);
+        const t = this;
+        t[0] = -2 * lr; t[4] = 0;       t[8] = 0;       t[12] = (left + right) * lr;
+        t[1] = 0;       t[5] = -2 * bt; t[9] = 0;       t[13] = (top + bottom) * bt;
+        t[2] = 0;       t[6] = 0;       t[10] = 2 * nf; t[14] = (far + near) * nf;
+        t[3] = 0;       t[7] = 0;       t[11] = 0;      t[15] = 1;
         return this;
     }
 
+    /**
+     * Sets this matrix from a Quaternion
+     *
+     * 1-2y²-2z²    2xy-2zw    2xz+2yw    0
+     * 2xy+2zw      1-2x²-2z²  2yz-2xw    0
+     * 2xz-2yw      2yz+2xw    1-2x²-2y²  0
+     * 0            0          0          1
+     * @param q Quaternion to create matrix from
+     * @returns
+     */
+    // prettier-ignore
     fromQuaternion(q) {
-        Mat4Func.fromQuat(this, q);
+        const x = q[0], y = q[1], z = q[2], w = q[3];
+        const x2 = x + x, y2 = y + y, z2 = z + z; 
+        const xx = x * x2;
+        const yx = y * x2;
+        const yy = y * y2;
+        const zx = z * x2;
+        const zy = z * y2;
+        const zz = z * z2;
+        const wx = w * x2;
+        const wy = w * y2;
+        const wz = w * z2;
+
+        const t = this;
+
+        t[0] = 1 - yy - zz;
+        t[1] = yx + wz;
+        t[2] = zx - wy;
+        t[3] = 0;
+
+        t[4] = yx - wz;
+        t[5] = 1 - xx - zz;
+        t[6] = zy + wx;
+        t[7] = 0;
+
+        t[8] = zx + wy;
+        t[9] = zy - wx;
+        t[10] = 1 - xx - yy;
+        t[11] = 0;
+
+        t[12] = 0;
+        t[13] = 0;
+        t[14] = 0;
+        t[15] = 1;
+
         return this;
     }
 
-    setPosition(v) {
-        this.x = v[0];
-        this.y = v[1];
-        this.z = v[2];
+    compose(q: Quat, pos: Vec3, scale: Vec3): this {
+        const x = q[0],
+            y = q[1],
+            z = q[2],
+            w = q[3];
+        const x2 = x + x,
+            y2 = y + y,
+            z2 = z + z;
+        const xx = x * x2;
+        const yx = y * x2;
+        const yy = y * y2;
+        const zx = z * x2;
+        const zy = z * y2;
+        const zz = z * z2;
+        const wx = w * x2;
+        const wy = w * y2;
+        const wz = w * z2;
+        const sx = scale.x;
+        const sy = scale.y;
+        const sz = scale.z;
+
+        const t = this;
+
+        t[0] = (1 - (yy + zz)) * sx;
+        t[1] = (yx + wz) * sx;
+        t[2] = (zx - wy) * sx;
+        t[3] = 0;
+
+        t[4] = (yx - wz) * sy;
+        t[5] = (1 - (xx + zz)) * sy;
+        t[6] = (zy + wx) * sy;
+        t[7] = 0;
+
+        t[8] = (zx + wy) * sz;
+        t[9] = (zy - wx) * sz;
+        t[10] = (1 - (xx + yy)) * sz;
+        t[11] = 0;
+
+        t[12] = pos.x;
+        t[13] = pos.y;
+        t[14] = pos.z;
+        t[15] = 1;
+
         return this;
     }
 
@@ -316,19 +543,16 @@ export class Mat4 extends Array<number> {
         return this;
     }
 
-    compose(q, pos, scale) {
-        Mat4Func.fromRotationTranslationScale(this, q, pos, scale);
-        return this;
-    }
-
     getRotation(q) {
         Mat4Func.getRotation(q, this);
         return this;
     }
 
-    getTranslation(pos) {
-        Mat4Func.getTranslation(pos, this);
-        return this;
+    getTranslation(pos: Vec3): Vec3 {
+        pos.x = this[12];
+        pos.y = this[13];
+        pos.z = this[14];
+        return pos;
     }
 
     getScaling(scale) {
