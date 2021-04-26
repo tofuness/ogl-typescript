@@ -107,10 +107,7 @@ export class Vec3 extends Array<number> {
 
     // Can't use 'length' as Array.prototype uses it
     len(): number {
-        const x = this.x;
-        const y = this.y;
-        const z = this.z;
-        return Math.sqrt(x * x + y * y + z * z);
+        return Math.hypot(this.x, this.y, this.z);
     }
 
     squaredLen(): number {

@@ -87,13 +87,13 @@ export class Vec2 extends Array<number> {
     }
 
     len(): number {
-        return Math.sqrt(this.x * this.x + this.y * this.y);
+        return Math.hypot(this.x, this.y);
     }
 
     distance(v: Vec2): number {
         const x = v.x - this.x;
         const y = v.y - this.y;
-        return Math.sqrt(x * x + y * y);
+        return Math.hypot(x, y);
     }
 
     squaredDistance(v: Vec2): number {
