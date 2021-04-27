@@ -132,6 +132,29 @@ export class Mat4 extends Array<number> {
         return this;
     }
 
+    transpose(): this {
+        const t = this;
+        let temp = t[1];
+        t[1] = t[4];
+        t[4] = temp;
+        temp = t[2];
+        t[2] = t[8];
+        t[8] = temp;
+        temp = t[3];
+        t[3] = t[12];
+        t[12] = temp;
+        temp = t[6];
+        t[6] = t[9];
+        t[9] = temp;
+        temp = t[7];
+        t[7] = t[13];
+        t[13] = temp;
+        temp = t[11];
+        t[11] = t[14];
+        t[14] = temp;
+        return this;
+    }
+
     /**
      * Translate by the given vector 3
      *
@@ -297,6 +320,7 @@ export class Mat4 extends Array<number> {
     // prettier-ignore
     multiplyMatrices(ma: Mat4, mb: Mat4): this {
 
+        const t = this;
         const a11 = ma[0], a12 = ma[4], a13 = ma[8],  a14 = ma[12];
         const a21 = ma[1], a22 = ma[5], a23 = ma[9],  a24 = ma[13];
         const a31 = ma[2], a32 = ma[6], a33 = ma[10], a34 = ma[14];
@@ -305,31 +329,31 @@ export class Mat4 extends Array<number> {
         // Cache only the current column of the second matrix
         let b1 = mb[0], b2 = mb[1], b3 = mb[2], b4 = mb[3];
 
-        this[0] = a11 * b1 + a12 * b2 + a13 * b3 + a14 * b4;
-        this[1] = a21 * b1 + a22 * b2 + a23 * b3 + a24 * b4;
-        this[2] = a31 * b1 + a32 * b2 + a33 * b3 + a34 * b4;
-        this[3] = a41 * b1 + a42 * b2 + a43 * b3 + a44 * b4;
+        t[0] = a11 * b1 + a12 * b2 + a13 * b3 + a14 * b4;
+        t[1] = a21 * b1 + a22 * b2 + a23 * b3 + a24 * b4;
+        t[2] = a31 * b1 + a32 * b2 + a33 * b3 + a34 * b4;
+        t[3] = a41 * b1 + a42 * b2 + a43 * b3 + a44 * b4;
 
         b1 = mb[4]; b2 = mb[5]; b3 = mb[6]; b4 = mb[7];
 
-        this[4] = a11 * b1 + a12 * b2 + a13 * b3 + a14 * b4;
-        this[5] = a21 * b1 + a22 * b2 + a23 * b3 + a24 * b4;
-        this[6] = a31 * b1 + a32 * b2 + a33 * b3 + a34 * b4;
-        this[7] = a41 * b1 + a42 * b2 + a43 * b3 + a44 * b4;
+        t[4] = a11 * b1 + a12 * b2 + a13 * b3 + a14 * b4;
+        t[5] = a21 * b1 + a22 * b2 + a23 * b3 + a24 * b4;
+        t[6] = a31 * b1 + a32 * b2 + a33 * b3 + a34 * b4;
+        t[7] = a41 * b1 + a42 * b2 + a43 * b3 + a44 * b4;
 
         b1 = mb[8]; b2 = mb[9]; b3 = mb[10]; b4 = mb[11];
 
-        this[8] = a11 * b1 + a12 * b2 + a13 * b3 + a14 * b4;
-        this[9] = a21 * b1 + a22 * b2 + a23 * b3 + a24 * b4;
-        this[10] = a31 * b1 + a32 * b2 + a33 * b3 + a34 * b4;
-        this[11] = a41 * b1 + a42 * b2 + a43 * b3 + a44 * b4;
+        t[8] = a11 * b1 + a12 * b2 + a13 * b3 + a14 * b4;
+        t[9] = a21 * b1 + a22 * b2 + a23 * b3 + a24 * b4;
+        t[10] = a31 * b1 + a32 * b2 + a33 * b3 + a34 * b4;
+        t[11] = a41 * b1 + a42 * b2 + a43 * b3 + a44 * b4;
 
         b1 = mb[12]; b2 = mb[13]; b3 = mb[14]; b4 = mb[15];
 
-        this[8] = a11 * b1 + a12 * b2 + a13 * b3 + a14 * b4;
-        this[9] = a21 * b1 + a22 * b2 + a23 * b3 + a24 * b4;
-        this[10] = a31 * b1 + a32 * b2 + a33 * b3 + a34 * b4;
-        this[11] = a41 * b1 + a42 * b2 + a43 * b3 + a44 * b4;
+        t[8] = a11 * b1 + a12 * b2 + a13 * b3 + a14 * b4;
+        t[9] = a21 * b1 + a22 * b2 + a23 * b3 + a24 * b4;
+        t[10] = a31 * b1 + a32 * b2 + a33 * b3 + a34 * b4;
+        t[11] = a41 * b1 + a42 * b2 + a43 * b3 + a44 * b4;
 
         return this;
     }
@@ -347,22 +371,23 @@ export class Mat4 extends Array<number> {
     }
 
     copy(m: Mat4): this {
-        this[0] = m[0];
-        this[1] = m[1];
-        this[2] = m[2];
-        this[3] = m[3];
-        this[4] = m[4];
-        this[5] = m[5];
-        this[6] = m[6];
-        this[7] = m[7];
-        this[8] = m[8];
-        this[9] = m[9];
-        this[10] = m[10];
-        this[11] = m[11];
-        this[12] = m[12];
-        this[13] = m[13];
-        this[14] = m[14];
-        this[15] = m[15];
+        const t = this;
+        t[0] = m[0];
+        t[1] = m[1];
+        t[2] = m[2];
+        t[3] = m[3];
+        t[4] = m[4];
+        t[5] = m[5];
+        t[6] = m[6];
+        t[7] = m[7];
+        t[8] = m[8];
+        t[9] = m[9];
+        t[10] = m[10];
+        t[11] = m[11];
+        t[12] = m[12];
+        t[13] = m[13];
+        t[14] = m[14];
+        t[15] = m[15];
         return this;
     }
 
@@ -412,10 +437,11 @@ export class Mat4 extends Array<number> {
         const yScale = 1.0 / Math.tan(fov / 2.0);
         const xScale = yScale / aspect;
         const nf = 1 / (near - far);
-        this[0] = xScale; this[4] = 0;      this[8] = 0;                  this[12] = 0;
-        this[1] = 0;      this[5] = yScale; this[9] = 0;                  this[13] = 0;
-        this[2] = 0;      this[6] = 0;      this[10] = (far + near) * nf; this[14] = 2 * far * near * nf;
-        this[3] = 0;      this[7] = 0;      this[11] = -1;                this[15] = 0;
+        const t = this;
+        t[0] = xScale; t[4] = 0;      t[8] = 0;                  t[12] = 0;
+        t[1] = 0;      t[5] = yScale; t[9] = 0;                  t[13] = 0;
+        t[2] = 0;      t[6] = 0;      t[10] = (far + near) * nf; t[14] = 2 * far * near * nf;
+        t[3] = 0;      t[7] = 0;      t[11] = -1;                t[15] = 0;
         return this;
     }
 
@@ -538,8 +564,99 @@ export class Mat4 extends Array<number> {
         return this;
     }
 
-    inverse(m = this) {
-        Mat4Func.invert(this, m);
+    decompose(quat: Quat, pos: Vec3, scale: Vec3) {
+        const t = this;
+        let sx = Math.hypot(t[0], t[1], t[2]);
+        const sy = Math.hypot(t[4], t[5], t[6]);
+        const sz = Math.hypot(t[8], t[9], t[10]);
+
+        // if determine is negative, we need to invert one scale
+        const det = this.determinant();
+        if (det < 0) sx = -sx;
+
+        pos.x = t[12];
+        pos.y = t[13];
+        pos.z = t[14];
+
+        // scale the rotation part
+        _m1.copy(this);
+
+        const invSX = 1 / sx;
+        const invSY = 1 / sy;
+        const invSZ = 1 / sz;
+
+        _m1[0] *= invSX;
+        _m1[1] *= invSX;
+        _m1[2] *= invSX;
+
+        _m1[4] *= invSY;
+        _m1[5] *= invSY;
+        _m1[6] *= invSY;
+
+        _m1[8] *= invSZ;
+        _m1[9] *= invSZ;
+        _m1[10] *= invSZ;
+
+        // TODO: quat
+        quat.setFromRotationMatrix(_m1);
+
+        scale.x = sx;
+        scale.y = sy;
+        scale.z = sz;
+
+        return this;
+    }
+
+    inverse(): this {
+        // three.js
+        const t = this,
+            n11 = t[0],
+            n21 = t[1],
+            n31 = t[2],
+            n41 = t[3],
+            n12 = t[4],
+            n22 = t[5],
+            n32 = t[6],
+            n42 = t[7],
+            n13 = t[8],
+            n23 = t[9],
+            n33 = t[10],
+            n43 = t[11],
+            n14 = t[12],
+            n24 = t[13],
+            n34 = t[14],
+            n44 = t[15],
+            t11 = n23 * n34 * n42 - n24 * n33 * n42 + n24 * n32 * n43 - n22 * n34 * n43 - n23 * n32 * n44 + n22 * n33 * n44,
+            t12 = n14 * n33 * n42 - n13 * n34 * n42 - n14 * n32 * n43 + n12 * n34 * n43 + n13 * n32 * n44 - n12 * n33 * n44,
+            t13 = n13 * n24 * n42 - n14 * n23 * n42 + n14 * n22 * n43 - n12 * n24 * n43 - n13 * n22 * n44 + n12 * n23 * n44,
+            t14 = n14 * n23 * n32 - n13 * n24 * n32 - n14 * n22 * n33 + n12 * n24 * n33 + n13 * n22 * n34 - n12 * n23 * n34;
+
+        const det = n11 * t11 + n21 * t12 + n31 * t13 + n41 * t14;
+
+        if (det === 0) return this.set(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+        const detInv = 1 / det;
+
+        t[0] = t11 * detInv;
+        t[1] = (n24 * n33 * n41 - n23 * n34 * n41 - n24 * n31 * n43 + n21 * n34 * n43 + n23 * n31 * n44 - n21 * n33 * n44) * detInv;
+        t[2] = (n22 * n34 * n41 - n24 * n32 * n41 + n24 * n31 * n42 - n21 * n34 * n42 - n22 * n31 * n44 + n21 * n32 * n44) * detInv;
+        t[3] = (n23 * n32 * n41 - n22 * n33 * n41 - n23 * n31 * n42 + n21 * n33 * n42 + n22 * n31 * n43 - n21 * n32 * n43) * detInv;
+
+        t[4] = t12 * detInv;
+        t[5] = (n13 * n34 * n41 - n14 * n33 * n41 + n14 * n31 * n43 - n11 * n34 * n43 - n13 * n31 * n44 + n11 * n33 * n44) * detInv;
+        t[6] = (n14 * n32 * n41 - n12 * n34 * n41 - n14 * n31 * n42 + n11 * n34 * n42 + n12 * n31 * n44 - n11 * n32 * n44) * detInv;
+        t[7] = (n12 * n33 * n41 - n13 * n32 * n41 + n13 * n31 * n42 - n11 * n33 * n42 - n12 * n31 * n43 + n11 * n32 * n43) * detInv;
+
+        t[8] = t13 * detInv;
+        t[9] = (n14 * n23 * n41 - n13 * n24 * n41 - n14 * n21 * n43 + n11 * n24 * n43 + n13 * n21 * n44 - n11 * n23 * n44) * detInv;
+        t[10] = (n12 * n24 * n41 - n14 * n22 * n41 + n14 * n21 * n42 - n11 * n24 * n42 - n12 * n21 * n44 + n11 * n22 * n44) * detInv;
+        t[11] = (n13 * n22 * n41 - n12 * n23 * n41 - n13 * n21 * n42 + n11 * n23 * n42 + n12 * n21 * n43 - n11 * n22 * n43) * detInv;
+
+        t[12] = t14 * detInv;
+        t[13] = (n13 * n24 * n31 - n14 * n23 * n31 + n14 * n21 * n33 - n11 * n24 * n33 - n13 * n21 * n34 + n11 * n23 * n34) * detInv;
+        t[14] = (n14 * n22 * n31 - n12 * n24 * n31 - n14 * n21 * n32 + n11 * n24 * n32 + n12 * n21 * n34 - n11 * n22 * n34) * detInv;
+        t[15] = (n12 * n23 * n31 - n13 * n22 * n31 + n13 * n21 * n32 - n11 * n23 * n32 - n12 * n21 * n33 + n11 * n22 * n33) * detInv;
+
         return this;
     }
 
@@ -555,13 +672,31 @@ export class Mat4 extends Array<number> {
         return pos;
     }
 
-    getScaling(scale) {
-        Mat4Func.getScaling(scale, this);
-        return this;
+    getScaling(scale: Vec3): Vec3 {
+        const t = this;
+        scale.x = Math.hypot(t[0], t[1], t[2]);
+        scale.y = Math.hypot(t[4], t[5], t[6]);
+        scale.z = Math.hypot(t[8], t[9], t[10]);
+        return scale;
     }
 
-    getMaxScaleOnAxis() {
-        return Mat4Func.getMaxScaleOnAxis(this);
+    getMaxScaleOnAxis(): number {
+        const t = this;
+        let n11 = t[0];
+        let n21 = t[1];
+        let n31 = t[2];
+        let n12 = t[4];
+        let n22 = t[5];
+        let n32 = t[6];
+        let n13 = t[8];
+        let n23 = t[9];
+        let n33 = t[10];
+
+        const x = n11 * n11 + n21 * n21 + n31 * n31;
+        const y = n12 * n12 + n22 * n22 + n32 * n32;
+        const z = n13 * n13 + n23 * n23 + n33 * n33;
+
+        return Math.sqrt(Math.max(x, y, z));
     }
 
     lookAt<T extends number[]>(eye: T, target, up) {
@@ -569,8 +704,52 @@ export class Mat4 extends Array<number> {
         return this;
     }
 
-    determinant() {
-        return Mat4Func.determinant(this);
+    determinant(): number {
+        // http://www.euclideanspace.com/maths/algebra/matrix/functions/determinant/fourD/index.htm
+        const t = this;
+        const m00 = t[0],
+            m01 = t[4],
+            m02 = t[8],
+            m03 = t[12],
+            m10 = t[1],
+            m11 = t[5],
+            m12 = t[9],
+            m13 = t[13],
+            m20 = t[2],
+            m21 = t[6],
+            m22 = t[10],
+            m23 = t[14],
+            m30 = t[3],
+            m31 = t[7],
+            m32 = t[11],
+            m33 = t[15];
+
+        return (
+            m03 * m12 * m21 * m30 -
+            m02 * m13 * m21 * m30 -
+            m03 * m11 * m22 * m30 +
+            m01 * m13 * m22 * m30 +
+            m02 * m11 * m23 * m30 -
+            m01 * m12 * m23 * m30 -
+            m03 * m12 * m20 * m31 +
+            m02 * m13 * m20 * m31 +
+            m03 * m10 * m22 * m31 -
+            m00 * m13 * m22 * m31 -
+            m02 * m10 * m23 * m31 +
+            m00 * m12 * m23 * m31 +
+            m03 * m11 * m20 * m32 -
+            m01 * m13 * m20 * m32 -
+            m03 * m10 * m21 * m32 +
+            m00 * m13 * m21 * m32 +
+            m01 * m10 * m23 * m32 -
+            m00 * m11 * m23 * m32 -
+            m02 * m11 * m20 * m33 +
+            m01 * m12 * m20 * m33 +
+            m02 * m10 * m21 * m33 -
+            m00 * m12 * m21 * m33 -
+            m01 * m10 * m22 * m33 +
+            m00 * m11 * m22 * m33
+        );
     }
 
     fromArray(a, o = 0) {
@@ -613,3 +792,5 @@ export class Mat4 extends Array<number> {
         return a;
     }
 }
+
+const _m1 = new Mat4();
