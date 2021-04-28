@@ -1,5 +1,6 @@
-import * as Mat4Func from './functions/Mat4Func';
+// import * as Mat4Func from './functions/Mat4Func';
 import { Vec3 } from './Vec3';
+import { Quat } from './Quat';
 
 export class Mat4 extends Array<number> {
     /**
@@ -156,7 +157,7 @@ export class Mat4 extends Array<number> {
     }
 
     /**
-     * Translate by the given vector 3
+     * Pre multiply translate
      *
      * 1 0 0 x     m[0] m[4] m[8]  m[12]
      * 0 1 0 y  *  m[1] m[5] m[9]  m[13]
@@ -172,13 +173,35 @@ export class Mat4 extends Array<number> {
      * @returns this
      */
     // prettier-ignore
-    translate(v: Vec3): this {
-        const x = v.x;
-        const y = v.y;
-        const z = v.z;
-        this[0] += x * this[3]; this[4] += x * this[7]; this[8]  += x * this[11]; this[12] += x * this[15];
-        this[1] += y * this[3]; this[5] += y * this[7]; this[9]  += y * this[11]; this[13] += y * this[15];
-        this[2] += z * this[3]; this[6] += z * this[7]; this[10] += z * this[11]; this[14] += z * this[15];
+    preTranslate(x: number, y: number, z: number): this {
+        const t = this;
+        t[0] += x * t[3]; t[4] += x * t[7]; t[8]  += x * t[11]; t[12] += x * t[15];
+        t[1] += y * t[3]; t[5] += y * t[7]; t[9]  += y * t[11]; t[13] += y * t[15];
+        t[2] += z * t[3]; t[6] += z * t[7]; t[10] += z * t[11]; t[14] += z * t[15];
+        return this;
+    }
+
+    /**
+     * Post multiply translate
+     *
+     * m[0] m[4] m[8]  m[12]     1 0 0 x
+     * m[1] m[5] m[9]  m[13]  *  0 1 0 y
+     * m[2] m[6] m[10] m[14]     0 0 1 z
+     * m[3] m[7] m[11] m[15]     0 0 0 1
+     *
+     * m[0], m[4], m[8],  m[0] * x + m[4] * y + m[8]  * z + m[12]
+     * m[1], m[5], m[9],  m[1] * x + m[5] * y + m[9]  * z + m[13]
+     * m[2], m[6], m[10], m[2] * x + m[6] * y + m[10] * z + m[14]
+     * m[3], m[7], m[11], m[3] * x + m[7] * y + m[11] * z + m[15]
+     *
+     * @param v
+     */
+    translate(x: number, y: number, z: number): this {
+        const t = this;
+        t[12] = t[0] * x + t[4] * y + t[8] * z + t[12];
+        t[13] = t[1] * x + t[5] * y + t[9] * z + t[13];
+        t[14] = t[2] * x + t[6] * y + t[10] * z + t[14];
+        t[15] = t[3] * x + t[7] * y + t[11] * z + t[15];
         return this;
     }
 
@@ -199,26 +222,68 @@ export class Mat4 extends Array<number> {
      * @returns this
      */
     // prettier-ignore
-    rotateX(rad:number):this{
+    preRotateX(rad:number):this{
+        const t = this;
         const c = Math.cos(rad);
         const s = Math.sin(rad);
-        const t1 = this[1];
-        const t2 = this[2];
-        const t5 = this[5];
-        const t6 = this[6];
-        const t9 = this[9];
-        const t10 = this[10];
-        const t13 = this[13];
-        const t14 = this[14];
+        const t1 = t[1];
+        const t2 = t[2];
+        const t5 = t[5];
+        const t6 = t[6];
+        const t9 = t[9];
+        const t10 = t[10];
+        const t13 = t[13];
+        const t14 = t[14];
 
-        this[1] = c * t1 - s * t2;
-        this[2] = s * t1 + c * t2;
-        this[5] = c * t5 - s * t6;
-        this[6] = s * t5 + c * t6;
-        this[9] = c * t9 - s * t10;
-        this[10] = s * t9 + c * t10;
-        this[13] = c * t13 - s * t14;
-        this[14] = s * t13 + c * t14;
+        t[1] = c * t1 - s * t2;
+        t[2] = s * t1 + c * t2;
+        t[5] = c * t5 - s * t6;
+        t[6] = s * t5 + c * t6;
+        t[9] = c * t9 - s * t10;
+        t[10] = s * t9 + c * t10;
+        t[13] = c * t13 - s * t14;
+        t[14] = s * t13 + c * t14;
+
+        return this;
+    }
+
+    /**
+     * Rotate radians around x axis
+     *
+     * m[0] m[4] m[8]  m[12]     1, 0,  0, 0,
+     * m[1] m[5] m[9]  m[13]  *  0, c, -s, 0,
+     * m[2] m[6] m[10] m[14]     0, s,  c, 0,
+     * m[3] m[7] m[11] m[15]     0, 0,  0, 1
+     *
+     * m[0], m[4] * c + m[8] * s , m[4] * -s + m[8] * c , m[12]
+     * m[1], m[5] * c + m[9] * s , m[5] * -s + m[9] * c , m[13]
+     * m[2], m[6] * c + m[10] * s, m[6] * -s + m[10] * c, m[14]
+     * m[3], m[7] * c + m[11] * s, m[7] * -s + m[11] * c, m[15]
+     *
+     * @param rad radians
+     * @returns this
+     */
+    rotateX(rad: number): this {
+        const t = this;
+        const c = Math.cos(rad);
+        const s = Math.sin(rad);
+        const t4 = t[4];
+        const t5 = t[5];
+        const t6 = t[6];
+        const t7 = t[7];
+        const t8 = t[8];
+        const t9 = t[9];
+        const t10 = t[10];
+        const t11 = t[11];
+
+        t[4] = t4 * c + t8 * s;
+        t[5] = t5 * c + t9 * s;
+        t[6] = t6 * c + t10 * s;
+        t[7] = t7 * c + t11 * s;
+        t[8] = t8 * c - t4 * s;
+        t[9] = t9 * c - t5 * s;
+        t[10] = t10 * c - t6 * s;
+        t[11] = t11 * c - t7 * s;
 
         return this;
     }
@@ -240,19 +305,59 @@ export class Mat4 extends Array<number> {
      * @returns this
      */
     // prettier-ignore
-    rotateY(rad:number):this{
+    preRotateY(rad: number):this{
+        const t = this;
         const c = Math.cos(rad);
         const s = Math.sin(rad);
-        const m11 = this[0];
-        const m31 = this[2];
-        const m12 = this[4];
-        const m32 = this[6];
-        const m13 = this[8];
-        const m33 = this[10];
-        const m14 = this[12];
-        const m34 = this[14];
-        this[0] = c * m11 + s * m31;  this[4] = c * m12 + s * m32;  this[8] = c * m13 + s * m33;  this[12] = c * m14 + s * m34;
-        this[2] = -s * m11 + c * m31; this[6] = -s * m12 + c * m32; this[10] = -s * m13 + c * m33;this[14] = -s * m14 + c * m34; 
+        const t0 = t[0];
+        const t2 = t[2];
+        const t4 = t[4];
+        const t6 = t[6];
+        const t8 = t[8];
+        const t10 = t[10];
+        const t12 = t[12];
+        const t14 = t[14];
+        t[0] = c * t0 + s * t2;  t[4] = c * t4 + s * t6;  t[8] = c * t8 + s * t10;  t[12] = c * t12 + s * t14;
+        t[2] = -s * t0 + c * t2; t[6] = -s * t4 + c * t6; t[10] = -s * t8 + c * t10;t[14] = -s * t12 + c * t14; 
+        return this;
+    }
+
+    /**
+     * Rotate radians around y axis
+     *
+     * m[0] m[4] m[8]  m[12]      c, 0, s, 0,
+     * m[1] m[5] m[9]  m[13]   *  0, 1, 0, 0,
+     * m[2] m[6] m[10] m[14]     -s, 0, c, 0,
+     * m[3] m[7] m[11] m[15]      0, 0, 0, 1
+     *
+     * m[0] * c - m[8] * s , m[4], m[0] * s + m[8] * c , m[12]
+     * m[1] * c - m[9] * s , m[5], m[1] * s + m[9] * c , m[13]
+     * m[2] * c - m[10] * s, m[6], m[2] * s + m[10] * c, m[14]
+     * m[3] * c - m[11] * s, m[7], m[3] * s + m[11] * c, m[15]
+     *
+     * @param rad radians
+     * @returns this
+     */
+    rotateY(rad: number): this {
+        const t = this;
+        const c = Math.cos(rad);
+        const s = Math.sin(rad);
+        const t0 = t[0];
+        const t1 = t[1];
+        const t2 = t[2];
+        const t3 = t[3];
+        const t8 = t[8];
+        const t9 = t[9];
+        const t10 = t[10];
+        const t11 = t[11];
+        t[0] = t0 * c - t8 * s;
+        t[1] = t1 * c - t9 * s;
+        t[2] = t2 * c - t10 * s;
+        t[3] = t3 * c - t11 * s;
+        t[8] = t0 * s + t8 * c;
+        t[9] = t1 * s + t9 * c;
+        t[10] = t2 * s + t10 * c;
+        t[11] = t3 * s + t11 * c;
         return this;
     }
 
@@ -268,29 +373,69 @@ export class Mat4 extends Array<number> {
      * @returns this
      */
     // prettier-ignore
-    rotateZ(rad:number):this{
+    preRotateZ(rad:number):this{
+        const t = this;
         const c = Math.cos(rad);
         const s = Math.sin(rad);
-        const m11 = this[0];
-        const m21 = this[1];
-        const m12 = this[4];
-        const m22 = this[5];
-        const m13 = this[8];
-        const m23 = this[9];
-        const m14 = this[12];
-        const m24 = this[13];
+        const t0 = t[0];
+        const t1 = t[1];
+        const t4 = t[4];
+        const t5 = t[5];
+        const t8 = t[8];
+        const t9 = t[9];
+        const t12 = t[12];
+        const t13 = t[13];
 
-        this[0] = c * m11 - s * m21; this[4] = c * m12 - s * m22; this[8] = c * m13 - s * m23; this[12] = c * m14 - s * m24;
-        this[1] = s * m11 + c * m21; this[5] = s * m12 + c * m22; this[9] = s * m13 + c * m23; this[13] = s * m14 + c * m24;
+        this[0] = c * t0 - s * t1; this[4] = c * t4 - s * t5; this[8] = c * t8 - s * t9; this[12] = c * t12 - s * t13;
+        this[1] = s * t0 + c * t1; this[5] = s * t4 + c * t5; this[9] = s * t8 + c * t9; this[13] = s * t12 + c * t13;
+        return this;
+    }
+
+    /**
+     * Rotate radians around z axis
+     *
+     * m[0] m[4] m[8] m[12]      c, -s, 0, 0,
+     * m[1] m[5] m[9] m[13]  *   s,  c, 0, 0,
+     * m[2] m[6] m[10] m[14]     0,  0, 1, 0,
+     * m[3] m[7] m[11] m[15]     0,  0, 0, 1
+     *
+     * m[0] * c + m[4] * s, m[4] * c - m[0] * s, m[8], m[12],
+     * m[1] * c + m[5] * s, m[5] * c - m[1] * s, m[9], m[13],
+     * m[2] * c + m[6] * s, m[6] * c - m[2] * s, m[10],m[14],
+     * m[3] * c + m[7] * s, m[7] * c - m[3] * s, m[11],m[15]
+     *
+     * @param rad radians
+     * @returns this
+     */
+    rotateZ(rad: number): this {
+        const t = this;
+        const c = Math.cos(rad);
+        const s = Math.sin(rad);
+        const t0 = t[0];
+        const t1 = t[1];
+        const t2 = t[2];
+        const t3 = t[3];
+        const t4 = t[4];
+        const t5 = t[5];
+        const t6 = t[6];
+        const t7 = t[7];
+        this[0] = t0 * c + t4 * s;
+        this[1] = t1 * c + t5 * s;
+        this[2] = t2 * c + t6 * s;
+        this[3] = t3 * c + t7 * s;
+        this[4] = t4 * c - t0 * s;
+        this[5] = t5 * c - t1 * s;
+        this[6] = t6 * c - t2 * s;
+        this[7] = t7 * c - t3 * s;
         return this;
     }
 
     rotate(rad: number, axis: Vec3): this {
-        return this.premultiply(new Mat4().fromRotationAxis(axis, rad));
+        return this.multiply(new Mat4().fromRotationAxis(axis, rad));
     }
 
     /**
-     * Scale by the given vector 3
+     * Post multiply a scale matrix
      *
      * x 0 0 0     m[0] m[4] m[8]  m[12]
      * 0 y 0 0  *  m[1] m[5] m[9]  m[13]
@@ -307,13 +452,45 @@ export class Mat4 extends Array<number> {
      * @returns this
      */
     // prettier-ignore
-    scale(v: Vec3): this {
-        const x = v.x;
-        const y = v.y;
-        const z = v.z;
-        this[0] *= x; this[4] *= x; this[8]  *= x; this[12] *= x;
-        this[1] *= y; this[5] *= y; this[9]  *= y; this[13] *= y;
-        this[2] *= z; this[6] *= z; this[10] *= z; this[14] *= z;
+    preScale(sx: number, sy: number, sz: number): this {
+        this[0] *= sx; this[4] *= sx; this[8]  *= sx; this[12] *= sx;
+        this[1] *= sy; this[5] *= sy; this[9]  *= sy; this[13] *= sy;
+        this[2] *= sz; this[6] *= sz; this[10] *= sz; this[14] *= sz;
+        return this;
+    }
+
+    /**
+     * Post multiply a scale matrix
+     *
+     * m[0] m[4] m[8]  m[12]     x 0 0 0
+     * m[1] m[5] m[9]  m[13]  *  0 y 0 0
+     * m[2] m[6] m[10] m[14]     0 0 z 0
+     * m[3] m[7] m[11] m[15]     0 0 0 1
+     *
+     * m[0] * x , m[4] * y, m[8] * z , m[12]
+     * m[1] * x , m[5] * y, m[9] * z , m[13]
+     * m[2] * x , m[6] * y, m[10] * z, m[14]
+     * m[3] * x , m[7] * y, m[11] * z, m[15]
+     *
+     * @param sx scale x
+     * @param sy scale y
+     * @param sz scale z
+     * @returns this
+     */
+    scale(sx: number, sy: number, sz: number): this {
+        const t = this;
+        t[0] *= sx;
+        t[1] *= sx;
+        t[2] *= sx;
+        t[3] *= sx;
+        t[4] *= sy;
+        t[5] *= sy;
+        t[6] *= sy;
+        t[7] *= sy;
+        t[8] *= sz;
+        t[9] *= sz;
+        t[10] *= sz;
+        t[11] *= sz;
         return this;
     }
 
@@ -350,10 +527,10 @@ export class Mat4 extends Array<number> {
 
         b1 = mb[12]; b2 = mb[13]; b3 = mb[14]; b4 = mb[15];
 
-        t[8] = a11 * b1 + a12 * b2 + a13 * b3 + a14 * b4;
-        t[9] = a21 * b1 + a22 * b2 + a23 * b3 + a24 * b4;
-        t[10] = a31 * b1 + a32 * b2 + a33 * b3 + a34 * b4;
-        t[11] = a41 * b1 + a42 * b2 + a43 * b3 + a44 * b4;
+        t[12] = a11 * b1 + a12 * b2 + a13 * b3 + a14 * b4;
+        t[13] = a21 * b1 + a22 * b2 + a23 * b3 + a24 * b4;
+        t[14] = a31 * b1 + a32 * b2 + a33 * b3 + a34 * b4;
+        t[15] = a41 * b1 + a42 * b2 + a43 * b3 + a44 * b4;
 
         return this;
     }
@@ -598,7 +775,7 @@ export class Mat4 extends Array<number> {
         _m1[10] *= invSZ;
 
         // TODO: quat
-        quat.setFromRotationMatrix(_m1);
+        // quat.setFromRotationMatrix(_m1);
 
         scale.x = sx;
         scale.y = sy;
@@ -661,7 +838,7 @@ export class Mat4 extends Array<number> {
     }
 
     getRotation(q) {
-        Mat4Func.getRotation(q, this);
+        // Mat4Func.getRotation(q, this);
         return this;
     }
 
@@ -700,7 +877,7 @@ export class Mat4 extends Array<number> {
     }
 
     lookAt<T extends number[]>(eye: T, target, up) {
-        Mat4Func.targetTo(this, eye, target, up);
+        // Mat4Func.targetTo(this, eye, target, up);
         return this;
     }
 
@@ -790,6 +967,15 @@ export class Mat4 extends Array<number> {
         a[o + 14] = this[14];
         a[o + 15] = this[15];
         return a;
+    }
+
+    // prettier-ignore
+    clone() {
+        const t = this;
+        return new Mat4(t[0],t[4],t[8],t[12],
+                        t[1],t[5],t[9],t[13],
+                        t[2],t[6],t[10],t[14],
+                        t[3],t[7],t[11],t[15]);
     }
 }
 
