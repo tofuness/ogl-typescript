@@ -1,5 +1,6 @@
 import { clamp, PI_OVER_TWO } from './MathUtils';
 import { Mat3 } from './Mat3';
+import { Mat4 } from './Mat4';
 
 export class Vec3 extends Array<number> {
     // constant: number; // TODO: only be used in Camera class
@@ -218,12 +219,28 @@ export class Vec3 extends Array<number> {
         return this;
     }
 
-    // TODO: mat4 quaternion
-    // applyMatrix4(mat4) {
-    //     Vec3Func.transformMat4(this, this, mat4);
-    //     return this;
-    // }
+    /**
+     *
+     * m[0] m[4] m[8]  m[12]     x
+     * m[1] m[5] m[9]  m[13]  *  y
+     * m[2] m[6] m[10] m[14]     z
+     * m[3] m[7] m[11] m[15]     1
+     *
+     * @param mat4
+     * @returns
+     */
+    applyMatrix4(m: Mat4): this {
+        const x = this.x;
+        const y = this.y;
+        const z = this.z;
+        // let w = m[3] * x + m[7] * y + m[11] * z + m[15]
+        this.x = m[0] * x + m[4] * y + m[8] * z + m[12];
+        this.y = m[1] * x + m[5] * y + m[9] * z + m[13];
+        this.z = m[2] * x + m[6] * y + m[10] * z + m[14];
+        return this;
+    }
 
+    // TODO: mat4 quaternion
     // scaleRotateMatrix4(mat4) {
     //     Vec3Func.scaleRotateMat4(this, this, mat4);
     //     return this;

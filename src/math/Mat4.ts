@@ -430,10 +430,20 @@ export class Mat4 extends Array<number> {
         return this;
     }
 
+    /**
+     *  post multiply a rotate matrix
+     *
+     * @param rad radians
+     * @param axis rotate axis
+     * @returns this
+     */
     rotate(rad: number, axis: Vec3): this {
         return this.multiply(new Mat4().fromRotationAxis(axis, rad));
     }
 
+    preRotate(rad: number, axis: Vec3): this {
+        return this.premultiply(new Mat4().fromRotationAxis(axis, rad));
+    }
     /**
      * Post multiply a scale matrix
      *
@@ -929,7 +939,13 @@ export class Mat4 extends Array<number> {
         );
     }
 
-    fromArray(a, o = 0) {
+    /**
+     * from column-major Array
+     * @param a number array copy from
+     * @param o first index
+     * @returns this
+     */
+    fromArray(a: number[], o: number = 0): this {
         this[0] = a[o];
         this[1] = a[o + 1];
         this[2] = a[o + 2];
@@ -949,7 +965,7 @@ export class Mat4 extends Array<number> {
         return this;
     }
 
-    toArray(a = [], o = 0) {
+    toArray(a: number[] = [], o: number = 0): number[] {
         a[o] = this[0];
         a[o + 1] = this[1];
         a[o + 2] = this[2];
@@ -976,6 +992,16 @@ export class Mat4 extends Array<number> {
                         t[1],t[5],t[9],t[13],
                         t[2],t[6],t[10],t[14],
                         t[3],t[7],t[11],t[15]);
+    }
+
+    // prettier-ignore
+    toString(): string {
+        const t = this;
+        return '|  ' + t[0] + ',' + t[4] + ',' + t[8] +  ',' + t[12] + '\n'
+             + '|  ' + t[1] + ',' + t[5] + ',' + t[9] +  ',' + t[13] + '\n'
+             + '|  ' + t[2] + ',' + t[6] + ',' + t[10] + ',' + t[14] + '\n'
+             + '|  ' + t[3] + ',' + t[7] + ',' + t[11] + ',' + t[15] + '\n'
+
     }
 }
 
