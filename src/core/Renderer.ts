@@ -31,7 +31,7 @@ export interface RendererOptions {
     powerPreference: string;
     autoClear: boolean;
     webgl: number;
-    gl: OGLRenderingContext | null;
+    gl: OGLRenderingContext | WebGL2RenderingContext | null;
 }
 
 export type OGLRenderingContext = {
