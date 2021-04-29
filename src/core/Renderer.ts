@@ -1,3 +1,5 @@
+import { ExpoWebGLRenderingContext } from 'expo-gl';
+
 import { Vec3 } from '../math/Vec3';
 import { Transform } from './Transform';
 import { Camera } from './Camera';
@@ -31,13 +33,13 @@ export interface RendererOptions {
     powerPreference: string;
     autoClear: boolean;
     webgl: number;
-    gl: OGLRenderingContext | WebGL2RenderingContext | null;
+    gl: OGLRenderingContext | null;
 }
 
 export type OGLRenderingContext = {
     renderer: Renderer;
     canvas: HTMLCanvasElement;
-} & (WebGL2RenderingContext | WebGLRenderingContext);
+} & (ExpoWebGLRenderingContext | WebGL2RenderingContext | WebGLRenderingContext);
 
 export type DeviceParameters = {
     maxTextureUnits?: number;
