@@ -40,7 +40,6 @@
     },
     "homepage": "https://github.com/nshen/ogl-typescript",
     "devDependencies": {
-        "expo-gl": "^10.2.0",
         "prettier": "^2.2.1",
         "rimraf": "^3.0.2",
         "typescript": "^4.2.4",
@@ -59,7 +58,8 @@
         "trailingComma": "es5",
         "useTabs": false
     },
-    "peerDependencies": {
+    "peerDependencies": {},
+    "dependencies": {
         "expo-gl": "^10.2.0"
     }
 }

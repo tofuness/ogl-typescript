@@ -1,3 +1,4 @@
+import { ExpoWebGLRenderingContext } from 'expo-gl';
 import { Transform } from './Transform';
 import { Camera } from './Camera';
 import { RenderTarget } from './RenderTarget';
@@ -20,7 +21,7 @@ export interface RendererOptions {
 export declare type OGLRenderingContext = {
     renderer: Renderer;
     canvas: HTMLCanvasElement;
-} & (WebGL2RenderingContext | WebGLRenderingContext);
+} & (ExpoWebGLRenderingContext | WebGL2RenderingContext | WebGLRenderingContext);
 export declare type DeviceParameters = {
     maxTextureUnits?: number;
     maxAnisotropy?: number;
