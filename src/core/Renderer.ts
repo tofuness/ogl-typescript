@@ -18,7 +18,7 @@ const tempVec3 = new Vec3();
 let ID = 1;
 
 export interface RendererOptions {
-    canvas: HTMLCanvasElement;
+    canvas: HTMLCanvasElement | null;
     width: number;
     height: number;
     dpr: number;
@@ -31,6 +31,7 @@ export interface RendererOptions {
     powerPreference: string;
     autoClear: boolean;
     webgl: number;
+    gl: OGLRenderingContext | null;
 }
 
 export type OGLRenderingContext = {
@@ -99,7 +100,7 @@ export class Renderer {
     private _id: number;
 
     constructor({
-        canvas = document.createElement('canvas'),
+        canvas = null,
         width = 300,
         height = 150,
         dpr = 1,
@@ -112,6 +113,7 @@ export class Renderer {
         powerPreference = 'default',
         autoClear = true,
         webgl = 2,
+        gl = null
     }: Partial<RendererOptions> = {}) {
         const attributes = { alpha, depth, stencil, antialias, premultipliedAlpha, preserveDrawingBuffer, powerPreference };
         this.dpr = dpr;
@@ -123,13 +125,20 @@ export class Renderer {
         this.autoClear = autoClear;
         this._id = ID++;
 
-        // Attempt WebGL2 unless forced to 1, if not supported fallback to WebGL1
-        if (webgl === 2) this.gl = canvas.getContext('webgl2', attributes) as OGLRenderingContext;
-        this.isWebgl2 = !!this.gl;
-        if (!this.gl) {
-            this.gl = (canvas.getContext('webgl', attributes) || canvas.getContext('experimental-webgl', attributes)) as OGLRenderingContext;
+        if (gl) {
+            this.gl = gl;
+        } else {
+            // Attempt WebGL2 unless forced to 1, if not supported fallback to WebGL1
+            if (webgl === 2) {
+                canvas = document.createElement('canvas');
+                this.gl = canvas.getContext('webgl2', attributes) as OGLRenderingContext;
+            }
+            this.isWebgl2 = !!this.gl;
+            if (!this.gl) {
+                this.gl = (canvas.getContext('webgl', attributes) || canvas.getContext('experimental-webgl', attributes)) as OGLRenderingContext;
+            }
+            if (!this.gl) console.error('unable to create webgl context');
         }
-        if (!this.gl) console.error('unable to create webgl context');
 
         // Attach renderer to gl so that all classes have access to internal state functions
         this.gl.renderer = this;
